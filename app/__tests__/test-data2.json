@@ -6,13 +6,13 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "9a6f5b4fe3",
-          "name": "Braun",
-          "blacklist": [4, 5, 7, 9, 11, 17, 20, 21, 30],
-          "greenlist": [1, 12, 25],
-          "groups": ["Geriatrie"],
+          "id": "9da365a278",
+          "name": "Hoffmann",
+          "blacklist": [3, 5, 6, 8, 9, 19, 20, 23, 29, 30],
+          "greenlist": [1, 15, 22],
+          "groups": ["Rhythmologie"],
           "imc": false,
-          "dutyColumns": ["Notaufnahme"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -21,11 +21,11 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "5dfdadf57b",
-          "name": "Hoffmann",
-          "blacklist": [7, 13, 17, 23],
-          "greenlist": [1, 4, 21, 30],
-          "groups": ["Gastroenterologie"],
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
+          "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -36,11 +36,11 @@
       },
       "IMC": {
         "duty": {
-          "id": "13d6e5dfda",
-          "name": "Schneider",
-          "blacklist": [16, 20, 24, 26],
-          "greenlist": [7],
-          "groups": ["Rhythmologie"],
+          "id": "116857a04f",
+          "name": "Krüger",
+          "blacklist": [3, 7, 8, 11, 14, 17, 18, 22, 25, 26, 27],
+          "greenlist": [1, 6, 12, 16, 20, 30],
+          "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -58,11 +58,11 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "dadf57bf9a",
-          "name": "Bauer",
-          "blacklist": [3, 4, 15, 16, 19, 23, 30],
-          "greenlist": [2, 14, 24],
-          "groups": ["Gastroenterologie"],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -73,11 +73,11 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "d6e5dfdadf",
-          "name": "Weber",
-          "blacklist": [9, 11, 14, 23, 26, 27],
-          "greenlist": [2, 8, 18],
-          "groups": ["Ohne"],
+          "id": "78cf116857",
+          "name": "Neumann",
+          "blacklist": [3, 4, 9, 13, 14, 15, 18, 24, 25],
+          "greenlist": [2, 6, 11, 22, 27],
+          "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -88,11 +88,11 @@
       },
       "IMC": {
         "duty": {
-          "id": "913d6e5dfd",
-          "name": "Müller",
-          "blacklist": [3, 6, 8, 27, 30],
-          "greenlist": [7, 21, 29],
-          "groups": ["Gastroenterologie"],
+          "id": "365a278cf1",
+          "name": "Bauer",
+          "blacklist": [5, 15, 17],
+          "greenlist": [1, 13],
+          "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -108,14 +108,28 @@
     "weekday": 3,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
+      "Notaufnahme": {
+        "duty": {
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
+          "groups": ["Ohne"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "Hausdienst": {
         "duty": {
-          "id": "f9a6f5b4fe",
-          "name": "Zimmermann",
-          "blacklist": [8, 11, 12, 17, 21, 23],
-          "greenlist": [3, 13],
-          "groups": ["Ohne"],
+          "id": "c9da365a27",
+          "name": "Becker",
+          "blacklist": [14, 17, 19, 23, 24, 25],
+          "greenlist": [3, 9, 21, 29],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -126,11 +140,11 @@
       },
       "IMC": {
         "duty": {
-          "id": "913d6e5dfd",
-          "name": "Müller",
-          "blacklist": [3, 6, 8, 27, 30],
-          "greenlist": [7, 21, 29],
-          "groups": ["Gastroenterologie"],
+          "id": "9da365a278",
+          "name": "Hoffmann",
+          "blacklist": [3, 5, 6, 8, 9, 19, 20, 23, 29, 30],
+          "greenlist": [1, 15, 22],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -148,10 +162,10 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "5dfdadf57b",
-          "name": "Hoffmann",
-          "blacklist": [7, 13, 17, 23],
-          "greenlist": [1, 4, 21, 30],
+          "id": "cf3c9da365",
+          "name": "Fischer",
+          "blacklist": [2, 7, 10, 11, 13, 16, 17, 18, 23, 30],
+          "greenlist": [20],
           "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -161,14 +175,28 @@
         },
         "autoAssignment": true
       },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
+      "Hausdienst": {
+        "duty": {
+          "id": "3c9da365a2",
+          "name": "Schulz",
+          "blacklist": [3, 5, 6, 7, 13, 14, 20, 22],
+          "greenlist": [17, 23, 25],
+          "groups": ["Geriatrie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "IMC": {
         "duty": {
-          "id": "d6e5dfdadf",
-          "name": "Weber",
-          "blacklist": [9, 11, 14, 23, 26, 27],
-          "greenlist": [2, 8, 18],
-          "groups": ["Ohne"],
+          "id": "cf116857a0",
+          "name": "Zimmermann",
+          "blacklist": [1, 6, 7, 10, 15, 17, 23, 28],
+          "greenlist": [5, 29],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -186,10 +214,10 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "57bf9a6f5b",
-          "name": "Schröder",
-          "blacklist": [3, 6, 9, 11, 12, 16, 23, 26],
-          "greenlist": [5, 18, 24],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
           "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -199,14 +227,28 @@
         },
         "autoAssignment": true
       },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
+      "Hausdienst": {
+        "duty": {
+          "id": "fcf3c9da36",
+          "name": "Schneider",
+          "blacklist": [1, 2, 9, 19, 20, 21, 28],
+          "greenlist": [10, 29],
+          "groups": ["Geriatrie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "IMC": {
         "duty": {
-          "id": "fdadf57bf9",
-          "name": "Koch",
-          "blacklist": [7, 8, 11, 18, 25, 28],
-          "greenlist": [9],
-          "groups": ["Rhythmologie"],
+          "id": "365a278cf1",
+          "name": "Bauer",
+          "blacklist": [5, 15, 17],
+          "greenlist": [1, 13],
+          "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -224,10 +266,25 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "e5dfdadf57",
-          "name": "Becker",
-          "blacklist": [1, 3, 10, 17, 19, 21, 25, 26, 30],
-          "greenlist": [6, 13, 27],
+          "id": "f3c9da365a",
+          "name": "Weber",
+          "blacklist": [4, 5, 9, 14, 18, 26],
+          "greenlist": [6, 10, 22],
+          "groups": ["Kardiologie"],
+          "imc": false,
+          "dutyColumns": ["Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "Hausdienst": {
+        "duty": {
+          "id": "116857a04f",
+          "name": "Krüger",
+          "blacklist": [3, 7, 8, 11, 14, 17, 18, 22, 25, 26, 27],
+          "greenlist": [1, 6, 12, 16, 20, 30],
           "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -237,13 +294,12 @@
         },
         "autoAssignment": true
       },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
       "IMC": {
         "duty": {
-          "id": "dfdadf57bf",
-          "name": "Schäfer",
-          "blacklist": [1, 3, 15, 17, 18, 22, 23, 26, 30],
-          "greenlist": [16],
+          "id": "78cf116857",
+          "name": "Neumann",
+          "blacklist": [3, 4, 9, 13, 14, 15, 18, 24, 25],
+          "greenlist": [2, 6, 11, 22, 27],
           "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -262,11 +318,11 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "13d6e5dfda",
-          "name": "Schneider",
-          "blacklist": [16, 20, 24, 26],
-          "greenlist": [7],
-          "groups": ["Rhythmologie"],
+          "id": "278cf11685",
+          "name": "Schröder",
+          "blacklist": [2, 3, 6, 9, 24, 25, 28],
+          "greenlist": [7, 14],
+          "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -277,13 +333,13 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "913d6e5dfd",
-          "name": "Müller",
-          "blacklist": [3, 6, 8, 27, 30],
-          "greenlist": [7, 21, 29],
-          "groups": ["Gastroenterologie"],
+          "id": "a278cf1168",
+          "name": "Wolf",
+          "blacklist": [3, 5, 14, 19, 20, 21, 26, 27],
+          "greenlist": [1, 7],
+          "groups": ["Kardiologie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -292,13 +348,13 @@
       },
       "IMC": {
         "duty": {
-          "id": "9a6f5b4fe3",
-          "name": "Braun",
-          "blacklist": [4, 5, 7, 9, 11, 17, 20, 21, 30],
-          "greenlist": [1, 12, 25],
-          "groups": ["Geriatrie"],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
+          "groups": ["Rhythmologie"],
           "imc": false,
-          "dutyColumns": ["Notaufnahme"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -314,11 +370,11 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "f57bf9a6f5",
-          "name": "Wolf",
-          "blacklist": [1, 3, 4, 6, 12, 15, 18, 19, 22, 24],
-          "greenlist": [8, 11, 21],
-          "groups": ["Geriatrie"],
+          "id": "cf3c9da365",
+          "name": "Fischer",
+          "blacklist": [2, 7, 10, 11, 13, 16, 17, 18, 23, 30],
+          "greenlist": [20],
+          "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -329,13 +385,13 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "d6e5dfdadf",
-          "name": "Weber",
-          "blacklist": [9, 11, 14, 23, 26, 27],
-          "greenlist": [2, 8, 18],
+          "id": "5a278cf116",
+          "name": "Klein",
+          "blacklist": [7, 11, 13, 16, 20, 21],
+          "greenlist": [8, 15],
           "groups": ["Ohne"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -344,13 +400,13 @@
       },
       "IMC": {
         "duty": {
-          "id": "5dfdadf57b",
-          "name": "Hoffmann",
-          "blacklist": [7, 13, 17, 23],
-          "greenlist": [1, 4, 21, 30],
-          "groups": ["Gastroenterologie"],
+          "id": "65a278cf11",
+          "name": "Richter",
+          "blacklist": [6, 9, 10, 11, 16, 21, 27, 29],
+          "greenlist": [25, 30],
+          "groups": ["Ohne"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -364,14 +420,28 @@
     "weekday": 2,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
+      "Notaufnahme": {
+        "duty": {
+          "id": "c9da365a27",
+          "name": "Becker",
+          "blacklist": [14, 17, 19, 23, 24, 25],
+          "greenlist": [3, 9, 21, 29],
+          "groups": ["Rhythmologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "Hausdienst": {
         "duty": {
-          "id": "fdadf57bf9",
-          "name": "Koch",
-          "blacklist": [7, 8, 11, 18, 25, 28],
-          "greenlist": [9],
-          "groups": ["Rhythmologie"],
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
+          "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -382,10 +452,10 @@
       },
       "IMC": {
         "duty": {
-          "id": "dfdadf57bf",
-          "name": "Schäfer",
-          "blacklist": [1, 3, 15, 17, 18, 22, 23, 26, 30],
-          "greenlist": [16],
+          "id": "116857a04f",
+          "name": "Krüger",
+          "blacklist": [3, 7, 8, 11, 14, 17, 18, 22, 25, 26, 27],
+          "greenlist": [1, 6, 12, 16, 20, 30],
           "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -402,16 +472,30 @@
     "weekday": 3,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
+      "Notaufnahme": {
+        "duty": {
+          "id": "f3c9da365a",
+          "name": "Weber",
+          "blacklist": [4, 5, 9, 14, 18, 26],
+          "greenlist": [6, 10, 22],
+          "groups": ["Kardiologie"],
+          "imc": false,
+          "dutyColumns": ["Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "Hausdienst": {
         "duty": {
-          "id": "bf9a6f5b4f",
-          "name": "Schwarz",
-          "blacklist": [3, 5, 6, 9, 17, 18, 19, 21, 22, 23, 27],
-          "greenlist": [10, 20, 25],
-          "groups": ["Geriatrie"],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
+          "groups": ["Rhythmologie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -420,13 +504,13 @@
       },
       "IMC": {
         "duty": {
-          "id": "6e5dfdadf5",
+          "id": "3c9da365a2",
           "name": "Schulz",
-          "blacklist": [4, 29, 30],
-          "greenlist": [12, 15, 21, 27],
-          "groups": ["Rhythmologie"],
+          "blacklist": [3, 5, 6, 7, 13, 14, 20, 22],
+          "greenlist": [17, 23, 25],
+          "groups": ["Geriatrie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -440,14 +524,13 @@
     "weekday": 4,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
-      "Hausdienst": {
+      "Notaufnahme": {
         "duty": {
-          "id": "f57bf9a6f5",
-          "name": "Wolf",
-          "blacklist": [1, 3, 4, 6, 12, 15, 18, 19, 22, 24],
-          "greenlist": [8, 11, 21],
-          "groups": ["Geriatrie"],
+          "id": "78cf116857",
+          "name": "Neumann",
+          "blacklist": [3, 4, 9, 13, 14, 15, 18, 24, 25],
+          "greenlist": [2, 6, 11, 22, 27],
+          "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -456,13 +539,28 @@
         },
         "autoAssignment": true
       },
+      "Hausdienst": {
+        "duty": {
+          "id": "da365a278c",
+          "name": "Schäfer",
+          "blacklist": [1, 3, 4],
+          "greenlist": [11, 26, 28],
+          "groups": ["Rhythmologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "IMC": {
         "duty": {
-          "id": "f57bf9a6f5",
-          "name": "Wolf",
-          "blacklist": [1, 3, 4, 6, 12, 15, 18, 19, 22, 24],
-          "greenlist": [8, 11, 21],
-          "groups": ["Geriatrie"],
+          "id": "c9da365a27",
+          "name": "Becker",
+          "blacklist": [14, 17, 19, 23, 24, 25],
+          "greenlist": [3, 9, 21, 29],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -480,13 +578,13 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "9a6f5b4fe3",
-          "name": "Braun",
-          "blacklist": [4, 5, 7, 9, 11, 17, 20, 21, 30],
-          "greenlist": [1, 12, 25],
-          "groups": ["Geriatrie"],
+          "id": "116857a04f",
+          "name": "Krüger",
+          "blacklist": [3, 7, 8, 11, 14, 17, 18, 22, 25, 26, 27],
+          "greenlist": [1, 6, 12, 16, 20, 30],
+          "groups": ["Gastroenterologie"],
           "imc": false,
-          "dutyColumns": ["Notaufnahme"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -495,10 +593,10 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "6e5dfdadf5",
-          "name": "Schulz",
-          "blacklist": [4, 29, 30],
-          "greenlist": [12, 15, 21, 27],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
           "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -510,13 +608,13 @@
       },
       "IMC": {
         "duty": {
-          "id": "3d6e5dfdad",
-          "name": "Fischer",
-          "blacklist": [1, 5, 9, 11, 15, 19, 20, 21, 27],
-          "greenlist": [28],
-          "groups": ["Gastroenterologie"],
+          "id": "a278cf1168",
+          "name": "Wolf",
+          "blacklist": [3, 5, 14, 19, 20, 21, 26, 27],
+          "greenlist": [1, 7],
+          "groups": ["Kardiologie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -532,11 +630,11 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "e5dfdadf57",
-          "name": "Becker",
-          "blacklist": [1, 3, 10, 17, 19, 21, 25, 26, 30],
-          "greenlist": [6, 13, 27],
-          "groups": ["Gastroenterologie"],
+          "id": "365a278cf1",
+          "name": "Bauer",
+          "blacklist": [5, 15, 17],
+          "greenlist": [1, 13],
+          "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -547,10 +645,10 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "f9a6f5b4fe",
-          "name": "Zimmermann",
-          "blacklist": [8, 11, 12, 17, 21, 23],
-          "greenlist": [3, 13],
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
           "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -562,13 +660,13 @@
       },
       "IMC": {
         "duty": {
-          "id": "dadf57bf9a",
-          "name": "Bauer",
-          "blacklist": [3, 4, 15, 16, 19, 23, 30],
-          "greenlist": [2, 14, 24],
+          "id": "8cf116857a",
+          "name": "Schwarz",
+          "blacklist": [5, 6, 11, 12, 26, 29, 30],
+          "greenlist": [14],
           "groups": ["Gastroenterologie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -584,11 +682,11 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "dadf57bf9a",
-          "name": "Bauer",
-          "blacklist": [3, 4, 15, 16, 19, 23, 30],
-          "greenlist": [2, 14, 24],
-          "groups": ["Gastroenterologie"],
+          "id": "278cf11685",
+          "name": "Schröder",
+          "blacklist": [2, 3, 6, 9, 24, 25, 28],
+          "greenlist": [7, 14],
+          "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -599,13 +697,13 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "df57bf9a6f",
-          "name": "Klein",
-          "blacklist": [8, 11, 12, 15, 26, 30],
-          "greenlist": [14, 21],
-          "groups": ["Geriatrie"],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
+          "groups": ["Rhythmologie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -614,10 +712,10 @@
       },
       "IMC": {
         "duty": {
-          "id": "fdadf57bf9",
-          "name": "Koch",
-          "blacklist": [7, 8, 11, 18, 25, 28],
-          "greenlist": [9],
+          "id": "9da365a278",
+          "name": "Hoffmann",
+          "blacklist": [3, 5, 6, 8, 9, 19, 20, 23, 29, 30],
+          "greenlist": [1, 15, 22],
           "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -634,16 +732,30 @@
     "weekday": 1,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
+      "Notaufnahme": {
+        "duty": {
+          "id": "f3c9da365a",
+          "name": "Weber",
+          "blacklist": [4, 5, 9, 14, 18, 26],
+          "greenlist": [6, 10, 22],
+          "groups": ["Kardiologie"],
+          "imc": false,
+          "dutyColumns": ["Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "Hausdienst": {
         "duty": {
-          "id": "6e5dfdadf5",
-          "name": "Schulz",
-          "blacklist": [4, 29, 30],
-          "greenlist": [12, 15, 21, 27],
-          "groups": ["Rhythmologie"],
+          "id": "5a278cf116",
+          "name": "Klein",
+          "blacklist": [7, 11, 13, 16, 20, 21],
+          "greenlist": [8, 15],
+          "groups": ["Ohne"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -652,10 +764,10 @@
       },
       "IMC": {
         "duty": {
-          "id": "dadf57bf9a",
-          "name": "Bauer",
-          "blacklist": [3, 4, 15, 16, 19, 23, 30],
-          "greenlist": [2, 14, 24],
+          "id": "116857a04f",
+          "name": "Krüger",
+          "blacklist": [3, 7, 8, 11, 14, 17, 18, 22, 25, 26, 27],
+          "greenlist": [1, 6, 12, 16, 20, 30],
           "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -674,10 +786,10 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "dfdadf57bf",
-          "name": "Schäfer",
-          "blacklist": [1, 3, 15, 17, 18, 22, 23, 26, 30],
-          "greenlist": [16],
+          "id": "cf3c9da365",
+          "name": "Fischer",
+          "blacklist": [2, 7, 10, 11, 13, 16, 17, 18, 23, 30],
+          "greenlist": [20],
           "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -687,14 +799,28 @@
         },
         "autoAssignment": true
       },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
+      "Hausdienst": {
+        "duty": {
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
+          "groups": ["Ohne"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "IMC": {
         "duty": {
-          "id": "f57bf9a6f5",
-          "name": "Wolf",
-          "blacklist": [1, 3, 4, 6, 12, 15, 18, 19, 22, 24],
-          "greenlist": [8, 11, 21],
-          "groups": ["Geriatrie"],
+          "id": "cf116857a0",
+          "name": "Zimmermann",
+          "blacklist": [1, 6, 7, 10, 15, 17, 23, 28],
+          "greenlist": [5, 29],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -710,15 +836,43 @@
     "weekday": 3,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
+      "Notaufnahme": {
+        "duty": {
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
+          "groups": ["Rhythmologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "Hausdienst": {
+        "duty": {
+          "id": "3c9da365a2",
+          "name": "Schulz",
+          "blacklist": [3, 5, 6, 7, 13, 14, 20, 22],
+          "greenlist": [17, 23, 25],
+          "groups": ["Geriatrie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "IMC": {
         "duty": {
-          "id": "dfdadf57bf",
-          "name": "Schäfer",
-          "blacklist": [1, 3, 15, 17, 18, 22, 23, 26, 30],
-          "greenlist": [16],
-          "groups": ["Gastroenterologie"],
+          "id": "c9da365a27",
+          "name": "Becker",
+          "blacklist": [14, 17, 19, 23, 24, 25],
+          "greenlist": [3, 9, 21, 29],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -736,10 +890,10 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "d6e5dfdadf",
-          "name": "Weber",
-          "blacklist": [9, 11, 14, 23, 26, 27],
-          "greenlist": [2, 8, 18],
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
           "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -751,13 +905,13 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "57bf9a6f5b",
-          "name": "Schröder",
-          "blacklist": [3, 6, 9, 11, 12, 16, 23, 26],
-          "greenlist": [5, 18, 24],
-          "groups": ["Rhythmologie"],
+          "id": "fcf3c9da36",
+          "name": "Schneider",
+          "blacklist": [1, 2, 9, 19, 20, 21, 28],
+          "greenlist": [10, 29],
+          "groups": ["Geriatrie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -766,13 +920,13 @@
       },
       "IMC": {
         "duty": {
-          "id": "7bf9a6f5b4",
-          "name": "Neumann",
-          "blacklist": [2, 4, 6, 13, 17, 19, 23, 26],
-          "greenlist": [7],
+          "id": "f116857a04",
+          "name": "Braun",
+          "blacklist": [2, 14, 15, 25, 28],
+          "greenlist": [19],
           "groups": ["Geriatrie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst"],
+          "dutyColumns": [],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -786,17 +940,45 @@
     "weekday": 5,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
-      "IMC": {
+      "Notaufnahme": {
         "duty": {
-          "id": "d6e5dfdadf",
-          "name": "Weber",
-          "blacklist": [9, 11, 14, 23, 26, 27],
-          "greenlist": [2, 8, 18],
-          "groups": ["Ohne"],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "Hausdienst": {
+        "duty": {
+          "id": "c9da365a27",
+          "name": "Becker",
+          "blacklist": [14, 17, 19, 23, 24, 25],
+          "greenlist": [3, 9, 21, 29],
+          "groups": ["Rhythmologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "IMC": {
+        "duty": {
+          "id": "da365a278c",
+          "name": "Schäfer",
+          "blacklist": [1, 3, 4],
+          "greenlist": [11, 26, 28],
+          "groups": ["Rhythmologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -812,11 +994,11 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "a6f5b4fe32",
+          "id": "116857a04f",
           "name": "Krüger",
-          "blacklist": [1, 6, 8, 11, 14, 19],
-          "greenlist": [18, 20, 23],
-          "groups": ["Rhythmologie"],
+          "blacklist": [3, 7, 8, 11, 14, 17, 18, 22, 25, 26, 27],
+          "greenlist": [1, 6, 12, 16, 20, 30],
+          "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -827,13 +1009,13 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "bf9a6f5b4f",
-          "name": "Schwarz",
-          "blacklist": [3, 5, 6, 9, 17, 18, 19, 21, 22, 23, 27],
-          "greenlist": [10, 20, 25],
-          "groups": ["Geriatrie"],
+          "id": "cf3c9da365",
+          "name": "Fischer",
+          "blacklist": [2, 7, 10, 11, 13, 16, 17, 18, 23, 30],
+          "greenlist": [20],
+          "groups": ["Gastroenterologie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -842,11 +1024,11 @@
       },
       "IMC": {
         "duty": {
-          "id": "bf9a6f5b4f",
-          "name": "Schwarz",
-          "blacklist": [3, 5, 6, 9, 17, 18, 19, 21, 22, 23, 27],
-          "greenlist": [10, 20, 25],
-          "groups": ["Geriatrie"],
+          "id": "da365a278c",
+          "name": "Schäfer",
+          "blacklist": [1, 3, 4],
+          "greenlist": [11, 26, 28],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst"],
           "duties": [],
@@ -864,11 +1046,11 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "6e5dfdadf5",
-          "name": "Schulz",
-          "blacklist": [4, 29, 30],
-          "greenlist": [12, 15, 21, 27],
-          "groups": ["Rhythmologie"],
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
+          "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -879,11 +1061,11 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "913d6e5dfd",
-          "name": "Müller",
-          "blacklist": [3, 6, 8, 27, 30],
-          "greenlist": [7, 21, 29],
-          "groups": ["Gastroenterologie"],
+          "id": "c9da365a27",
+          "name": "Becker",
+          "blacklist": [14, 17, 19, 23, 24, 25],
+          "greenlist": [3, 9, 21, 29],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -894,13 +1076,13 @@
       },
       "IMC": {
         "duty": {
-          "id": "f57bf9a6f5",
-          "name": "Wolf",
-          "blacklist": [1, 3, 4, 6, 12, 15, 18, 19, 22, 24],
-          "greenlist": [8, 11, 21],
+          "id": "3c9da365a2",
+          "name": "Schulz",
+          "blacklist": [3, 5, 6, 7, 13, 14, 20, 22],
+          "greenlist": [17, 23, 25],
           "groups": ["Geriatrie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -914,17 +1096,45 @@
     "weekday": 1,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
-      "IMC": {
+      "Notaufnahme": {
         "duty": {
-          "id": "fdadf57bf9",
-          "name": "Koch",
-          "blacklist": [7, 8, 11, 18, 25, 28],
-          "greenlist": [9],
+          "id": "f3c9da365a",
+          "name": "Weber",
+          "blacklist": [4, 5, 9, 14, 18, 26],
+          "greenlist": [6, 10, 22],
+          "groups": ["Kardiologie"],
+          "imc": false,
+          "dutyColumns": ["Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "Hausdienst": {
+        "duty": {
+          "id": "9da365a278",
+          "name": "Hoffmann",
+          "blacklist": [3, 5, 6, 8, 9, 19, 20, 23, 29, 30],
+          "greenlist": [1, 15, 22],
           "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "IMC": {
+        "duty": {
+          "id": "8cf116857a",
+          "name": "Schwarz",
+          "blacklist": [5, 6, 11, 12, 26, 29, 30],
+          "greenlist": [14],
+          "groups": ["Gastroenterologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -940,10 +1150,10 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "a6f5b4fe32",
-          "name": "Krüger",
-          "blacklist": [1, 6, 8, 11, 14, 19],
-          "greenlist": [18, 20, 23],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
           "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -953,14 +1163,28 @@
         },
         "autoAssignment": true
       },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
+      "Hausdienst": {
+        "duty": {
+          "id": "3c9da365a2",
+          "name": "Schulz",
+          "blacklist": [3, 5, 6, 7, 13, 14, 20, 22],
+          "greenlist": [17, 23, 25],
+          "groups": ["Geriatrie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "IMC": {
         "duty": {
-          "id": "6e5dfdadf5",
-          "name": "Schulz",
-          "blacklist": [4, 29, 30],
-          "greenlist": [12, 15, 21, 27],
-          "groups": ["Rhythmologie"],
+          "id": "116857a04f",
+          "name": "Krüger",
+          "blacklist": [3, 7, 8, 11, 14, 17, 18, 22, 25, 26, 27],
+          "greenlist": [1, 6, 12, 16, 20, 30],
+          "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -978,11 +1202,11 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "57bf9a6f5b",
-          "name": "Schröder",
-          "blacklist": [3, 6, 9, 11, 12, 16, 23, 26],
-          "greenlist": [5, 18, 24],
-          "groups": ["Rhythmologie"],
+          "id": "cf3c9da365",
+          "name": "Fischer",
+          "blacklist": [2, 7, 10, 11, 13, 16, 17, 18, 23, 30],
+          "greenlist": [20],
+          "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -993,13 +1217,13 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "dadf57bf9a",
-          "name": "Bauer",
-          "blacklist": [3, 4, 15, 16, 19, 23, 30],
-          "greenlist": [2, 14, 24],
-          "groups": ["Gastroenterologie"],
+          "id": "fcf3c9da36",
+          "name": "Schneider",
+          "blacklist": [1, 2, 9, 19, 20, 21, 28],
+          "greenlist": [10, 29],
+          "groups": ["Geriatrie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -1008,13 +1232,13 @@
       },
       "IMC": {
         "duty": {
-          "id": "df57bf9a6f",
-          "name": "Klein",
-          "blacklist": [8, 11, 12, 15, 26, 30],
-          "greenlist": [14, 21],
-          "groups": ["Geriatrie"],
+          "id": "116857a04f",
+          "name": "Krüger",
+          "blacklist": [3, 7, 8, 11, 14, 17, 18, 22, 25, 26, 27],
+          "greenlist": [1, 6, 12, 16, 20, 30],
+          "groups": ["Gastroenterologie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -1030,13 +1254,13 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "9a6f5b4fe3",
-          "name": "Braun",
-          "blacklist": [4, 5, 7, 9, 11, 17, 20, 21, 30],
-          "greenlist": [1, 12, 25],
-          "groups": ["Geriatrie"],
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
+          "groups": ["Ohne"],
           "imc": false,
-          "dutyColumns": ["Notaufnahme"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -1045,10 +1269,10 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "bf9a6f5b4f",
-          "name": "Schwarz",
-          "blacklist": [3, 5, 6, 9, 17, 18, 19, 21, 22, 23, 27],
-          "greenlist": [10, 20, 25],
+          "id": "3c9da365a2",
+          "name": "Schulz",
+          "blacklist": [3, 5, 6, 7, 13, 14, 20, 22],
+          "greenlist": [17, 23, 25],
           "groups": ["Geriatrie"],
           "imc": false,
           "dutyColumns": ["Hausdienst"],
@@ -1060,13 +1284,13 @@
       },
       "IMC": {
         "duty": {
-          "id": "df57bf9a6f",
-          "name": "Klein",
-          "blacklist": [8, 11, 12, 15, 26, 30],
-          "greenlist": [14, 21],
-          "groups": ["Geriatrie"],
+          "id": "9da365a278",
+          "name": "Hoffmann",
+          "blacklist": [3, 5, 6, 8, 9, 19, 20, 23, 29, 30],
+          "greenlist": [1, 15, 22],
+          "groups": ["Rhythmologie"],
           "imc": false,
-          "dutyColumns": ["Hausdienst"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -1080,17 +1304,45 @@
     "weekday": 5,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
-      "IMC": {
+      "Notaufnahme": {
         "duty": {
-          "id": "f9a6f5b4fe",
-          "name": "Zimmermann",
-          "blacklist": [8, 11, 12, 17, 21, 23],
-          "greenlist": [3, 13],
-          "groups": ["Ohne"],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "Hausdienst": {
+        "duty": {
+          "id": "da365a278c",
+          "name": "Schäfer",
+          "blacklist": [1, 3, 4],
+          "greenlist": [11, 26, 28],
+          "groups": ["Rhythmologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "IMC": {
+        "duty": {
+          "id": "f3c9da365a",
+          "name": "Weber",
+          "blacklist": [4, 5, 9, 14, 18, 26],
+          "greenlist": [6, 10, 22],
+          "groups": ["Kardiologie"],
+          "imc": false,
+          "dutyColumns": ["Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -1106,13 +1358,13 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "1913d6e5df",
-          "name": "Schmidt",
-          "blacklist": [1, 6, 11, 13, 16, 28],
-          "greenlist": [27],
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
           "groups": ["Ohne"],
           "imc": false,
-          "dutyColumns": ["Notaufnahme"],
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -1121,11 +1373,11 @@
       },
       "Hausdienst": {
         "duty": {
-          "id": "6e5dfdadf5",
-          "name": "Schulz",
-          "blacklist": [4, 29, 30],
-          "greenlist": [12, 15, 21, 27],
-          "groups": ["Rhythmologie"],
+          "id": "cf3c9da365",
+          "name": "Fischer",
+          "blacklist": [2, 7, 10, 11, 13, 16, 17, 18, 23, 30],
+          "greenlist": [20],
+          "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -1136,11 +1388,11 @@
       },
       "IMC": {
         "duty": {
-          "id": "57bf9a6f5b",
-          "name": "Schröder",
-          "blacklist": [3, 6, 9, 11, 12, 16, 23, 26],
-          "greenlist": [5, 18, 24],
-          "groups": ["Rhythmologie"],
+          "id": "78cf116857",
+          "name": "Neumann",
+          "blacklist": [3, 4, 9, 13, 14, 15, 18, 24, 25],
+          "greenlist": [2, 6, 11, 22, 27],
+          "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -1158,11 +1410,11 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "3d6e5dfdad",
-          "name": "Fischer",
-          "blacklist": [1, 5, 9, 11, 15, 19, 20, 21, 27],
-          "greenlist": [28],
-          "groups": ["Gastroenterologie"],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -1171,16 +1423,30 @@
         },
         "autoAssignment": true
       },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
+      "Hausdienst": {
+        "duty": {
+          "id": "da365a278c",
+          "name": "Schäfer",
+          "blacklist": [1, 3, 4],
+          "greenlist": [11, 26, 28],
+          "groups": ["Rhythmologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "IMC": {
         "duty": {
-          "id": "5dfdadf57b",
-          "name": "Hoffmann",
-          "blacklist": [7, 13, 17, 23],
-          "greenlist": [1, 4, 21, 30],
-          "groups": ["Gastroenterologie"],
+          "id": "5a278cf116",
+          "name": "Klein",
+          "blacklist": [7, 11, 13, 16, 20, 21],
+          "greenlist": [8, 15],
+          "groups": ["Ohne"],
           "imc": false,
-          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -1194,14 +1460,13 @@
     "weekday": 1,
     "holiday": true,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
-      "Hausdienst": {
+      "Notaufnahme": {
         "duty": {
-          "id": "913d6e5dfd",
-          "name": "Müller",
-          "blacklist": [3, 6, 8, 27, 30],
-          "greenlist": [7, 21, 29],
-          "groups": ["Gastroenterologie"],
+          "id": "cf116857a0",
+          "name": "Zimmermann",
+          "blacklist": [1, 6, 7, 10, 15, 17, 23, 28],
+          "greenlist": [5, 29],
+          "groups": ["Rhythmologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -1210,15 +1475,30 @@
         },
         "autoAssignment": true
       },
-      "IMC": {
+      "Hausdienst": {
         "duty": {
-          "id": "bf9a6f5b4f",
-          "name": "Schwarz",
-          "blacklist": [3, 5, 6, 9, 17, 18, 19, 21, 22, 23, 27],
-          "greenlist": [10, 20, 25],
+          "id": "fcf3c9da36",
+          "name": "Schneider",
+          "blacklist": [1, 2, 9, 19, 20, 21, 28],
+          "greenlist": [10, 29],
           "groups": ["Geriatrie"],
           "imc": false,
           "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "IMC": {
+        "duty": {
+          "id": "c9da365a27",
+          "name": "Becker",
+          "blacklist": [14, 17, 19, 23, 24, 25],
+          "greenlist": [3, 9, 21, 29],
+          "groups": ["Rhythmologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
           "weekends": [],
           "points": 0
@@ -1234,10 +1514,10 @@
     "dutyColumns": {
       "Notaufnahme": {
         "duty": {
-          "id": "5dfdadf57b",
-          "name": "Hoffmann",
-          "blacklist": [7, 13, 17, 23],
-          "greenlist": [1, 4, 21, 30],
+          "id": "116857a04f",
+          "name": "Krüger",
+          "blacklist": [3, 7, 8, 11, 14, 17, 18, 22, 25, 26, 27],
+          "greenlist": [1, 6, 12, 16, 20, 30],
           "groups": ["Gastroenterologie"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
@@ -1247,14 +1527,28 @@
         },
         "autoAssignment": true
       },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
+      "Hausdienst": {
+        "duty": {
+          "id": "65a278cf11",
+          "name": "Richter",
+          "blacklist": [6, 9, 10, 11, 16, 21, 27, 29],
+          "greenlist": [25, 30],
+          "groups": ["Ohne"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
       "IMC": {
         "duty": {
-          "id": "fdadf57bf9",
-          "name": "Koch",
-          "blacklist": [7, 8, 11, 18, 25, 28],
-          "greenlist": [9],
-          "groups": ["Rhythmologie"],
+          "id": "ffcf3c9da3",
+          "name": "Müller",
+          "blacklist": [4, 9, 10, 13, 16, 30],
+          "greenlist": [1, 27],
+          "groups": ["Ohne"],
           "imc": false,
           "dutyColumns": ["Hausdienst", "Notaufnahme"],
           "duties": [],
@@ -1270,17 +1564,45 @@
     "weekday": 3,
     "holiday": false,
     "dutyColumns": {
-      "Notaufnahme": { "duty": false, "autoAssignment": true },
-      "Hausdienst": { "duty": false, "autoAssignment": true },
-      "IMC": {
+      "Notaufnahme": {
         "duty": {
-          "id": "9a6f5b4fe3",
-          "name": "Braun",
-          "blacklist": [4, 5, 7, 9, 11, 17, 20, 21, 30],
-          "greenlist": [1, 12, 25],
+          "id": "dffcf3c9da",
+          "name": "Schmidt",
+          "blacklist": [21, 23, 29, 30],
+          "greenlist": [7, 10, 19],
+          "groups": ["Rhythmologie"],
+          "imc": false,
+          "dutyColumns": ["Hausdienst", "Notaufnahme"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "Hausdienst": {
+        "duty": {
+          "id": "fcf3c9da36",
+          "name": "Schneider",
+          "blacklist": [1, 2, 9, 19, 20, 21, 28],
+          "greenlist": [10, 29],
           "groups": ["Geriatrie"],
           "imc": false,
-          "dutyColumns": ["Notaufnahme"],
+          "dutyColumns": ["Hausdienst"],
+          "duties": [],
+          "weekends": [],
+          "points": 0
+        },
+        "autoAssignment": true
+      },
+      "IMC": {
+        "duty": {
+          "id": "f116857a04",
+          "name": "Braun",
+          "blacklist": [2, 14, 15, 25, 28],
+          "greenlist": [19],
+          "groups": ["Geriatrie"],
+          "imc": false,
+          "dutyColumns": [],
           "duties": [],
           "weekends": [],
           "points": 0

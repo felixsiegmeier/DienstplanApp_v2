@@ -175,12 +175,26 @@ function groupIsValide({ day, doctor, config }) {
   return true;
 }
 
-function noDutyInProximity(roster, date, doctor){
+function noDutyInProximity(roster, dateString, doctor){
+  const date = parseInt(dateString)
+  for(const dutyColumn of Object.values(roster[date].dutyColumns)){
+    if(dutyColumn.duty.id && (dutyColumn.duty.id === doctor.id)){return false}
+  }
+  if(roster[date-1]){
+    for(const dutyColumn of Object.values(roster[date-1].dutyColumns)){
+      if (dutyColumn.duty.id && (dutyColumn.duty.id === doctor.id)){return false}
+    }
+  }
+  if(roster[date+1]){
+    for(const dutyColumn of Object.values(roster[date+1].dutyColumns)){
+      if (dutyColumn.duty.id && (dutyColumn.duty.id === doctor.id)){return false}
+    }
+  }
   return true;
 };
 
 function dutyNotBlacklisted(doctor, date){
-  return true;
+  return !doctor.blacklist.includes(date);
 };
 
 function sortDoctorsByScore(doctors) {
