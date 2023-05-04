@@ -1,91 +1,41 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from './page.module.css'
+import {generateDoctors} from "./lib/random-data/generate-doctors"
+import {generateMonth} from "./lib/random-data/generate-month"
+import {generateIMCRoster} from "./lib/random-data/generate-imc-roster"
+import {initializePopulation} from "./lib/initialize-population/initialize-population"
+//import {logDoctorsTable, logRosterTable, logSummaryTable} from "./test/test-outputs"
 
-const inter = Inter({ subsets: ['latin'] })
+export default async function Home() {
+  const config = {
+    month: {month: 5, year: 2023},
+    initializationSize: 500,
+    populationSize: 100,
+    dutyColumns: [
+      {name: "Notaufnahme", autoAssignment: true}, 
+      {name: "Hausdienst", autoAssignment: true}, 
+      {name: "IMC", autoAssignment: false}
+    ],
+    groups: [
+      {name: "Kardiologie", maximum: 2, exclusion: [5,6]},
+      {name: "Gastroenterologie", maximum: 2, exclusion: [5,6]},
+      {name: "Geriatrie", maximum: 2, exclusion: [5,6]},
+      {name: "Rhythmologie", maximum: 2, exclusion: [5,6]},
+      {name: "Surugiu", maximum: 1}
+    ]
+  }
 
-export default function Home() {
+  const doctors = generateDoctors(20, 30)
+  let roster = await generateMonth(config)
+  roster = generateIMCRoster(roster, doctors)
+  const population = initializePopulation(roster, doctors, config)
+  /* console.log(JSON.stringify(population[0])) */
+  //logDoctorsTable(doctors)
+  //logRosterTable(roster)
+  //logRosterTable(population[0][1])
+  //console.log(population[0][0])
+  //console.log(population[99][0])
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-        <div className={styles.thirteen}>
-          <Image src="/thirteen.svg" alt="13" width={40} height={31} priority />
-        </div>
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={inter.className}>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p className={inter.className}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main className="">
+     Test
     </main>
   )
-}
+} 
