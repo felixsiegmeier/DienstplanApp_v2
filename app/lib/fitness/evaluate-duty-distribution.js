@@ -17,6 +17,7 @@ function evaluateDutyDistribution({roster, weight}) {
 	// Anmerkung 2: Allerdings sind dafür die Dienstpunkte da, um das zu balancen
 
 	// Die gewünschte Anzahl von Diensten und Wochenenden pro Arzt wird berechnet
+	// die 3 wird verwendet, da ein WE im durchschnitt 3 Tage hat (einzelne Feiertage werden somit über- und mehrer wie Ostern unterschätzt)
 	const targetDutiesPerDoctor = numDuties / Object.keys(doctors).length;
 	const targetWeekendsPerDoctor = numWeekends * 3 / Object.keys(doctors).length;
 
@@ -43,13 +44,13 @@ function evaluateDutyDistribution({roster, weight}) {
 			if(weekend.some(day => doctor.duties.indexOf(day) >= 0)){
 				weekendCount += 1;
 				doctorWeekends.push(index)
-				let indexComparator = index;
-				while (indexComparator > 0 && doctorWeekends.includes(indexComparator-1)){
-					weekendRows += 1;
-					indexComparator -= 1;
-				}
 			}
 		})
+		for(const weekend of doctorWeekends){
+			if (doctorWeekends.includes(weekend+1)){
+				weekendRows += 1
+			}
+		}
 		rowFactor += Math.pow(2, weekendRows+1)
 		deviationWe += Math.pow(Math.abs(targetWeekendsPerDoctor-weekendCount), 3)
 		//console.log(`${targetWeekendsPerDoctor} & ${weekendCount} & ${deviationWe}`)

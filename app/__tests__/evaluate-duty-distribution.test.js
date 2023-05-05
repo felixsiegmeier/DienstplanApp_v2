@@ -8,6 +8,6 @@ const data = JSON.parse(jsonData)
 
 describe("Tests für die Verteilung der Dienste", () => {
     test("Mit Test-Datensatz", () => {
-        expect(evaluateDutyDistribution({roster: data, weight: 10})).toBe(111)
+        expect(evaluateDutyDistribution({roster: data, weight: 10})).toBe(107)
     })
 })
