@@ -1,27 +1,22 @@
-function evaluateDutyValueDistribution({roster, rosterKeys, weight, doctors, doctorKeys}){
+const { countDuties } = require("./count-duties");
+
+function evaluateDutyValueDistribution({roster, weight}){
 	let fitness = 0
+
+	const doctors = countDuties(roster)
     
-    // Anzahl der Ärzte wird berechnet
-	const numDoctors = doctorKeys.length;
-	// Summe aller Punkte aller Ärzte wird berechnet
-	const numPoints = doctorKeys.reduce((sum, id) => {
-		return sum + doctors[id].points
-	}, 0);
-	// Zielanzahl an Punkten pro Arzt wird berechnet
-	const targetPointsPerDoctor = numPoints / numDoctors;
+	let points = 0
 
-	// Die Summe der Abweichungen der Punkte jedes Arztes vom Zielwert wird berechnet
-	const deviationSum = doctorKeys.reduce((sum, id) => {
-		const deviation = doctors[id].points - targetPointsPerDoctor;
-	    // Die Abweichung wird quadriert und zur Summe hinzugefügt
-		return sum + (Math.abs(deviation)*Math.abs(deviation)*Math.abs(deviation));
-	}, 0);
+	for(doctor in doctors){
+		points += doctors[doctor].points
+	}
 
-	// Die Abweichungssumme wird durch die Anzahl der Ärzte geteilt und zur Fitness hinzugefügt
-	fitness += deviationSum/numDoctors
-	//console.log("Fitness duty points distribution: "+(fitness*weight))
+	const targetPoints = points/Object.keys(doctors).length
 
-	// Die Fitness wird mit dem gegebenen Gewicht multipliziert und zurückgegeben
+	for(doctor in doctors){
+		fitness += Math.abs(targetPoints - doctors[doctor].points)
+	}
+
 	return Math.round(fitness*weight)
 }
 

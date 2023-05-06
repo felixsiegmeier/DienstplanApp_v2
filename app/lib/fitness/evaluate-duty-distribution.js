@@ -26,7 +26,6 @@ function evaluateDutyDistribution({roster, weight}) {
 	let deviationWe = 0;
 	let rowFactor = 0;
 
-	// ########################## Hier weiter ##########################
 	// iteriert über jedem Doctor und vergleicht mit den target-Werten
 	for(const doctorId in doctors){
 		const doctor = doctors[doctorId];
@@ -57,7 +56,7 @@ function evaluateDutyDistribution({roster, weight}) {
 		// console.log(`${rowFactor} & ${doctor.weekends}`)
 		
 	 }
-	console.log(`${deviationSum} & ${deviationWe} & ${Math.sqrt(rowFactor)}`)
+	// console.log(`${deviationSum} & ${deviationWe} & ${Math.sqrt(rowFactor)}`)
 	fitness += (deviationSum / Object.keys(doctors).length + deviationWe / Object.keys(doctors).length + Math.sqrt(rowFactor)/Object.keys(doctors).length);
 
 	return Math.round(fitness * weight);

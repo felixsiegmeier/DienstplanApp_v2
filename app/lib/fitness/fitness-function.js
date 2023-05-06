@@ -4,7 +4,7 @@ import {evaluateProximity} from "./evaluate-proximity"
 import {evaluateSpacing} from "./evaluate-spacing"
 import {evaluateDutyDistribution} from "./evaluate-duty-distribution"
 import {evaluateDutyValueDistribution} from "./evaluate-duty-value-distribution"
-import {evaluateClinics} from "./evaluate-clinics"
+import {evaluateClinics} from "./evaluate-groups"
 
 
 function fitnessFunction(rosterRef, mutated){
@@ -21,9 +21,9 @@ function fitnessFunction(rosterRef, mutated){
 	const spacingFitness = evaluateSpacing({roster, weight: .2})
 	const dutyDistributionFitness = 0 //evaluateDutyDistribution({roster, rosterKeys, weight: 2, doctors, doctorKeys})
 	const DutyValueDistributionFitness = 0 //evaluateDutyValueDistribution({roster, rosterKeys, weight: 10, doctors, doctorKeys})
-	const ClinicsFitness = 0 //evaluateClinics({roster, rosterKeys, weight: 100, doctors, doctorKeys})
+	const GroupsFitness = 0 //evaluateGroups({roster, rosterKeys, weight: 100, doctors, doctorKeys})
 
-	fitness += spacingFitness + dutyDistributionFitness + DutyValueDistributionFitness + ClinicsFitness
+	fitness += spacingFitness + dutyDistributionFitness + DutyValueDistributionFitness + GroupsFitness
 	/*
 	console.table({
 		Spacing: spacingFitness,
