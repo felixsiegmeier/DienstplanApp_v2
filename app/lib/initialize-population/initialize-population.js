@@ -18,7 +18,7 @@ function initializePopulation(rosterRef, doctorsRef, config) {
     const doctors = JSON.parse(JSON.stringify(doctorsBeforeWishes));
     const filledRoster = fillRoster(roster, doctors, config);
 
-    population.push([fitnessFunction(filledRoster, false), filledRoster]);
+    population.push([fitnessFunction({rosterRef: filledRoster, mutated: false, config: config}), filledRoster]);
 
     // das hält die Population klein und sortiert nach jedem über die Ziellänge des Arrays hinausgehenden Eintrag neu und
     // löscht den mit der schlechtesten Fitness raus

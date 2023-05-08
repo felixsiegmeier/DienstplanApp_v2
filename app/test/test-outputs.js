@@ -14,17 +14,21 @@ function logDoctorsTable(doctors){
 }
 
 function logRosterTable(roster){
-    const data = {}
-    Object.keys(roster).forEach(key => {
-        data[key] = {
-            ...roster[key],
-            emdep: roster[key].emdep.name?roster[key].emdep.name:false,
-            house: roster[key].house.name?roster[key].house.name:false,
-            imc: roster[key].imc.name?roster[key].imc.name:false,
-        }
-    })
-    console.table(data, Object.keys(roster[Object.keys(roster)[0]]).slice(1))
-}
+    const dutyColumns = Object.keys(roster["1"].dutyColumns);
+    const dates = Object.keys(roster);
+    const table = [];
+  
+    for (const date of dates) {
+      const row = { Date: roster[date].date };
+      for (const column of dutyColumns) {
+        const doctor = roster[date].dutyColumns[column].duty;
+        row[column] = doctor ? doctor.name : "";
+      }
+      table.push(row);
+    }
+  
+    console.table(table);
+  }
 
 function logSummaryTable(roster, dutyColumns){
     // doctorName, dutys, weekends, points

@@ -1,27 +1,23 @@
-import {countDuties} from './count-duties'
-import {logDoctorsTable} from "../../test/test-outputs"
-import {evaluateProximity} from "./evaluate-proximity"
-import {evaluateSpacing} from "./evaluate-spacing"
-import {evaluateDutyDistribution} from "./evaluate-duty-distribution"
-import {evaluateDutyValueDistribution} from "./evaluate-duty-value-distribution"
-import {evaluateClinics} from "./evaluate-groups"
+const {logRosterTable} = require("../../test/test-outputs");
+const {evaluateProximity} = require("./evaluate-proximity");
+const {evaluateSpacing} = require("./evaluate-spacing");
+const {evaluateDutyDistribution} = require("./evaluate-duty-distribution");
+const {evaluateDutyValueDistribution} = require("./evaluate-duty-value-distribution");
+const {evaluateGroups} = require("./evaluate-groups");
 
-
-function fitnessFunction(rosterRef, mutated){
+function fitnessFunction({rosterRef, mutated, config}){
 	const roster = JSON.parse(JSON.stringify(rosterRef))
 	const rosterKeys = Object.keys(roster)
-	let fitness = Math.random() * 500 //0
-	//const doctors = countDuties(roster)
-	//logDoctorsTable(doctors)
-	
+	let fitness = 0
+	// logRosterTable(roster)
 
 	if(mutated){
 		fitness += evaluateProximity({roster, weight: 100})
 	}
 	const spacingFitness = evaluateSpacing({roster, weight: .2})
-	const dutyDistributionFitness = 0 //evaluateDutyDistribution({roster, rosterKeys, weight: 2, doctors, doctorKeys})
-	const DutyValueDistributionFitness = 0 //evaluateDutyValueDistribution({roster, rosterKeys, weight: 10, doctors, doctorKeys})
-	const GroupsFitness = 0 //evaluateGroups({roster, rosterKeys, weight: 100, doctors, doctorKeys})
+	const dutyDistributionFitness = evaluateDutyDistribution({roster, weight: 2})
+	const DutyValueDistributionFitness = evaluateDutyValueDistribution({roster, weight: 10})
+	const GroupsFitness = evaluateGroups({roster, groups: config.groups, weight: 10})
 
 	fitness += spacingFitness + dutyDistributionFitness + DutyValueDistributionFitness + GroupsFitness
 	/*

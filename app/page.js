@@ -27,7 +27,7 @@ export default async function Home() {
   let roster = await generateMonth(config)
   roster = generateIMCRoster(roster, doctors)
   const population = initializePopulation(roster, doctors, config)
-console.log(JSON.stringify(population[0]))
+  //console.log(JSON.stringify(population[0]))
   //logDoctorsTable(doctors)
   //logRosterTable(roster)
   //logRosterTable(population[0][1])

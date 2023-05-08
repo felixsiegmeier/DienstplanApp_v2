@@ -7,15 +7,15 @@ function evaluateDutyValueDistribution({roster, weight}){
     
 	let points = 0
 
-	for(doctor in doctors){
+	Object.keys(doctors).forEach(doctor => {
 		points += doctors[doctor].points
-	}
+	})
 
 	const targetPoints = points/Object.keys(doctors).length
 
-	for(doctor in doctors){
+	Object.keys(doctors).forEach(doctor => {
 		fitness += Math.abs(targetPoints - doctors[doctor].points)
-	}
+	})
 
 	return Math.round(fitness*weight)
 }
