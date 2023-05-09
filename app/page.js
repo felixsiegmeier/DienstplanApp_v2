@@ -2,6 +2,7 @@ import {generateDoctors} from "./lib/random-data/generate-doctors"
 import {generateMonth} from "./lib/random-data/generate-month"
 import {generateIMCRoster} from "./lib/random-data/generate-imc-roster"
 import {initializePopulation} from "./lib/initialize-population/initialize-population"
+import MainPage from "./components/main"
 //import {logDoctorsTable, logRosterTable, logSummaryTable} from "./test/test-outputs"
 
 export default async function Home() {
@@ -35,7 +36,7 @@ export default async function Home() {
   //console.log(population[99][0])
   return (
     <main className="">
-     Test
+     <MainPage />
     </main>
   )
 } 
