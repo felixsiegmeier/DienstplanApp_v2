@@ -16,11 +16,10 @@ export default function NavDropdown({ title, plans }) {
       <div
         className={`${
           isDropdownOpen ? "block" : "hidden"
-        } absolute bg-gray-800 text-white py-2 mt-2 rounded-lg`}
+        } relative bg-gray-800 text-white py-2 mt-2 rounded-lg`}
       >
         {plans.map((plan, index) => (
-          <Link key={index} href={`/dienstplan/${plan}`} className="block px-4 py-2 hover:bg-gray-700">
-            {plan}
+          <Link key={index} href={`/dienstplan/${plan}`} passHref className="block px-4 py-2 hover:bg-gray-700">{plan}
           </Link>
         ))}
       </div>
