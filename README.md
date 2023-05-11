@@ -26,6 +26,8 @@ Hier soll eine Version 2.0 des DienstplanProgramms entstehen.
 Diese Config wird in `page.js` im App-Directory eingestellt (später dann über das Frontend) und gibt wichtige Einstellungen an die Logic-Funktionen weiter.
 ```
 config: {
+	userGrupId: 1,
+	admins: [],
 	month: {month: 5, year: 2023},
 	initializationSize: 500,
 	populationSize: 100,
@@ -93,6 +95,7 @@ roster: {
 ```
 {
 	doctorId1: {
+		userGrupId: 1,
 		id: String,
 		name: String,
 		blacklist: [Number],

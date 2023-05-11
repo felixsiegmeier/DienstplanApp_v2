@@ -1,6 +1,14 @@
+"use client"
 import ButtonPlate from "./button-plate";
 
 export default function MainPage() {
+
+  async function handleClick(){
+    const data = await fetch("/api/doctors")
+    const body = await data.json()
+    console.log(body)
+  }
+
   return (
     <main className="flex-grow ">
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
@@ -38,6 +46,7 @@ export default function MainPage() {
               explaination="Verwaltung der Grundeinstellungen für das Dienstmodell und den Algorithmus"
               link="/options"
             />
+            <button onClick={handleClick}>TESTEN</button>
           </div>
         </div>
       </div>

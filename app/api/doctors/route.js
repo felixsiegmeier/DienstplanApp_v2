@@ -9,14 +9,13 @@ const fetchOptions = {
 
 const fetchBody = {
 	dataSource: "Cluster0",
-	database: "social_butterfly",
-	collection: "flutters"
+	database: "RosterApp",
+	collection: "doctors"
 };
 
 const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;
 
 export async function GET(request) {
-  console.log("got called")
   const readData = await fetch(`${baseUrl}/find`, {
     ...fetchOptions,
     body: JSON.stringify({
@@ -25,7 +24,5 @@ export async function GET(request) {
     }),
   });
   const readDataJson = await readData.json();
-  
-  console.log(readDataJson.documents)
-  return new Response('Hello, Next.js!')
+  return new Response(JSON.stringify(readDataJson.documents))
 }
