@@ -39,7 +39,7 @@ export default function Navbar() {
         }`}
       >
         <div className="text-sm lg:flex-grow">
-          <NavButton href="/aerzte" title="Ärzte " />
+          <NavButton href="/doctors" title="Ärzte " />
           {isMobile ? (
             <NavDropdown
               title="Dienstpläne"
