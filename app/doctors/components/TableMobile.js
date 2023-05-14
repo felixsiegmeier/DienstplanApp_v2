@@ -2,7 +2,7 @@
 import {useState } from "react";
 import TableRowMobile from "./TableRowMobile";
 
-export default function TableMobile({doctors, config}) {
+export default function TableMobile({doctors, config, saveDoctors}) {
   const [openIndex, setOpenIndex] = useState(-1);
 
   const toggleRow = (index) => {
@@ -27,6 +27,8 @@ export default function TableMobile({doctors, config}) {
             doctor={doctor}
             isOpen={index === openIndex}
             toggle={() => toggleRow(index)}
+            saveDoctors={saveDoctors}
+            config={config}
           />
         ))}
       </tbody>

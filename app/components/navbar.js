@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import NavButton from "./nav-button";
 import NavDropdown from "./nav-dropdown";
 import NavBurgerMenu from "./nav-burger-menu";
+import { usePageContext } from "../context/pageContext";
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const {setUserId, setUserGroupId} = usePageContext();
 
   useEffect(() => {
     const handleResize = () => {
@@ -50,7 +52,14 @@ export default function Navbar() {
           )}
 
           <NavButton href="/configuration" title="Einstellungen" />
-          <NavButton href="/logout" title="Logout" />
+          <button
+            onClick={() => {
+              setUserGroupId(false)
+              setUserId(false)
+              }}
+            className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
+            Logout
+          </button>
         </div>
       </div>
     </nav>

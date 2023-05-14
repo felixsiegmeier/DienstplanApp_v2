@@ -1,9 +1,24 @@
-export default function ToggleBox({doctor}){
+"use client"
+import { useState } from "react";
+import MultiSelect from "./MultiSelect";
+
+export default function ToggleBox({doctor, config, saveDoctors}){
+  console.log(config)
+
+  const [selectedOptions, setSelectedOptions] = useState([]);
+  const [fruitOptions] = useState(["Apple", "Banana", "Cherry", "Date", "Elderberry"]);
+
+  const handleFruitSelectionChange = (selection) => setSelectedOptions(selection);
+
     return (
         <tr>
-          <td colSpan="2" className="p-2">
+          <td colSpan="4" className="p-2">
             <div className="select-none bg-slate-600 rounded-md p-4 animate-fade-in">
-              {doctor.name}
+            <p className="text-lg underline">Welchen Gruppen gehört {doctor.name} an?</p>
+            <p className="text-lg underline">Welchen Dienstreihen gehört {doctor.name} an?</p>
+            <p className="text-lg underline">Macht {doctor.name} nur 12-Stunden-Dienste?</p>
+            <p className="text-lg underline">An welchen Wochentagen soll {doctor.name} keine Dienste machen?</p>
+            <p className="text-lg underline">Gibt es für {doctor.name} eine Dienstobergrenze?</p>
               <label class="flex items-center space-x-2 text-gray-300">
                 <input
                   type="checkbox"
@@ -11,6 +26,12 @@ export default function ToggleBox({doctor}){
                 />
                 <span class="text-md ml-2">Checkbox-Text</span>
               </label>
+              Gruppen:
+              <MultiSelect
+        options={fruitOptions}
+        selected={selectedOptions}
+        onChange={handleFruitSelectionChange}
+      />
             </div>
           </td>
         </tr>
