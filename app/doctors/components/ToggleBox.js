@@ -3,6 +3,7 @@ import { useState } from "react";
 import MultiSelect from "./MultiSelect";
 import { usePageContext } from "../../context/pageContext";
 import BoxGroups from "./boxComponents/BoxGroups";
+import BoxDutyColumns from "./boxComponents/BoxDutyColumns";
 
 export default function ToggleBox({ doctor }) {
   const { config, doctors, setDoctors } = usePageContext();
@@ -29,6 +30,7 @@ export default function ToggleBox({ doctor }) {
           <p className="text-lg underline">
             Welchen Dienstreihen gehört {doctor.name} an?
           </p>
+          <BoxDutyColumns doctor={doctor} saveDoctorChange={saveDoctorChange} />
           <p className="text-lg underline">
             Macht {doctor.name} nur 12-Stunden-Dienste?
           </p>
