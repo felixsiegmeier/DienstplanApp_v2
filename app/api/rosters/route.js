@@ -1,12 +1,11 @@
 import { fetchBody, fetchOptions, baseUrl } from "../database/db";
 
 export async function GET(request) {
-  console.log(request.nextUrl.searchParams)
   const readData = await fetch(`${baseUrl}/find`, {
     ...fetchOptions,
     body: JSON.stringify({
       ...fetchBody,
-      collection: "doctors",
+      collection: "rosters",
       filter: { userGroupId: request.nextUrl.searchParams.get("userGroupId") }
     }),
   });

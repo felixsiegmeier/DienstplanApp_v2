@@ -3,16 +3,13 @@ export const fetchOptions = {
 	headers: {
 		"Content-Type": "application/json",
 		"Access-Control-Request-Headers": "*",
-		"api-Key": process.env.MONGODB_DATA_API_KEY,
-    cache: "no-store"
+		"api-Key": process.env.MONGODB_DATA_API_KEY
 	},
 };
 
-export const fetchBodyDoctors = {
+export const fetchBody = {
 	dataSource: "Cluster0",
 	database: "RosterApp",
-	collection: "doctors",
-	
 };
 
 export const baseUrl = `${process.env.MONGODB_DATA_API_URL}/action`;

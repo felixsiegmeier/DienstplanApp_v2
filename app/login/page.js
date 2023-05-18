@@ -15,7 +15,7 @@ export default function Login() {
     });
     const data = await response.json();
     if (data){
-        setUserGroupId(data.setUserGroupId)
+        setUserGroupId(data.userGroupId)
         setUserId(data.userId)
     }else {
       setError("Benutzername oder Passwort falsch!");

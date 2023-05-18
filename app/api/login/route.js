@@ -1,4 +1,4 @@
-import { fetchOptions, fetchBodyDoctors, baseUrl } from "../database/db";
+import { fetchOptions, fetchBody, baseUrl } from "../database/db";
 import bcrypt from "bcryptjs"
 
 export async function POST(request) {
@@ -6,7 +6,8 @@ export async function POST(request) {
   const userStream = await fetch(`${baseUrl}/findOne`, {
     ...fetchOptions,
     body: JSON.stringify({
-        ...fetchBodyDoctors,
+        ...fetchBody,
+        collection: "doctors",
         filter: {
             alias: body.username
         }

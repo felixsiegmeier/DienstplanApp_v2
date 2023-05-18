@@ -17,9 +17,11 @@ export const PageContextProvider = ({ children }) => {
   const [roster, setRoster] = useState({});
   const [userGroupId, setUserGroupId] = useState(false);
   const [userId, setUserId] = useState(false);
-  const [config, setConfig] = useState({})
+  const [config, setConfig] = useState({});
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("invoking")
     if(userId){
       getData()
     }else{
@@ -27,11 +29,28 @@ export const PageContextProvider = ({ children }) => {
     }
 
     async function getData(){
-      
+      console.log("getting Data")
+      const doctorsData = await fetch(`/api/doctors?userGroupId=${userGroupId}`)
+      const doctors = await doctorsData.json()
+      setDoctors(doctors)
+
+      const rostersData = await fetch(`/api/rosters?userGroupId=${userGroupId}`)
+      const rosters = await rostersData.json()
+      setRosters(rosters)
+
+      const configData = await fetch(`/api/config?userGroupId=${userGroupId}`)
+      const config = await configData.json()
+      setConfig(config)
+
+      setLoading(false)
     }
 
     function clearData(){
-      return
+      console.log("clearing Data")
+      setDoctors([])
+      setDoctors([])
+      setDoctors({})
+      setLoading(true)
     }
   }, [userId]);
 
@@ -49,7 +68,9 @@ export const PageContextProvider = ({ children }) => {
         userId,
         setUserId,
         config,
-        setConfig
+        setConfig,
+        loading,
+        setLoading
       }}
     >
     {userId ? children : <Login/>}

@@ -1,9 +1,11 @@
 "use client";
 import {useState } from "react";
 import TableRow from "./TableRow";
+import { usePageContext } from "../../context/pageContext";
 
-export default function Table({doctors, config, saveDoctors}) {
+export default function Table() {
   const [openIndex, setOpenIndex] = useState(-1);
+  const {doctors} = usePageContext();
 
   const toggleRow = (index) => {
     if (index === openIndex) {
@@ -28,10 +30,9 @@ export default function Table({doctors, config, saveDoctors}) {
           <TableRow
             key={doctor.id}
             doctor={doctor}
+            index={index}
             isOpen={index === openIndex}
             toggle={() => toggleRow(index)}
-            saveDoctors={saveDoctors}
-            config={config}
           />
         ))}
       </tbody>
