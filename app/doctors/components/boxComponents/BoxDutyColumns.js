@@ -23,7 +23,7 @@ export default function BoxDutyColumns({doctor, saveDoctorChange}){
     }
 
     return(
-        <>
+        <div className="mt-1 mb-2">
             {config.dutyColumns.map((dutyColumn, index) => {
                 return(
                 <div key={index}>
@@ -32,6 +32,6 @@ export default function BoxDutyColumns({doctor, saveDoctorChange}){
                 </div>
                 )
             })}
-        </>
+        </div>
     )
 }

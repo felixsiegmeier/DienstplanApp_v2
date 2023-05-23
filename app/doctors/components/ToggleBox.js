@@ -4,6 +4,8 @@ import MultiSelect from "./MultiSelect";
 import { usePageContext } from "../../context/pageContext";
 import BoxGroups from "./boxComponents/BoxGroups";
 import BoxDutyColumns from "./boxComponents/BoxDutyColumns";
+import Box12h from "./boxComponents/Box12h";
+import BoxNonWorkingDays from "./boxComponents/BoxNonWorkingDays";
 
 export default function ToggleBox({ doctor }) {
   const { config, doctors, setDoctors } = usePageContext();
@@ -34,9 +36,11 @@ export default function ToggleBox({ doctor }) {
           <p className="text-lg underline">
             Macht {doctor.name} nur 12-Stunden-Dienste?
           </p>
+          <Box12h doctor={doctor} saveDoctorChange={saveDoctorChange} />
           <p className="text-lg underline">
             An welchen Wochentagen soll {doctor.name} keine Dienste machen?
           </p>
+          <BoxNonWorkingDays doctor={doctor} saveDoctorChange={saveDoctorChange} />
           <p className="text-lg underline">
             Gibt es für {doctor.name} eine Dienstobergrenze?
           </p>

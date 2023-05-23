@@ -23,7 +23,7 @@ export default function BoxGroups({doctor, saveDoctorChange}){
     }
 
     return(
-        <>
+        <div className="mt-1 mb-2">
             {config.groups.map((group, index) => {
                 return(
                 <div key={index}>
@@ -32,6 +32,6 @@ export default function BoxGroups({doctor, saveDoctorChange}){
                 </div>
                 )
             })}
-        </>
+        </div>
     )
 }
