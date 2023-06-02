@@ -1,4 +1,7 @@
+import { uid } from "uid";
 import { fetchBody, fetchOptions, baseUrl } from "../database/db";
+import { doctorModel } from "../database/models";
+import bcrypt from "bcryptjs"
 
 export async function GET(request) {
   console.log(request.nextUrl.searchParams)
@@ -12,4 +15,31 @@ export async function GET(request) {
   });
   const readDataJson = await readData.json();
   return new Response(JSON.stringify(readDataJson.documents))
+}
+
+export async function PUT(request){
+  const body = await request.json();
+  const doctorName = body.doctorName;
+  const normalizedDoctorName = body.doctorName.toLowerCase().replace(/\s/g, '').normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  const insertData = await fetch(`${baseUrl}/insertOne`, {
+    ...fetchOptions,
+    body: JSON.stringify({
+      ...fetchBody,
+      collection: "doctors",
+      document: {
+        ...doctorModel,
+        name: doctorName,
+        password: bcrypt.hashSync(normalizedDoctorName, 10),
+        userAccount: normalizedDoctorName,
+        id: uid(20),
+        userGroupId: body.userGroupId
+      }
+    })
+  })
+  
+  const insertDataJson = await insertData.json()
+  console.log(insertDataJson)
+
+  return new Response(true)
 }

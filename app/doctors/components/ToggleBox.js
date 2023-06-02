@@ -6,6 +6,7 @@ import BoxGroups from "./boxComponents/BoxGroups";
 import BoxDutyColumns from "./boxComponents/BoxDutyColumns";
 import Box12h from "./boxComponents/Box12h";
 import BoxNonWorkingDays from "./boxComponents/BoxNonWorkingDays";
+import BoxMaximum from "./boxComponents/BoxMaximum";
 
 export default function ToggleBox({ doctor }) {
   const { config, doctors, setDoctors } = usePageContext();
@@ -44,19 +45,7 @@ export default function ToggleBox({ doctor }) {
           <p className="text-lg underline">
             Gibt es für {doctor.name} eine Dienstobergrenze?
           </p>
-          <label class="flex items-center space-x-2 text-gray-300">
-            <input
-              type="checkbox"
-              class="form-checkbox rounded-md text-slate-700 border-slate-700 focus:outline-none focus:border-slate-900 focus:ring-2 focus:ring-offset-2 focus:ring-slate-700"
-            />
-            <span class="text-md ml-2">Checkbox-Text</span>
-          </label>
-          Gruppen:
-          <MultiSelect
-            options={fruitOptions}
-            selected={selectedOptions}
-            onChange={handleFruitSelectionChange}
-          />
+          <BoxMaximum doctor={doctor} saveDoctorChange={saveDoctorChange} />
         </div>
       </td>
     </tr>
@@ -70,7 +59,7 @@ export default function ToggleBox({ doctor }) {
       if (updatedDoctors[i].id === doctor.id) {
         updatedDoctors[i] = doctor;
         setDoctors(updatedDoctors);
-        // api call hier noch einfügen
+        // API Call updateDoctor(doctor) = muss noch geschrieben werden!
         break;
       }
     }

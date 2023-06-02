@@ -19,6 +19,11 @@ export const PageContextProvider = ({ children }) => {
   const [userId, setUserId] = useState(false);
   const [config, setConfig] = useState({});
   const [loading, setLoading] = useState(true);
+  const [reload, setReload] = useState(true);
+
+  function toggleContextUpdateFromDatabase(){
+    setReload(!reload)
+  }
 
   useEffect(() => {
     console.log("invoking")
@@ -52,7 +57,7 @@ export const PageContextProvider = ({ children }) => {
       setDoctors({})
       setLoading(true)
     }
-  }, [userId]);
+  }, [userId, reload]);
 
   return (
     <PageContext.Provider
@@ -70,7 +75,8 @@ export const PageContextProvider = ({ children }) => {
         config,
         setConfig,
         loading,
-        setLoading
+        setLoading,
+        toggleContextUpdateFromDatabase
       }}
     >
     {userId ? children : <Login/>}

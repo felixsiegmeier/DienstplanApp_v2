@@ -111,7 +111,9 @@ name: String,
 groups: [String],
 dutyColumns: [String],
 only12: Boolean,
-nonWorkingDays: [Number]
+nonWorkingDays: [Number],
+maximum: Number,
+password: String
 }
 ]
 ```

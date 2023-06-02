@@ -5,6 +5,7 @@ export const fetchOptions = {
 		"Access-Control-Request-Headers": "*",
 		"api-Key": process.env.MONGODB_DATA_API_KEY
 	},
+	cache: "no-store"
 };
 
 export const fetchBody = {

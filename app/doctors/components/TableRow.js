@@ -36,6 +36,9 @@ export default function TableRow({
     if (doctor.nonWorkingDays.length > 0) {
       return true;
     }
+    if (doctor.maximum < 11){
+      return true;
+    }
     return false;
   }
 }
