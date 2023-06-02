@@ -27,6 +27,7 @@ export default function Doctors() {
     <NewDoctorModal isMobile={isMobile} open={openNewDoctorModal} setOpen={setOpenNewDoctorModal} />
     {!loading && (isMobile ? <TableMobile/> : <Table/>)}
     <AddDoctorButton openModal={() => {setOpenNewDoctorModal(true)}}/>
+    <br/><br/>
     </div>
     
   );

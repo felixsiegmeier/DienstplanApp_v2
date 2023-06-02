@@ -2,13 +2,19 @@
 import { useState } from "react";
 export default function BoxMaximum({ doctor, saveDoctorChange }) {
   function handleChange() {
-    if (doctor.maximum < 11) {
-      saveDoctorChange({ ...doctor, maximum: 99 });
-      setSelectedNumber(99);
-    } else {
-      saveDoctorChange({ ...doctor, maximum: 10 });
-      setSelectedNumber(10);
-    }
+    const updatedMaximum = doctor.maximum < 11 ? 99 : 10;
+
+    saveDoctorChange({ ...doctor, maximum: updatedMaximum });
+    setSelectedNumber(updatedMaximum);
+
+    fetch("/api/doctors", {
+      method: "POST",
+      body: JSON.stringify({
+        id: doctor._id,
+        property: "maximum",
+        value: updatedMaximum,
+      }),
+    });
   }
 
   const [selectedNumber, setSelectedNumber] = useState(doctor.maximum);
@@ -16,6 +22,14 @@ export default function BoxMaximum({ doctor, saveDoctorChange }) {
   const handleNumberSelection = (number) => {
     setSelectedNumber(number);
     saveDoctorChange({ ...doctor, maximum: number });
+    fetch("/api/doctors", {
+      method: "POST",
+      body: JSON.stringify({
+        id: doctor._id,
+        property: "maximum",
+        value: number,
+      }),
+    });
   };
 
   return (

@@ -181,8 +181,11 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
 ### Doctors
 - rendert abhängig von der Größe die `table` oder die `TableMobile`
 - Tabellen rendern wiederum ihre spezifischen Zeilen, dafür wird über `doctors` aus dem Context gemapt
-- jede Zeile kann auf Klick ein Optionsmenü öffnen, in welchem die Ärzte konfiguriert werden können
-	- Hier gibt es eine Funktion `saveDoctorChange`, welche die Daten im Context sichert und gleichzeitig an die API schickt, sodass der Server aktualisiert wird. Diese Funktion wird an die Unter-Componenten vergeben, welche letztliche die einzelnen Attribute (Gruppen, Dienstreihen, Besonderheiten) darstellen und veränderlich machen
+- jede Zeile kann auf Klick ein Optionsmenü öffnen (`ToggleBox`), in welchem die Ärzte konfiguriert werden können
+	- Hier gibt es eine Funktion `saveDoctorChange`, welche die Daten im Context sichert Diese Funktion wird an die Unter-Componenten (`boxComponents`) vergeben, welche letztliche die einzelnen Attribute (Gruppen, Dienstreihen, Besonderheiten) darstellen und veränderlich machen
+	- Die Veränderung in der Datenbank geschieht mittels POST-Request an `/api/doctors` und wird von jeder `boxComponent` einzeln aufgerufen. Das Backend führt dann ein updateOne() auf der Datenbank durch.
+	- Außerdem gibt es einen Lösch-Button, der ein Modal öffnet zur Bestätigung und dann ans Backend funkt mit DELETE an `/api/doctors`
+- Es gibt einen Button zum erstellen eines neuen Doctors. Dieser öffnet ein Modal, welches den Namen abfragt und einen PUT-Request an `/api/doctors` sendet. Sobald der Server die Neuanlage verarbeitet wird, wird der Context von der Datenbank aktualisiert.
 # Modules
 
 [[Next.js]]

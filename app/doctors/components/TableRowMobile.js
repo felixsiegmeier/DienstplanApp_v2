@@ -15,9 +15,7 @@ export default function TableRowMobile({
       >
         <td className="px-4 py-2 text-center">{doctor.name}</td>
       </tr>
-      {isOpen && (
-        <ToggleBox doctor={doctor}/>
-      )}
+      <ToggleBox isOpen={isOpen} toggle={toggle} doctor={doctor}/>
     </>
   );
 }

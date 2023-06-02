@@ -23,9 +23,7 @@ export default function TableRow({
           {specialties(doctor) ? "Ja" : "Nein"}
         </td>
       </tr>
-      {isOpen && (
-        <ToggleBox doctor={doctor}/>
-      )}
+      <ToggleBox isOpen={isOpen} toggle={toggle} doctor={doctor}/>
     </>
   );
 
