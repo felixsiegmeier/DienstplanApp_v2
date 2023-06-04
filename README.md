@@ -43,6 +43,8 @@ Wird von `random-data/generate-month.js` generiert.
 Feiertage werden von einer [Web-API](https://feiertage-api.de) bezogen.
 Beim Erstellen wird eine Kopie von `doctors` erzeugt und diese um einige Attribute erweitert
 
+**Cave: Das ist so doof. Bitte ändern, sodass roster ein Array von Tagen enthält. Diese sollen außerdem nicht Jahr, Monat, Wochentag und Tag als Attribute haben sondern besser ein Date()-Objekt! Außerdem benötigt es noch einen Changelog, der wiederum enthalten muss [Änderung, Verursacher, Date(); damit dieser später auch was nützt, muss der Finale Plan gespeichert werden, damit später nur fortbestehende Änderungen vom Original gezeigt werden]**
+
 ```
 {
 	id: String,
