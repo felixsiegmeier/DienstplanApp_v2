@@ -20,6 +20,7 @@ export const PageContextProvider = ({ children }) => {
   const [config, setConfig] = useState({});
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   function toggleContextUpdateFromDatabase(){
     setReload(!reload)
@@ -57,6 +58,15 @@ export const PageContextProvider = ({ children }) => {
       setDoctors({})
       setLoading(true)
     }
+
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, [userId, reload]);
 
   return (
@@ -76,7 +86,8 @@ export const PageContextProvider = ({ children }) => {
         setConfig,
         loading,
         setLoading,
-        toggleContextUpdateFromDatabase
+        toggleContextUpdateFromDatabase,
+        isMobile
       }}
     >
     {userId ? children : <Login/>}

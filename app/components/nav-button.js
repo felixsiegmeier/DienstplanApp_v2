@@ -1,11 +1,15 @@
 import Link from "next/link";
-export default function NavButton({href, title}){
-    return (
-            <Link
-            href={href}
-            className="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4">
-            
-              {title}
-          </Link>
-    )
+import { usePageContext } from "../context/pageContext";
+export default function NavButton({ href, title }) {
+  const { isMobile } = usePageContext();
+  return (
+    <Link
+      href={href}
+      className={`block select-none mt-4 ${
+        !isMobile ? "inline-block mt-0" : null
+      } text-gray-200 hover:text-white mr-4`}
+    >
+      {title}
+    </Link>
+  );
 }

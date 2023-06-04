@@ -7,28 +7,25 @@ import AddDoctorButton from "./components/AddDoctorButton";
 import NewDoctorModal from "./components/NewDoctorModal";
 
 export default function Doctors() {
-  const {doctors, setDoctors, config, setConfig, loading} = usePageContext();
-  const [isMobile, setIsMobile] = useState(false);
+  const { doctors, setDoctors, config, setConfig, loading, isMobile } =
+    usePageContext();
   const [openNewDoctorModal, setOpenNewDoctorModal] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <div>
-    <NewDoctorModal isMobile={isMobile} open={openNewDoctorModal} setOpen={setOpenNewDoctorModal} />
-    {!loading && (isMobile ? <TableMobile/> : <Table/>)}
-    <AddDoctorButton openModal={() => {setOpenNewDoctorModal(true)}}/>
-    <br/><br/>
+      <NewDoctorModal
+        isMobile={isMobile}
+        open={openNewDoctorModal}
+        setOpen={setOpenNewDoctorModal}
+      />
+      {!loading && (isMobile ? <TableMobile /> : <Table />)}
+      <AddDoctorButton
+        openModal={() => {
+          setOpenNewDoctorModal(true);
+        }}
+      />
+      <br />
+      <br />
     </div>
-    
   );
 }

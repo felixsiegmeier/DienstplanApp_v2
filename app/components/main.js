@@ -20,13 +20,13 @@ export default function MainPage() {
               style="bg-lime-500 hover:bg-lime-600"
               title="Dienstpläne"
               explaination="Übersicht aller Dienstpläne mit Zugriff auf die Wunschlisten"
-              link="/plans"
+              link="/rosters"
             />
             <ButtonPlate
               style="bg-green-500 hover:bg-green-600"
-              title="Neuer Dienstplan"
-              explaination="Erstelle einen neuen Dienstplan"
-              link="/newPlan"
+              title="Urlaubsplan"
+              explaination="Erhalte eine Übersicht über Urlaube und Anwesenheiten"
+              link="/vacation"
             />
             <ButtonPlate
               style="bg-amber-500 hover:bg-amber-600"
