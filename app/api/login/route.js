@@ -18,5 +18,5 @@ export async function POST(request) {
   if(!user){return new Response(false)}
   const valid = await bcrypt.compare(body.password, user.password)
   if(!valid){return new Response(false)};
-  return new Response(JSON.stringify({userId: user.id, userGroupId: user.userGroupId}));
+  return new Response(JSON.stringify({userId: user._id, userGroupId: user.userGroupId}));
 }

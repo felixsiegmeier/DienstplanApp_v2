@@ -18,7 +18,7 @@ Diese Config wird in `page.js` im App-Directory eingestellt (später dann über 
 
 ```
 config: {
-	userGrupId: String,
+	_id: String,
 	admins: [String],
 	month: {month: Number, year: Number},
 	initializationSize: Number,
@@ -47,7 +47,8 @@ Beim Erstellen wird eine Kopie von `doctors` erzeugt und diese um einige Attribu
 
 ```
 {
-	id: String,
+	_id: String,
+	name: String,
 	userGrupId: String,
 	doctors: {
 		id: {
@@ -61,11 +62,8 @@ Beim Erstellen wird eine Kopie von `doctors` erzeugt und diese um einige Attribu
 	},
 	roster: {
 		"Number String": {
-			date: Number,
-			weekday: Number,
+			date: new Date(),
 			holiday: Boolean,
-			month: Number,
-			year: Number,
 			dutyColumns: {
 				dutyColumnName1: {
 					duty: [doctorId] | false,
@@ -90,7 +88,7 @@ Beim Erstellen wird eine Kopie von `doctors` erzeugt und diese um einige Attribu
 {
 userGroupId: String,
 userAccount: String,
-id: String,
+_id: String,
 name: String,
 groups: [String],
 dutyColumns: [String],
@@ -109,6 +107,7 @@ password: String
 	doctor.id: {
 		... doctor,
 		blacklist: [Number],
+		vacation: [Number],
 		greenlist: [Number],
 		duties: [Number],
 		weekends: [Number],

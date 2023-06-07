@@ -1,4 +1,3 @@
-import { uid } from "uid";
 import { fetchBody, fetchOptions, baseUrl } from "../database/db";
 import { doctorModel } from "../database/models";
 import bcrypt from "bcryptjs";
@@ -41,7 +40,6 @@ export async function PUT(request) {
         name: doctorName,
         password: bcrypt.hashSync(normalizedDoctorName, 10),
         userAccount: normalizedDoctorName,
-        id: uid(20),
         userGroupId: body.userGroupId,
       },
     }),

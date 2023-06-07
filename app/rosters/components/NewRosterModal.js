@@ -1,26 +1,10 @@
-"use client";
+import { usePageContext } from '@/app/context/pageContext';
+import React from 'react'
 import LeftButton from "@/app/components/LeftButton";
 import RightButton from "@/app/components/RightButton";
-import { usePageContext } from "@/app/context/pageContext";
-import React from "react";
+import createRoster from "@/app/lib/createRoster";
 
-export default function NewRoster() {
-  const { config, rosters, isMobile } = usePageContext();
-  const [open, setOpen] = React.useState(false);
-
-  return (
-    <div>
-      <Modal />
-      <div
-        onClick={() => setOpen(true)}
-        className="bg-cyan-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg active:bg-cyan-700 select-none"
-      >
-        Neuen Dienstplan anlegen
-      </div>
-    </div>
-  );
-
-  function Modal() {
+export default function NewRosterModal({open, setOpen}) {
     const months = [
       "Januar",
       "Februar",
@@ -35,6 +19,9 @@ export default function NewRoster() {
       "November",
       "Dezember",
     ];
+
+    const { config, rosters, isMobile, toggleContextUpdateFromDatabase } =
+    usePageContext();
 
     const [month, setMonth] = React.useState(0);
     const [year, setYear] = React.useState(0);
@@ -60,7 +47,7 @@ export default function NewRoster() {
     }
 
     function handleMonthUp() {
-        if (month > 10) setYear(year + 1);
+      if (month > 10) setYear(year + 1);
       setMonth(month > 10 ? 0 : month + 1);
     }
 
@@ -72,13 +59,13 @@ export default function NewRoster() {
       setYear(year + 1);
     }
 
-    function createRoster() {
-      console.log("Dieser Code muss erst noch geschrieben werden");
-      console.log(
-        `Er soll einen Dienstplan für ${months[month]} ${year} anlegen und in der Datenbank speichern`
-      );
-      const a = new Date(2023, 5, 4)
-      console.log(a.getDay())
+    async function handleCreateRoster() {
+      const roster = await createRoster({ name, month, year, config });
+      const create = await fetch("/api/rosters", {
+        method: "POST",
+        body: JSON.stringify(roster),
+      });
+      toggleContextUpdateFromDatabase();
       setOpen(false);
     }
 
@@ -111,7 +98,7 @@ export default function NewRoster() {
             <RightButton onClick={handleYearUp} />
           </div>
           <div
-            onClick={createRoster}
+            onClick={handleCreateRoster}
             className="bg-cyan-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg active:bg-cyan-700 select-none"
           >
             Erstellen
@@ -120,4 +107,3 @@ export default function NewRoster() {
       </div>
     );
   }
-}

@@ -44,7 +44,7 @@ export const PageContextProvider = ({ children }) => {
       const rosters = await rostersData.json()
       setRosters(rosters)
 
-      const configData = await fetch(`/api/config?userGroupId=${userGroupId}`)
+      const configData = await fetch(`/api/config?_id=${userGroupId}`)
       const config = await configData.json()
       setConfig(config)
 

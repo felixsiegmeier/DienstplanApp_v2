@@ -6,7 +6,7 @@ export async function GET(request) {
     body: JSON.stringify({
       ...fetchBody,
       collection: "configs",
-      filter: { userGroupId: request.nextUrl.searchParams.get("userGroupId") }
+      filter: { _id: {$oid: request.nextUrl.searchParams.get("_id")} }
     }),
   });
   const readDataJson = await readData.json();
