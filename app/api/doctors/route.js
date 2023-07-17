@@ -39,7 +39,7 @@ export async function PUT(request) {
         ...doctorModel,
         name: doctorName,
         password: bcrypt.hashSync(normalizedDoctorName, 10),
-        userAccount: normalizedDoctorName,
+        alias: normalizedDoctorName,
         userGroupId: body.userGroupId,
       },
     }),

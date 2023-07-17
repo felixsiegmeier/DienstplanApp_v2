@@ -68,9 +68,12 @@ export default function ToggleBox({ doctor, isOpen, toggle }) {
   function saveDoctorChange(doctor) {
     console.log("got updated doctor")
     console.log(doctor)
-    const updatedDoctors = [...doctors];
+    const updatedDoctors = JSON.parse(JSON.stringify(doctors));
     for (let i = 0; i < updatedDoctors.length; i++) {
-      if (updatedDoctors[i].id === doctor.id) {
+      if (updatedDoctors[i]._id === doctor._id) {
+        console.log(updatedDoctors[i].name)
+        console.log(updatedDoctors[i]._id)
+        console.log(doctor._id)
         updatedDoctors[i] = doctor;
         setDoctors(updatedDoctors);
         // Database Update via API-call from each component

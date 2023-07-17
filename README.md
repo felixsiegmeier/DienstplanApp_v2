@@ -87,7 +87,7 @@ Beim Erstellen wird eine Kopie von `doctors` erzeugt und diese um einige Attribu
 [
 {
 userGroupId: String,
-userAccount: String,
+alias: String,
 _id: String,
 name: String,
 groups: [String],
@@ -199,3 +199,9 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
 # Tests
 
 - Laufen mit einem Test-Datensatz für einen Monat mit 31 Tagen (`__tests__/test-data.json`)
+
+# Letzter und nächster Schritt
+- Zuletzt habe ich einen Bug gefixt, der durch die falsche Anwendung der "id" statt "_id" zustande kam beim updaten von "doctors" im Context
+- nächste Schritte: 
+-- Ärzte Seite eine User-Fassung geben (kein Hinzufügen-Button und nur eigene Parameter veränderlich)
+-- Modal erstellen, welches beim Klick auf einen Monat aufgerufen wird. Dabei muss in der Funktionalität zwischen Admin und user unterschieden werden. (Cool wäre vlt., wenn das Modal aus frei schwegenden Buttons besteht statt aus einem geschlossenen Kasten)

@@ -1,5 +1,5 @@
-import { usePageContext } from '@/app/context/pageContext';
-import React from 'react';
+import { usePageContext } from "@/app/context/pageContext";
+import React from "react";
 
 export default function RosterGrid({ year }) {
   const colors = [
@@ -22,7 +22,7 @@ export default function RosterGrid({ year }) {
   const sortedRosters = rosters.sort((a, b) => a.month - b.month);
 
   return (
-    <div className="flex flex-wrap">
+    <div className=" w-full flex gap-6 flex-wrap justify-center">
       {sortedRosters.map((roster, index) => {
         const month = roster.month;
         const color = colors[month % colors.length];
@@ -32,10 +32,17 @@ export default function RosterGrid({ year }) {
         return (
           <div
             key={index}
-            className={`w-${isMobile ? 'full' : '1/4'} p-4 ${color}`}
+            className={`${
+              isMobile ? "w-full" : "w-1/4"
+            } p-4 ${color} rounded-md ${
+              isMobile ? "ml-12 mr-12" : ""
+            } cursor-pointer select-none shadow-md hover:scale-105 shadow-black active:scale-100 text-center`}
           >
-            <h2>{roster.month}</h2>
-            <h3>{roster.year}</h3>
+            <h1>{roster.name}</h1>
+            <h3>
+              {roster.month < 9 ? 0 : ""}
+              {roster.month + 1}/{roster.year}
+            </h3>
             {/* Additional roster details */}
           </div>
         );

@@ -15,6 +15,7 @@ export async function POST(request) {
   })
   const users = await userStream.json()
   const user = users.document
+  console.log(user)
   if(!user){return new Response(false)}
   const valid = await bcrypt.compare(body.password, user.password)
   if(!valid){return new Response(false)};
