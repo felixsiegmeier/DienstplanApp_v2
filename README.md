@@ -157,6 +157,7 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
   - `currentRoster` (nach Auswahl festgelegt)
   - `config` (nach Einloggen geladen)
   - `isMobile` - darüber wird die Responsiveness der gesamten Page gesteuert
+  - `isAdmin` - darüber wird das rendern der Admin-Funktionen gesteuert
 
 ## Layout
 

@@ -17,6 +17,7 @@ export const PageContextProvider = ({ children }) => {
   const [roster, setRoster] = useState({});
   const [userGroupId, setUserGroupId] = useState(false);
   const [userId, setUserId] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [config, setConfig] = useState({});
   const [loading, setLoading] = useState(true);
   const [reload, setReload] = useState(true);
@@ -47,6 +48,8 @@ export const PageContextProvider = ({ children }) => {
       const configData = await fetch(`/api/config?_id=${userGroupId}`)
       const config = await configData.json()
       setConfig(config)
+
+      setIsAdmin(config.admins.includes(userId))
 
       setLoading(false)
     }
@@ -87,7 +90,8 @@ export const PageContextProvider = ({ children }) => {
         loading,
         setLoading,
         toggleContextUpdateFromDatabase,
-        isMobile
+        isMobile,
+        isAdmin
       }}
     >
     {userId ? children : <Login/>}

@@ -5,13 +5,17 @@ import { usePageContext } from "../../context/pageContext";
 
 export default function Table() {
   const [openIndex, setOpenIndex] = useState(-1);
-  const {doctors} = usePageContext();
+  const {doctors, isAdmin, userId} = usePageContext();
 
-  const toggleRow = (index) => {
+  const toggleRow = (index, id) => {
     if (index === openIndex) {
       setOpenIndex(-1);
     } else {
-      setOpenIndex(index);
+      if(isAdmin | id === userId){
+        setOpenIndex(index);
+      } else {
+        setOpenIndex(-1);
+      }
     }
   };
 
@@ -28,11 +32,11 @@ export default function Table() {
       <tbody>
         {doctors.map((doctor, index) => (
           <TableRow
-            key={doctor.id}
+            key={doctor._id}
             doctor={doctor}
             index={index}
             isOpen={index === openIndex}
-            toggle={() => toggleRow(index)}
+            toggle={() => toggleRow(index, doctor._id)}
           />
         ))}
       </tbody>
