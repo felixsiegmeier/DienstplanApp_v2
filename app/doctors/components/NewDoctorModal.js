@@ -5,7 +5,7 @@ export default function NewDoctorModal({ open, setOpen }) {
   if (!open) return null;
 
   const [doctorName, setDoctorName] = useState("");
-  const { userGroupId, toggleContextUpdateFromDatabase, isMobile } = usePageContext();
+  const { user, toggleContextUpdateFromDatabase, isMobile } = usePageContext();
 
   const handleChange = (e) => {
     setDoctorName(e.target.value);
@@ -16,7 +16,7 @@ export default function NewDoctorModal({ open, setOpen }) {
       method: "PUT",
       body: JSON.stringify({
         doctorName: doctorName,
-        userGroupId: userGroupId,
+        userGroupId: user.userGroupId,
       }),
     });
     const finished = await response.json();

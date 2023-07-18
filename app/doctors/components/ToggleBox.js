@@ -8,7 +8,7 @@ import BoxNonWorkingDays from "./boxComponents/BoxNonWorkingDays";
 import BoxMaximum from "./boxComponents/BoxMaximum";
 
 export default function ToggleBox({ doctor, isOpen, toggle }) {
-  const { config, doctors, setDoctors, isAdmin } = usePageContext();
+  const { user } = usePageContext();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
     if(!isOpen) return null;
@@ -39,7 +39,7 @@ export default function ToggleBox({ doctor, isOpen, toggle }) {
           <BoxMaximum doctor={doctor}/>
           <br/>
            <DeleteModal doctor={doctor} open={openDeleteModal} setOpen={setOpenDeleteModal} />
-           {isAdmin &&<div onClick={() => setOpenDeleteModal(true)}  className="inline bg-red-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg active:bg-red-700 select-none" >{doctor.name} löschen</div>
+           {user.isAdmin &&<div onClick={() => setOpenDeleteModal(true)}  className="inline bg-red-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg active:bg-red-700 select-none" >{doctor.name} löschen</div>
           }
         </div>
       </td>

@@ -5,13 +5,13 @@ import { usePageContext } from "../../context/pageContext";
 
 export default function Table() {
   const [openIndex, setOpenIndex] = useState(-1);
-  const {doctors, isAdmin, userId} = usePageContext();
+  const {doctors, user} = usePageContext();
 
   const toggleRow = (index, id) => {
     if (index === openIndex) {
       setOpenIndex(-1);
     } else {
-      if(isAdmin | id === userId){
+      if(user.isAdmin | id === user._id){
         setOpenIndex(index);
       } else {
         setOpenIndex(-1);

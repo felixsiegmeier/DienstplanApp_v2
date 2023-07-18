@@ -204,4 +204,5 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
 # Letzter und nächster Schritt
 - Zuletzt habe ich einen Bug gefixt, der durch die falsche Anwendung der "id" statt "_id" zustande kam beim updaten von "doctors" im Context
 - nächste Schritte: 
+-- User Class implementieren (mit Attributen admin, _id, userGroupId, name(für Changelog!))
 -- RosterModal bearbeiten, welches beim Klick auf einen Monat aufgerufen wird. Dabei muss in der Funktionalität zwischen Admin und User unterschieden werden. + Responsive Design!

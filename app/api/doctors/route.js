@@ -52,7 +52,11 @@ export async function PUT(request) {
 export async function POST(request) {
   const body = await request.json();
   const data = {}
-  data[body.property] = body.value
+  if(body.property === "password"){
+    data[body.property] = bcrypt.hashSync(body.value, 10)
+  } else {
+    data[body.property] = body.value
+  }
   const updateData = await fetch(`${baseUrl}/updateOne`, {
     ...fetchOptions,
     body: JSON.stringify({

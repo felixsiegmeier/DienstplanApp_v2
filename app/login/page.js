@@ -5,7 +5,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const {setUserId, setUserGroupId} = usePageContext();
+  const {setUser} = usePageContext();
 
   async function handler() {
     const response = await fetch("/api/login", {
@@ -15,8 +15,7 @@ export default function Login() {
     });
     const data = await response.json();
     if (data){
-        setUserGroupId(data.userGroupId)
-        setUserId(data.userId)
+        setUser({_id: data._id, userGroupId: data.userGroupId})
     }else {
       setError("Benutzername oder Passwort falsch!");
     }

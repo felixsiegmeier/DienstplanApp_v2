@@ -1,14 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import NavButton from "./nav-button";
-import NavDropdown from "./nav-dropdown";
 import NavBurgerMenu from "./nav-burger-menu";
 import { usePageContext } from "../context/pageContext";
 
 export default function Navbar() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const { setUserId, setUserGroupId, isMobile } = usePageContext();
+  const { setUser, isMobile } = usePageContext();
 
   return (
     <nav className="bg-slate-800 flex items-center justify-between flex-wrap p-6">
@@ -38,8 +37,7 @@ export default function Navbar() {
             <NavButton href="/configuration" title="Einstellungen" />
             <button
               onClick={() => {
-                setUserGroupId(false);
-                setUserId(false);
+                setUser({_id: null, setUserGroupId: null});
               }}
               className={`block select-none mt-4 ${
                 !isMobile ? "inline-block mt-0" : null

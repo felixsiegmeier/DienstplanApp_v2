@@ -7,7 +7,7 @@ import RightButton from "@/app/components/RightButton";
 import RosterGrid from "./components/RosterGrid";
 
 export default function AdminView() {
-  const { config, rosters, isAdmin } = usePageContext();
+  const { config, rosters, user } = usePageContext();
   const [year, setYear] = React.useState(new Date().getFullYear());
   return (
     <div className="flex flex-col justify-center items-center gap-4 mt-4">
@@ -20,7 +20,7 @@ export default function AdminView() {
         </div>
       </div>
       <RosterGrid year={year} />
-      {isAdmin && <NewRosterButton />}
+      {user.isAdmin && <NewRosterButton />}
     </div>
   );
 }
