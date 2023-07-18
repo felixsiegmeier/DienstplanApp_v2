@@ -12,7 +12,6 @@ export default function NewDoctorModal({ open, setOpen }) {
   };
 
   const createDoctor = async () => {
-    // API-Call await createDoctor(doctorName) = muss noch geschrieben werden
     const response = await fetch("/api/doctors", {
       method: "PUT",
       body: JSON.stringify({

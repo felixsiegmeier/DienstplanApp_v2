@@ -1,35 +1,12 @@
-"use client";
-import { useState } from "react";
-export default function BoxMaximum({ doctor, saveDoctorChange }) {
+export default function BoxMaximum({ doctor }) {
+
   function handleChange() {
     const updatedMaximum = doctor.maximum < 11 ? 99 : 10;
-
-    saveDoctorChange({ ...doctor, maximum: updatedMaximum });
-    setSelectedNumber(updatedMaximum);
-
-    fetch("/api/doctors", {
-      method: "POST",
-      body: JSON.stringify({
-        id: doctor._id,
-        property: "maximum",
-        value: updatedMaximum,
-      }),
-    });
+    doctor.updateMaximum(updatedMaximum);
   }
 
-  const [selectedNumber, setSelectedNumber] = useState(doctor.maximum);
-
   const handleNumberSelection = (number) => {
-    setSelectedNumber(number);
-    saveDoctorChange({ ...doctor, maximum: number });
-    fetch("/api/doctors", {
-      method: "POST",
-      body: JSON.stringify({
-        id: doctor._id,
-        property: "maximum",
-        value: number,
-      }),
-    });
+    doctor.updateMaximum(number);
   };
 
   return (
@@ -53,7 +30,7 @@ export default function BoxMaximum({ doctor, saveDoctorChange }) {
               key={index + 1}
               onClick={() => handleNumberSelection(index + 1)}
               className={`w-8 h-8 rounded-md pt-1 ${
-                selectedNumber === index + 1
+                doctor.maximum === index + 1
                   ? "bg-orange-500 hover:bg-orange-700"
                   : "bg-slate-800 hover:bg-slate-700"
               } text-center align-middle cursor-pointer select-none active:bg-slate-900`}

@@ -7,7 +7,6 @@ export default function AddDoctorButton({openModal}){
         <div className="flex justify-center mt-4">
             <div onClick={() => {
                 openModal()
-                console.log(doctors)
             }} className="bg-green-800 cursor-pointer p-2 rounded-md shadow-xl hover:scale-105 active:scale-100 active:shadow-lg active:bg-green-700 select-none" >
                 Arzt/ Ärztin hinzufügen
             </div>

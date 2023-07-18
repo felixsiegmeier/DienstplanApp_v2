@@ -1,21 +1,12 @@
-export default function BoxNonWorkingDays({ doctor, saveDoctorChange }) {
+export default function BoxNonWorkingDays({ doctor }) {
   const weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"];
 
   function handleChange(day) {
-    const updatedNonWorkingDays = doctor.nonWorkingDays.includes(day)
-      ? doctor.nonWorkingDays.filter((d) => d !== day)
-      : [...doctor.nonWorkingDays, day];
-
-    saveDoctorChange({ ...doctor, nonWorkingDays: updatedNonWorkingDays });
-
-    fetch("/api/doctors", {
-      method: "POST",
-      body: JSON.stringify({
-        id: doctor._id,
-        property: "nonWorkingDays",
-        value: updatedNonWorkingDays,
-      }),
-    });
+    if(doctor.nonWorkingDays.includes(day)){
+      doctor.removeNonWorkingDay(day)
+    } else {
+      doctor.addNonWorkingDay(day)
+    }
   }
 
   return (

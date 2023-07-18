@@ -1,31 +1,14 @@
-"use client";
 import { usePageContext } from "@/app/context/pageContext";
-import { useEffect, useState } from "react";
 
-export default function BoxDutyColumns({ doctor, saveDoctorChange }) {
+export default function BoxDutyColumns({ doctor }) {
   const { config } = usePageContext();
-  const [dutyColumns, setDutyColumns] = useState([]);
-
-  useEffect(() => {
-    setDutyColumns(doctor.dutyColumns);
-  }, []);
 
   function handleChange(e) {
-    const updatedDutyColumns = dutyColumns.includes(e.target.value)
-      ? dutyColumns.filter((dutyColumn) => dutyColumn !== e.target.value)
-      : [...dutyColumns, e.target.value];
-
-    setDutyColumns(updatedDutyColumns);
-    saveDoctorChange({ ...doctor, dutyColumns: updatedDutyColumns });
-
-    fetch("/api/doctors", {
-      method: "POST",
-      body: JSON.stringify({
-        id: doctor._id,
-        property: "dutyColumns",
-        value: updatedDutyColumns,
-      }),
-    });
+    if(doctor.dutyColumns.includes(e.target.value)){
+      doctor.removeDutyColumn(e.target.value)
+    } else {
+      doctor.addDutyColumn(e.target.value)
+    }
   }
 
   return (
@@ -36,7 +19,7 @@ export default function BoxDutyColumns({ doctor, saveDoctorChange }) {
             <input
               type="checkbox"
               value={dutyColumn.name}
-              checked={dutyColumns.includes(dutyColumn.name)}
+              checked={doctor.dutyColumns.includes(dutyColumn.name)}
               onChange={handleChange}
               className="form-checkbox mr-4 w-4 h-4"
             />

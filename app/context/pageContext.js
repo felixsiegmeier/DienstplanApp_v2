@@ -1,13 +1,8 @@
-"use client";
+"use client"
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useSyncExternalStore,
-  useEffect
-} from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import Login from "../login/page";
+import Doctor from "../models/Doctor";
 
 const PageContext = createContext({});
 
@@ -23,43 +18,54 @@ export const PageContextProvider = ({ children }) => {
   const [reload, setReload] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
-  function toggleContextUpdateFromDatabase(){
-    setReload(!reload)
+  function toggleContextUpdateFromDatabase() {
+    setReload(!reload);
   }
 
   useEffect(() => {
-    console.log("invoking")
-    if(userId){
-      getData()
-    }else{
-      clearData()
+    console.log("invoking");
+    if (userId) {
+      getData();
+    } else {
+      clearData();
     }
 
-    async function getData(){
-      console.log("getting Data")
-      const doctorsData = await fetch(`/api/doctors?userGroupId=${userGroupId}`)
-      const doctors = await doctorsData.json()
-      setDoctors(doctors)
+    async function getData() {
+      console.log("getting Data");
+      const doctorsDataStream = await fetch(
+        `/api/doctors?userGroupId=${userGroupId}`
+      );
+      const doctorsData = await doctorsDataStream.json();
+      const doctorObjects = doctorsData.map(
+        (doctorData) =>
+          new Doctor({
+            ...doctorData,
+            setParentArray: setDoctors,
+          })
+      );
+      setDoctors(doctorObjects);
 
-      const rostersData = await fetch(`/api/rosters?userGroupId=${userGroupId}`)
-      const rosters = await rostersData.json()
-      setRosters(rosters)
+      const rostersData = await fetch(
+        `/api/rosters?userGroupId=${userGroupId}`
+      );
+      const rosters = await rostersData.json();
+      setRosters(rosters);
 
-      const configData = await fetch(`/api/config?_id=${userGroupId}`)
-      const config = await configData.json()
-      setConfig(config)
+      const configData = await fetch(`/api/config?_id=${userGroupId}`);
+      const config = await configData.json();
+      setConfig(config);
 
-      setIsAdmin(config.admins.includes(userId))
+      setIsAdmin(config.admins.includes(userId));
 
-      setLoading(false)
+      setLoading(false);
     }
 
-    function clearData(){
-      console.log("clearing Data")
-      setDoctors([])
-      setDoctors([])
-      setDoctors({})
-      setLoading(true)
+    function clearData() {
+      console.log("clearing Data");
+      setDoctors([]);
+      setRosters([]);
+      setRoster({});
+      setLoading(true);
     }
 
     const handleResize = () => {
@@ -91,10 +97,10 @@ export const PageContextProvider = ({ children }) => {
         setLoading,
         toggleContextUpdateFromDatabase,
         isMobile,
-        isAdmin
+        isAdmin,
       }}
     >
-    {userId ? children : <Login/>}
+      {userId ? children : <Login />}
     </PageContext.Provider>
   );
 };

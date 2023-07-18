@@ -1,17 +1,9 @@
-import React from "react";
+export default function Box12h({ doctor }) {
 
-export default function Box12h({ doctor, saveDoctorChange }) {
-  function handleChange(e) {
-    saveDoctorChange({ ...doctor, only12: !doctor.only12 });
-    fetch("/api/doctors", {
-      method: "POST",
-      body: JSON.stringify({
-        id: doctor._id,
-        property: "only12",
-        value: !doctor.only12,
-      }),
-    });
+  function handleChange() {
+    doctor.toggleOnly12()
   }
+
   return (
     <label className="relative inline-flex items-center cursor-pointer mt-2 mb-2">
       <input
