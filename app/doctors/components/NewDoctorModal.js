@@ -13,7 +13,7 @@ export default function NewDoctorModal({ open, setOpen }) {
 
   const createDoctor = async () => {
     const response = await fetch("/api/doctors", {
-      method: "PUT",
+      method: "POST",
       body: JSON.stringify({
         doctorName: doctorName,
         userGroupId: user.userGroupId,

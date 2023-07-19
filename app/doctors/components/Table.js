@@ -23,10 +23,10 @@ export default function Table() {
     <table className="w-full border-collapse">
       <thead>
         <tr>
-          <th className="px-4 py-2 text-gray-200">Name</th>
-          <th className="px-4 py-2 text-gray-200">Gruppen</th>
-          <th className="px-4 py-2 text-gray-200">Dienstreihen</th>
-          <th className="px-4 py-2 text-gray-200">Besonderheiten</th>
+          <th className="px-4 py-2 text-gray-200 select-none">Name</th>
+          <th className="px-4 py-2 text-gray-200 select-none">Gruppen</th>
+          <th className="px-4 py-2 text-gray-200 select-none">Dienstreihen</th>
+          <th className="px-4 py-2 text-gray-200 select-none">Besonderheiten</th>
         </tr>
       </thead>
       <tbody>

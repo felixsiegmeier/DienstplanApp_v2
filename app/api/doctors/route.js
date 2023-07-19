@@ -21,7 +21,7 @@ export async function GET(request) {
   return new Response(JSON.stringify(doctors));
 }
 
-export async function PUT(request) {
+export async function POST(request) {
   const body = await request.json();
   const doctorName = body.doctorName;
   const normalizedDoctorName = body.doctorName
@@ -49,7 +49,7 @@ export async function PUT(request) {
   return new Response(true);
 }
 
-export async function POST(request) {
+export async function PUT(request) {
   const body = await request.json();
   const data = {}
   if(body.property === "password"){

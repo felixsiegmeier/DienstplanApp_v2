@@ -20,7 +20,6 @@ Diese Config wird in `page.js` im App-Directory eingestellt (später dann über 
 config: {
 	_id: String,
 	admins: [String],
-	month: {month: Number, year: Number},
 	initializationSize: Number,
 	populationSize: Number,
 	dutyColumns: [
@@ -201,8 +200,12 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
 
 - Laufen mit einem Test-Datensatz für einen Monat mit 31 Tagen (`__tests__/test-data.json`)
 
-# Letzter und nächster Schritt
-- Zuletzt habe ich einen Bug gefixt, der durch die falsche Anwendung der "id" statt "_id" zustande kam beim updaten von "doctors" im Context
-- nächste Schritte: 
--- User Class implementieren (mit Attributen admin, _id, userGroupId, name(für Changelog!))
--- RosterModal bearbeiten, welches beim Klick auf einen Monat aufgerufen wird. Dabei muss in der Funktionalität zwischen Admin und User unterschieden werden. + Responsive Design!
+# Zukunftsaufgaben
+- @app-pathing überall einführen
+- Buttons im hover-Verhalten homogenisieren
+
+# Nächste Schritte
+- Urlaubsplan implementieren
+	- Klasse
+	- API-Endpunkte
+	- page

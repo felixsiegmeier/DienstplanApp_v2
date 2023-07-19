@@ -4,8 +4,12 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import Login from "../login/page";
 import Doctor from "../models/Doctor";
 import User from "../models/User";
+import Roster from "../models/Roster";
+import Config from "../models/Config";
 
 const PageContext = createContext({});
+
+// ... Importe wie zuvor ...
 
 export const PageContextProvider = ({ children }) => {
   const [doctors, setDoctors] = useState([]);
@@ -13,29 +17,28 @@ export const PageContextProvider = ({ children }) => {
   const [roster, setRoster] = useState({});
   const [config, setConfig] = useState({});
   const [loading, setLoading] = useState(true);
-  const [reload, setReload] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState({});
+  const [reload, setReload] = useState(true);
 
   function toggleContextUpdateFromDatabase() {
-    setReload(!reload);
+    setReload((prevReload) => !prevReload);
   }
 
-  useEffect(() => {
-    console.log("invoking");
-    if (user._id) {
-      getData();
-    } else {
-      clearData();
-    }
+  async function fetchDataFromDatabase({userId, userGroupId}) {
+    try {
+      const [
+        doctorsData,
+        rostersData,
+        configData,
+      ] = await Promise.all([
+        fetch(`/api/doctors?userGroupId=${userGroupId}`),
+        fetch(`/api/rosters?userGroupId=${userGroupId}`),
+        fetch(`/api/config?_id=${userGroupId}`),
+      ]);
 
-    async function getData() {
-      console.log("getting Data");
-      const doctorsDataStream = await fetch(
-        `/api/doctors?userGroupId=${user.userGroupId}`
-      );
-      const doctorsData = await doctorsDataStream.json();
-      const doctorObjects = doctorsData.map(
+      const doctorsJson = await doctorsData.json();
+      const doctorObjects = doctorsJson.map(
         (doctorData) =>
           new Doctor({
             ...doctorData,
@@ -44,33 +47,52 @@ export const PageContextProvider = ({ children }) => {
       );
       setDoctors(doctorObjects);
 
-      const rostersData = await fetch(
-        `/api/rosters?userGroupId=${user.userGroupId}`
+      const rostersJson = await rostersData.json();
+      const rosterObjects = rostersJson.map(
+        (rosterData) =>
+          new Roster({
+            ...rosterData,
+            setParentArray: setRosters,
+          })
       );
-      const rosters = await rostersData.json();
-      setRosters(rosters);
+      setRosters(rosterObjects);
 
-      const configData = await fetch(`/api/config?_id=${user.userGroupId}`);
-      const config = await configData.json();
-      setConfig(config);
+      const configJson = await configData.json();
+      const configObject = new Config({
+            ...configJson,
+            setState: setConfig,
+          })
+      setConfig(configObject);
 
-      const userData = doctorObjects.find(doctor => doctor._id === user._id)
-      if(userData){
-        setUser(new User({
-          _id: userData._id,
-          userGroupId: userData.userGroupId,
-          name: userData.name,
-          alias: userData.alias,
-          setState: setUser,
-          isAdmin: config.admins.includes(userData._id)
-        }))
+      const userData = doctorObjects.find((doctor) => doctor._id === userId);
+      if (userData) {
+        setUser(
+          new User({
+            _id: userData._id,
+            userGroupId: userData.userGroupId,
+            name: userData.name,
+            alias: userData.alias,
+            setState: setUser,
+            isAdmin: configJson.admins.includes(userData._id),
+          })
+        );
       }
 
       setLoading(false);
+    } catch (error) {
+      console.error("Fehler beim Abrufen der Daten aus der Datenbank:", error);
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    if (user._id) {
+      fetchDataFromDatabase({userId: user._id, userGroupId: user.userGroupId});
+    } else {
+      clearData();
     }
 
     function clearData() {
-      console.log("clearing Data");
       setDoctors([]);
       setRosters([]);
       setRoster({});
@@ -92,7 +114,7 @@ export const PageContextProvider = ({ children }) => {
       value={{
         doctors,
         setDoctors,
-        user, 
+        user,
         setUser,
         rosters,
         setRosters,
@@ -104,6 +126,7 @@ export const PageContextProvider = ({ children }) => {
         setLoading,
         toggleContextUpdateFromDatabase,
         isMobile,
+        setReload
       }}
     >
       {user._id ? children : <Login />}

@@ -13,7 +13,7 @@ export default function NewRosterButton() {
       <NewRosterModal open={open} setOpen={setOpen} />
       <div
         onClick={() => setOpen(true)}
-        className="bg-cyan-800 cursor-pointer p-2 rounded-md shadow-xl active:shadow-lg  hover:scale-105 active:scale-100 active:bg-cyan-700 select-none mb-12 mt-4"
+        className="bg-cyan-800 cursor-pointer p-2 rounded-md shadow-xl active:shadow-lg  hover:bg-cyan-700 active:scale-100 active:bg-cyan-900 select-none mb-12 mt-4"
       >
         Neuen Dienstplan anlegen
       </div>

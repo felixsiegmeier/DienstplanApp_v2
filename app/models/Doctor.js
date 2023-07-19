@@ -23,125 +23,76 @@ export default class Doctor {
     this.setParentArray = setParentArray;
   }
 
-  addDutyColumn(newColumn) {
-    this.dutyColumns.push(newColumn);
-    this.updateDoctorsState();
-
-    fetch("/api/doctors", {
-        method: "POST",
+  async updateDatabase(property, value) {
+    try {
+      await fetch("/api/doctors", {
+        method: "PUT",
         body: JSON.stringify({
           id: this._id,
-          property: "dutyColumns",
-          value: this.dutyColumns,
+          property,
+          value,
         }),
       });
+    } catch (error) {
+      console.error("Fehler beim Aktualisieren der Datenbank:", error);
+    }
   }
 
-  removeDutyColumn(columnToRemove) {
+  async addDutyColumn(newColumn) {
+    this.dutyColumns.push(newColumn);
+    this.updateDoctorsState();
+    await this.updateDatabase("dutyColumns", this.dutyColumns);
+  }
+
+  async removeDutyColumn(columnToRemove) {
     this.dutyColumns = this.dutyColumns.filter(
       (column) => column !== columnToRemove
     );
     this.updateDoctorsState();
-
-    fetch("/api/doctors", {
-        method: "POST",
-        body: JSON.stringify({
-          id: this._id,
-          property: "dutyColumns",
-          value: this.dutyColumns,
-        }),
-      });
+    await this.updateDatabase("dutyColumns", this.dutyColumns);
   }
 
-  addGroup(newGroup) {
+  async addGroup(newGroup) {
     this.groups.push(newGroup);
     this.updateDoctorsState();
-
-    fetch("/api/doctors", {
-        method: "POST",
-        body: JSON.stringify({
-          id: this._id,
-          property: "groups",
-          value: this.groups,
-        }),
-      });
+    await this.updateDatabase("groups", this.groups);
   }
 
-  removeGroup(groupToRemove) {
+  async removeGroup(groupToRemove) {
     this.groups = this.groups.filter((group) => group !== groupToRemove);
     this.updateDoctorsState();
-
-    fetch("/api/doctors", {
-        method: "POST",
-        body: JSON.stringify({
-          id: this._id,
-          property: "groups",
-          value: this.groups,
-        }),
-      });
+    await this.updateDatabase("groups", this.groups);
   }
 
-  updateMaximum(newMaximum) {
+  async updateMaximum(newMaximum) {
     this.maximum = newMaximum;
     this.updateDoctorsState();
-
-    fetch("/api/doctors", {
-        method: "POST",
-        body: JSON.stringify({
-          id: this._id,
-          property: "maximum",
-          value: this.maximum,
-        }),
-      });
+    await this.updateDatabase("maximum", this.maximum);
   }
 
-  addNonWorkingDay(newDay) {
+  async addNonWorkingDay(newDay) {
     this.nonWorkingDays.push(newDay);
-    this.updateDoctorsState()
-
-    fetch("/api/doctors", {
-        method: "POST",
-        body: JSON.stringify({
-          id: this._id,
-          property: "nonWorkingDays",
-          value: this.nonWorkingDays,
-        }),
-      });
+    this.updateDoctorsState();
+    await this.updateDatabase("nonWorkingDays", this.nonWorkingDays);
   }
 
-  removeNonWorkingDay(dayToRemove) {
+  async removeNonWorkingDay(dayToRemove) {
     this.nonWorkingDays = this.nonWorkingDays.filter(
       (day) => day !== dayToRemove
     );
     this.updateDoctorsState();
-
-    fetch("/api/doctors", {
-        method: "POST",
-        body: JSON.stringify({
-          id: this._id,
-          property: "nonWorkingDays",
-          value: this.nonWorkingDays,
-        }),
-      });
+    await this.updateDatabase("nonWorkingDays", this.nonWorkingDays);
   }
 
-  toggleOnly12() {
+  async toggleOnly12() {
     this.only12 = !this.only12;
     this.updateDoctorsState();
-
-    fetch("/api/doctors", {
-        method: "POST",
-        body: JSON.stringify({
-          id: this._id,
-          property: "only12",
-          value: this.only12,
-        }),
-      });
+    await this.updateDatabase("only12", this.only12);
   }
 
   updateDoctorsState() {
     if (this.setParentArray) {
-      this.setParentArray(prevArray => {
+      this.setParentArray((prevArray) => {
         const updatedDoctorsArray = [...prevArray];
         const index = updatedDoctorsArray.findIndex(
           (doctor) => doctor._id === this._id
@@ -154,16 +105,20 @@ export default class Doctor {
     }
   }
 
-  deleteSelf() {
+  async deleteSelf() {
     if (this.setParentArray) {
-      this.setParentArray(prevArray => prevArray.filter(
-        (doctor) => doctor._id !== this._id
-      ));
+      this.setParentArray((prevArray) =>
+        prevArray.filter((doctor) => doctor._id !== this._id)
+      );
     }
 
-    fetch("/api/doctors", {
+    try {
+      await fetch("/api/doctors", {
         method: "DELETE",
-        body: JSON.stringify({id: this._id})
-      })
+        body: JSON.stringify({ id: this._id }),
+      });
+    } catch (error) {
+      console.error("Fehler beim Löschen aus der Datenbank:", error);
+    }
   }
 }

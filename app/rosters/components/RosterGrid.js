@@ -1,5 +1,6 @@
 import { usePageContext } from "@/app/context/pageContext";
-import React from "react";
+import React, { useState } from "react";
+import RosterModal from "./RosterModal";
 
 export default function RosterGrid({ year }) {
   const colors = [
@@ -17,9 +18,18 @@ export default function RosterGrid({ year }) {
     "bg-purple-500",
   ];
   const { isMobile, rosters } = usePageContext();
+  const [selectedRoster, setSelectedRoster] = useState(null)
 
   // Sort the rosters by month
   const sortedRosters = rosters.sort((a, b) => a.month - b.month);
+
+  function handleOpenModal(roster){
+    setSelectedRoster(roster)
+  }
+
+  function handleCloseModal(){
+    setSelectedRoster(null)
+  }
 
   return (
     <div className=" w-full flex gap-6 flex-wrap justify-center">
@@ -37,6 +47,7 @@ export default function RosterGrid({ year }) {
             } p-4 ${color} rounded-md ${
               isMobile ? "ml-12 mr-12" : ""
             } cursor-pointer select-none shadow-md hover:scale-105 shadow-black active:scale-100 text-center`}
+            onClick={() => handleOpenModal(roster)}
           >
             <h1>{roster.name}</h1>
             <h3>
@@ -47,6 +58,13 @@ export default function RosterGrid({ year }) {
           </div>
         );
       })}
+
+      {selectedRoster !== null && (
+        <RosterModal
+          selectedRoster={selectedRoster}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 }

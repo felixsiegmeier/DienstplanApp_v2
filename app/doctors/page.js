@@ -7,7 +7,7 @@ import AddDoctorButton from "./components/AddDoctorButton";
 import NewDoctorModal from "./components/NewDoctorModal";
 
 export default function Doctors() {
-  const { doctors, setDoctors, config, setConfig, loading, isMobile, isAdmin } =
+  const { loading, isMobile, user } =
     usePageContext();
   const [openNewDoctorModal, setOpenNewDoctorModal] = useState(false);
 
@@ -19,7 +19,7 @@ export default function Doctors() {
         setOpen={setOpenNewDoctorModal}
       />
       {!loading && (isMobile ? <TableMobile /> : <Table />)}
-      {isAdmin && <AddDoctorButton
+      {user.isAdmin && <AddDoctorButton
         openModal={() => {
           setOpenNewDoctorModal(true);
         }}

@@ -99,7 +99,7 @@ export default function NewRosterModal({open, setOpen}) {
           </div>
           <div
             onClick={handleCreateRoster}
-            className="bg-cyan-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg active:bg-cyan-700 select-none"
+            className="bg-cyan-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg hover:bg-cyan-700 active:bg-cyan-900 select-none"
           >
             Erstellen
           </div>
