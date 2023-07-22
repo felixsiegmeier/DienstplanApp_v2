@@ -202,9 +202,11 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
 
 # Zukunftsaufgaben
 - @app-pathing überall einführen
-- Buttons im hover-Verhalten homogenisieren
+- Vacation hat eine methode "addSelf", die die _id vom Server erhält und den Urlaub in das parentArray schreibt. 
+  Das muss ich für die Dienstpläne und die Ärzte auch noch implementieren und die Aktualisierung vom Server entsprechend löschen (toggleContextUpdateFromDatabase())
 
 # Nächste Schritte
 - Urlaubsplan implementieren
-	- Vacations in den context laden
 	- page
+		- Doctors per Button-Klick einfügen
+		- Anzeige für Urlaube kreieren

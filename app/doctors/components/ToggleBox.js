@@ -6,6 +6,8 @@ import BoxDutyColumns from "./boxComponents/BoxDutyColumns";
 import Box12h from "./boxComponents/Box12h";
 import BoxNonWorkingDays from "./boxComponents/BoxNonWorkingDays";
 import BoxMaximum from "./boxComponents/BoxMaximum";
+import ButtonRed from "@/app/components/ButtonRed";
+import ButtonCyan from "@/app/components/ButtonCyan";
 
 export default function ToggleBox({ doctor, isOpen, toggle }) {
   const { user } = usePageContext();
@@ -32,15 +34,16 @@ export default function ToggleBox({ doctor, isOpen, toggle }) {
           <p className="text-lg underline">
             An welchen Wochentagen soll {doctor.name} keine Dienste machen?
           </p>
+          <div className="flex justify-center">
           <BoxNonWorkingDays doctor={doctor}/>
+          </div>
           <p className="text-lg underline">
             Gibt es für {doctor.name} eine Dienstobergrenze?
           </p>
           <BoxMaximum doctor={doctor}/>
           <br/>
            <DeleteModal doctor={doctor} open={openDeleteModal} setOpen={setOpenDeleteModal} />
-           {user.isAdmin &&<div onClick={() => setOpenDeleteModal(true)}  className="inline bg-red-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg active:bg-red-700 select-none" >{doctor.name} löschen</div>
-          }
+           {user.isAdmin && <div className="flex justify-center"><ButtonRed onClick={() => setOpenDeleteModal(true)} text={`${doctor.name} löschen`} /></div>}
         </div>
       </td>
     </tr>
@@ -54,8 +57,8 @@ export default function ToggleBox({ doctor, isOpen, toggle }) {
           <p className="text-xl">{doctor.name}</p>
           <p>wirklich löschen?</p>
           <div className="mt-4 flex gap-4">
-          <div onClick={() => deleteDoctor(doctor)}  className="inline w-[100px] text-center bg-red-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg active:bg-red-700 select-none" >Löschen</div>
-          <div onClick={() => setOpen(false)}  className="inline w-[100px] text-center bg-cyan-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg active:bg-cyan-700 select-none" >Abbrechen</div>
+          <ButtonRed onClick={() => deleteDoctor(doctor)} text="Löschen" />
+          <ButtonCyan onClick={() => setOpen(false)} text="Abbrechen" />
           </div>
         </div>
       </div>

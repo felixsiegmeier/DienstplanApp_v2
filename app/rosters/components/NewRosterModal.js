@@ -3,6 +3,7 @@ import React from 'react'
 import LeftButton from "@/app/components/LeftButton";
 import RightButton from "@/app/components/RightButton";
 import createRoster from "@/app/lib/createRoster";
+import ButtonCyan from '@/app/components/ButtonCyan';
 
 export default function NewRosterModal({open, setOpen}) {
     const months = [
@@ -97,12 +98,10 @@ export default function NewRosterModal({open, setOpen}) {
             {year}
             <RightButton onClick={handleYearUp} />
           </div>
-          <div
+          <ButtonCyan 
             onClick={handleCreateRoster}
-            className="bg-cyan-800 cursor-pointer p-2 rounded-md shadow-xl hover:shadow-sm active:shadow-lg hover:bg-cyan-700 active:bg-cyan-900 select-none"
-          >
-            Erstellen
-          </div>
+            text="Erstellen"
+          />
         </div>
       </div>
     );

@@ -1,12 +1,35 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import DaysRangePicker from '../components/DaysRangePicker';
+"use client";
+import React, { useState, useEffect } from "react";
+import { usePageContext } from "../context/pageContext";
+import DaysRangePicker from "../components/DaysRangePicker";
+import ButtonCyan from "../components/ButtonCyan";
+import MonthPicker from "./components.js/MonthPicker";
 
-const Calendar = () => {
-  return <div className="text-center mt-4">
-  <h1 className="text-3xl font-bold mb-4"> Urlaubsplan </h1>
-    <DaysRangePicker days={31} blueData={[15,18]} greenData={[1,5,21,23]} redData={[3,4,22,24,25,26,27,28]} orangeData={[6,7,8,9,10,11,12]} />
-  </div>;
-};
+export default function Vacations() {
+  const { doctors, vacations, setvacations } = usePageContext();
+  const [selectedMonth, setSelectedMonth] = useState(0);
+  const [selectedYear, setSelectedYear] = useState(0);
 
-export default Calendar;
+  // Funktion zum Aktualisieren von Jahr und Monat in der übergeordneten Komponente
+  const handleMonthChange = (selectedMonth, selectedYear) => {
+    setSelectedMonth(selectedMonth);
+    setSelectedYear(selectedYear);
+  };
+
+  // Funktion um Ärzte aus der Datenbank in den aktuellen Monat einzufügen und vorhandene zu aktualisieren
+  const handleClick = () => {
+    console.log(vacations);
+    console.log(doctors)
+    // Hier kommt noch Code rein
+  };
+
+  return (
+    <div className="flex justify-center flex-col items-center">
+      <div className="text-center mt-4">
+        <h1 className="text-3xl font-bold"> Urlaubsplan </h1>
+      </div>
+      <MonthPicker onChange={handleMonthChange} />
+      <ButtonCyan className="mt-4" onClick={handleClick} text="Ärzte aus Datenbank einfügen und aktualisieren" />
+    </div>
+  );
+}

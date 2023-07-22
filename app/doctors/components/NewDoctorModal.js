@@ -1,3 +1,4 @@
+import ButtonCyan from "@/app/components/ButtonCyan";
 import { usePageContext } from "@/app/context/pageContext";
 import { useState } from "react";
 
@@ -48,12 +49,10 @@ export default function NewDoctorModal({ open, setOpen }) {
             value={doctorName}
             onChange={handleChange}
           />
-          <div
+          <ButtonCyan 
             onClick={createDoctor}
-            className="bg-green-800 cursor-pointer p-1 rounded-md shadow-xl hover:shadow-sm active:shadow-lg active:bg-green-700 select-none"
-          >
-            Erstellen
-          </div>
+            text="Erstellen"
+          />
         </div>
       </div>
     </div>

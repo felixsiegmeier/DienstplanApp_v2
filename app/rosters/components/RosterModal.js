@@ -1,4 +1,6 @@
-"use client"
+"use client";
+import ButtonCyan from "@/app/components/ButtonCyan";
+import ButtonRed from "@/app/components/ButtonRed";
 import { usePageContext } from "@/app/context/pageContext";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -9,7 +11,7 @@ export default function RosterModal({ selectedRoster, onClose }) {
   const router = useRouter();
 
   if (!selectedRoster) return null;
-  
+
   const { name, year, month, visible, wishOpen } = selectedRoster;
 
   const formatDate = (month, year) => {
@@ -18,7 +20,7 @@ export default function RosterModal({ selectedRoster, onClose }) {
   };
 
   const handleVisibilityChange = () => {
-    selectedRoster.toggleVisible()
+    selectedRoster.toggleVisible();
   };
 
   const handleWishesChange = () => {
@@ -58,27 +60,18 @@ export default function RosterModal({ selectedRoster, onClose }) {
 
         {/* Dienstplan und Wünsche Schaltflächen */}
         <div className={`flex ${isMobile ? "flex-col gap-4" : "gap-4"}`}>
-          <button
-            className={`p-3 rounded-md bg-cyan-800 text-white font-bold hover:bg-cyan-700 active:bg-cyan-900 focus:outline-none ${
-              isMobile ? "w-full" : "w-1/2"
-            }`}
+          <ButtonCyan
             onClick={() => {
               router.push(`/rosters/${selectedRoster._id}`);
             }}
-          >
-            Dienstplan aufrufen
-          </button>
-
-          <button
-            className={`p-3 rounded-md bg-cyan-800 text-white font-bold hover:bg-cyan-700 active:bg-cyan-900 focus:outline-none ${
-              isMobile ? "w-full" : "w-1/2"
-            }`}
+            text="Dienstplan aufrufen"
+          />
+          <ButtonCyan
             onClick={() => {
               router.push(`/rosters/wishes/${selectedRoster._id}`);
             }}
-          >
-            Wünsche aufrufen
-          </button>
+            text="Wünsche aufrufen"
+          />
         </div>
 
         <label className="relative inline-flex items-center cursor-pointer mt-2 mb-2">
@@ -107,19 +100,16 @@ export default function RosterModal({ selectedRoster, onClose }) {
           </span>
         </label>
 
-        {/* Verkleinerte Löschen-Schaltfläche */}
-        <button
-          className="p-2 rounded-md bg-red-800 text-white font-bold hover:bg-red-700 active:bg-red-900 focus:outline-none"
-          onClick={handleDelete}
-        >
-          Dienstplan löschen
-        </button>
+        {/* Löschen-Button */}
+        <ButtonRed onClick={handleDelete} text="Dienstplan löschen" />
 
         {/* Modalfenster für Bestätigung */}
         {showConfirmation && (
           <div className="fixed inset-0 bg-opacity-70 bg-gray-800 flex justify-center items-center">
             <div className="bg-white p-4 rounded-md">
-              <p className="text-gray-800">Möchten Sie den Dienstplan wirklich löschen?</p>
+              <p className="text-gray-800">
+                Möchten Sie den Dienstplan wirklich löschen?
+              </p>
               <div className="flex gap-2 mt-4">
                 <button
                   className="p-2 rounded-md bg-red-800 text-white font-bold hover:bg-red-700 active:bg-red-900 focus:outline-none"
