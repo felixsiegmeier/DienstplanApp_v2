@@ -9,8 +9,6 @@ import Config from "../models/Config";
 
 const PageContext = createContext({});
 
-// ... Importe wie zuvor ...
-
 export const PageContextProvider = ({ children }) => {
   const [doctors, setDoctors] = useState([]);
   const [rosters, setRosters] = useState([]);

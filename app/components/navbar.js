@@ -33,7 +33,7 @@ export default function Navbar() {
           <div className={`text-sm ${!isMobile ? "flex-grow" : null}`}>
             <NavButton href="/doctors" title="Ärzte" />
             <NavButton href="/rosters" title="Dienstpläne" />
-            <NavButton href="/vacation" title="Urlaubsplan" />
+            <NavButton href="/vacations" title="Urlaubsplan" />
             <NavButton href="/configuration" title="Einstellungen" />
             <button
               onClick={() => {

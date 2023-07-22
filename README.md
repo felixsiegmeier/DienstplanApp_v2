@@ -206,6 +206,5 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
 
 # Nächste Schritte
 - Urlaubsplan implementieren
-	- Klasse
-	- API-Endpunkte
+	- Vacations in den context laden
 	- page
