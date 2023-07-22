@@ -4,7 +4,7 @@ import Vacation from "@/app/models/Vacation";
 import { useState, useEffect } from "react";
 
 export default function VacationsRow({ doctor, year, month, index }) {
-  const { vacations, setVacations } = usePageContext();
+  const { vacations, setVacations, user } = usePageContext();
   const [mouseDown, setMouseDown] = useState(false);
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
@@ -126,10 +126,10 @@ export default function VacationsRow({ doctor, year, month, index }) {
   return (
     <tr className={`select-none transition-all duration-300 ${background}`}>
       <td className="px-4 py-2 text-center">{doctor.name}</td>
-      <td className="px-4 py-2 text-center">
+      <td className="px-4 py-2 text-center flex justify-center">
         {days.map((day) => (
           <div
-            className={`w-6 h-6 rounded-sm ml-1 inline-flex justify-center cursor-pointer ${
+            className={`w-8 h-8 rounded-sm mx-1 cursor-pointer flex items-center justify-center ${
               vacations.some(
                 (vacation) =>
                   vacation.date.getTime() === day.getTime() &&
@@ -143,9 +143,9 @@ export default function VacationsRow({ doctor, year, month, index }) {
                 : ""
             } ${day.getDay() === 0 || day.getDay() === 6 ? "opacity-40" : ""}`}
             key={day.getDate()}
-            onMouseDown={() => handleMouseDown(day, doctor)}
-            onMouseUp={() => handleMouseUp(day, doctor)}
-            onMouseOver={() => handleMouseOver(day, doctor)}
+            onMouseDown={() => {(user.isAdmin || doctor._id === user._id) && handleMouseDown(day, doctor)}}
+            onMouseUp={() => {(user.isAdmin || doctor._id === user._id) && handleMouseUp(day, doctor)}}
+            onMouseOver={() => {(user.isAdmin || doctor._id === user._id) && handleMouseOver(day, doctor)}}
           >
             {day.getDate()}
           </div>
@@ -153,4 +153,7 @@ export default function VacationsRow({ doctor, year, month, index }) {
       </td>
     </tr>
   );
+  
+  
+  
 }

@@ -3,7 +3,7 @@ import VacationsRowMobile from "./VacationsRowMobile";
 import VacationsRow from "./VacationsRow";
 import React from "react";
 
-export default function VacationsTable({ year, month }) {
+export default function VacationsTable({ month, year }) {
   const { doctors, isMobile } = usePageContext();
 
   // Funktion zum Sortieren der Doctors nach Gruppen und Namen und Gruppieren nach Gruppen
@@ -63,8 +63,8 @@ export default function VacationsTable({ year, month }) {
                   key={doctor._id}
                   doctor={doctor}
                   index={index}
-                  year={year}
                   month={month}
+                  year={year}
                 />
               ) : (
                 <VacationsRow
