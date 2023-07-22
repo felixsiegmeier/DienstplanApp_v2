@@ -33,7 +33,7 @@ export async function POST(request) {
   });
 
   const insertDataJson = await insertData.json();
-  return new Response(insertDataJson);
+  return new Response(JSON.stringify(insertDataJson));
 }
 
 // Eine DELETE-Anfrage zum Löschen eines Vacation-Datensatzes

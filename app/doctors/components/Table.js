@@ -20,7 +20,7 @@ export default function Table() {
   };
 
   return (
-    <table className="w-full border-collapse">
+    <table className="w-[90%] border-collapse">
       <thead>
         <tr>
           <th className="px-4 py-2 text-gray-200 select-none">Name</th>

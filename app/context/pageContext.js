@@ -47,7 +47,7 @@ export const PageContextProvider = ({ children }) => {
           fetch(`/api/doctors?userGroupId=${userGroupId}`),
           fetch(`/api/rosters?userGroupId=${userGroupId}`),
           fetch(`/api/config?_id=${userGroupId}`),
-          fetch(`/api/vacations?_id=${userGroupId}`),
+          fetch(`/api/vacations?userGroupId=${userGroupId}`),
         ]);
 
       // Verarbeite die erhaltenen Daten und erstelle entsprechende Objekte

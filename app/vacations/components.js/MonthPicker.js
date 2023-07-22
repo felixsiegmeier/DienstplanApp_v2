@@ -36,7 +36,7 @@ const MonthPicker = ({ onChange }) => {
     const monthName = months[d.getMonth()];
     const formattedYear = d.getFullYear();
     // Die Werte für Monat und Jahr werden über die onChange-Prop an die übergeordnete Komponente weitergegeben
-    onChange(monthName, formattedYear);
+    onChange(month, formattedYear);
   }, [month, year, months, onChange]);
 
   // Funktion zum Verringern des Monats
