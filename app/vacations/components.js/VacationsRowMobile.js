@@ -18,6 +18,17 @@ export default function VacationsRowMobile({ doctor, year, month, index }) {
     }
   );
 
+  function dayEntryClass(day, doctor) {
+    const isSelected = selectedDoctor === doctor._id && dateInArray(day, selectedDays);
+    const isVacation = vacations.some(
+      (vacation) => vacation.date.getTime() === day.getTime() && vacation.doctorId === doctor._id
+    );
+  
+    return `w-[90%] h-10 rounded-sm ml-1 cursor-pointer ${
+      isVacation ? "bg-cyan-600 hover:bg-cyan-700" : "bg-slate-500 hover:bg-slate-600"
+    } ${isSelected ? "ring ring-orange-500" : ""} ${day.getDay() === 0 || day.getDay() === 6 ? "opacity-40" : ""}`;
+  }
+
   useEffect(() => {
     function handleWindowMouseUp() {
       if (mouseDown) {
@@ -138,19 +149,7 @@ export default function VacationsRowMobile({ doctor, year, month, index }) {
           <div className="px-4 py-2 text-center select-none flex flex-col gap-1 items-center justify-center">
             {days.map((day) => (
               <div
-                className={`w-[90%] h-10 rounded-sm ml-1 cursor-pointer ${
-                  vacations.some(
-                    (vacation) =>
-                      vacation.date.getTime() === day.getTime() &&
-                      vacation.doctorId === doctor._id
-                  )
-                    ? "bg-cyan-600 hover:bg-cyan-700"
-                    : "bg-slate-500 hover:bg-slate-600"
-                } ${
-                  dateInArray(day, selectedDays)
-                    ? "ring ring-orange-500"
-                    : ""
-                } ${day.getDay() === 0 || day.getDay() === 6 ? "opacity-40" : ""}`}
+                className={dayEntryClass(day, doctor)}
                 key={day.getDate()}
                 onMouseDown={() => (user.isAdmin || doctor._id === user._id) && handleMouseDown(day, doctor)}
                 onMouseUp={() => (user.isAdmin || doctor._id === user._id) && handleMouseUp(day, doctor)}

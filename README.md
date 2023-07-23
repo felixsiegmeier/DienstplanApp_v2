@@ -206,7 +206,4 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
   Das muss ich für die Dienstpläne und die Ärzte auch noch implementieren und die Aktualisierung vom Server entsprechend löschen (toggleContextUpdateFromDatabase())
 
 # Nächste Schritte
-- Urlaubsplan implementieren
-	- page
-		- Doctors per Button-Klick einfügen
-		- Anzeige für Urlaube kreieren
+- Wunschliste implementieren

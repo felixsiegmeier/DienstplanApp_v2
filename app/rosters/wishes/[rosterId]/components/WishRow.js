@@ -1,21 +1,16 @@
-"use client";
-import { usePageContext } from "@/app/context/pageContext";
-import Vacation from "@/app/models/Vacation";
+"use client"
 import { useState, useEffect } from "react";
+import { usePageContext } from "@/app/context/pageContext";
+import React from "react";
 
-export default function VacationsRow({ doctor, year, month, index }) {
-  const { vacations, setVacations, user } = usePageContext();
+export default function WishRow({ doctor, index, roster }) {
+  const { user, vacations } = usePageContext();
   const [mouseDown, setMouseDown] = useState(false);
   const [selectedDays, setSelectedDays] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
 
-  // Erstelle das Array "days" und fülle es mit den Date()-Objekten für jeden Tag des Monats
-  const days = Array.from(
-    { length: new Date(year, month + 1, 0).getDate() },
-    (_, i) => {
-      return new Date(Date.UTC(year, month, i + 1));
-    }
-  );
+  // Erstelle das Array "days", welches alle Daten des Monats enhält
+  const days = roster.days.map(day => day.date);
 
   // Definiert die Hintergrundfarbe der Tabellenzeile für wechselndes Muster
   const background = index % 2 === 0 ? "" : "bg-slate-800";
@@ -26,11 +21,30 @@ export default function VacationsRow({ doctor, year, month, index }) {
     const isVacation = vacations.some(
       (vacation) => vacation.date.getTime() === day.getTime() && vacation.doctorId === doctor._id
     );
+    const isBlacklisted = doctor?.blacklist?.some(wish => wish.getTime() === day.getTime());
+    const isGreenlisted = doctor?.greenlist?.some(wish => wish.getTime() === day.getTime());
   
-    return `w-8 h-8 rounded-sm mx-1 cursor-pointer flex items-center justify-center ${
-      isVacation ? "bg-cyan-600 hover:bg-cyan-700" : "bg-slate-500 hover:bg-slate-600"
-    } ${isSelected ? "ring ring-orange-500" : ""} ${day.getDay() === 0 || day.getDay() === 6 ? "opacity-40" : ""}`;
+    let bgColorClass = "bg-slate-500 hover:bg-slate-600";
+    let ringColorClass = "";
+  
+    if (isBlacklisted) {
+      bgColorClass = "bg-red-500 hover:bg-red-600";
+    } else if (isGreenlisted) {
+      bgColorClass = "bg-green-500 hover:bg-green-600";
+    } else if (isVacation) {
+      bgColorClass = "bg-pink-500 hover:bg-pink-600";
+    }
+  
+    if (isSelected) {
+      ringColorClass = "ring ring-orange-500";
+    }
+  
+    const opacityClass = day.getDay() === 0 || day.getDay() === 6 || roster.days.find(d => d.date.getTime() === day.getTime()).holiday ? "opacity-40" : "";
+  
+    return `w-8 h-8 rounded-sm mx-1 cursor-pointer flex items-center justify-center ${bgColorClass} ${ringColorClass} ${opacityClass}`;
   }
+  
+   
 
   useEffect(() => {
     function handleWindowMouseUp() {
@@ -45,7 +59,6 @@ export default function VacationsRow({ doctor, year, month, index }) {
 
     window.addEventListener("mouseup", handleWindowMouseUp);
 
-    // Wichtig: Entferne den Event Listener, wenn die Komponente entladen wird
     return () => {
       window.removeEventListener("mouseup", handleWindowMouseUp);
     };
@@ -77,54 +90,55 @@ export default function VacationsRow({ doctor, year, month, index }) {
 
   function handleMouseUp(day, doctor) {
     setMouseDown(false);
-
-    // Überprüfe, ob die ausgewählten Tage bereits in den Urlauben für den ausgewählten Arzt vorhanden sind
-    const existingVacations = selectedDays.map((selectedDay) =>
-      vacations.find(
-        (vacation) =>
-          vacation.date.getTime() === selectedDay.getTime() &&
-          vacation.doctorId === doctor._id
-      )
-    );
-
-    // Wenn alle ausgewählten Tage vorhanden sind, lösche sie
-    if (
-      selectedDoctor === doctor._id &&
-      existingVacations.every((vacation) => vacation)
-    ) {
-      selectedDays.forEach((selectedDay) => {
-        const vacationToDelete = vacations.find(
-          (vacation) =>
-            vacation.date.getTime() === selectedDay.getTime() &&
-            vacation.doctorId === doctor._id
-        );
-        if (vacationToDelete) {
-          vacationToDelete.deleteSelf();
-        }
-      });
+    const selectedDaysCount = selectedDays.length;
+  
+    // Funktion zum Prüfen, ob ein Tag in der Blacklist enthalten ist
+    const isInBlacklist = (checkDay) =>
+      doctor.blacklist.some((blacklistDay) => blacklistDay.getTime() === checkDay.getTime());
+  
+    // Funktion zum Prüfen, ob ein Tag in der Greenlist enthalten ist
+    const isInGreenlist = (checkDay) =>
+      doctor.greenlist.some((greenlistDay) => greenlistDay.getTime() === checkDay.getTime());
+  
+    if (selectedDaysCount > 1) {
+      // Bei Auswahl mehrerer Tage
+      const allDaysInBlacklist = selectedDays.every((selectedDay) => isInBlacklist(selectedDay));
+  
+      if (!allDaysInBlacklist) {
+        // Füge die fehlenden Tage zur Blacklist hinzu und entferne sie aus der Greenlist
+        selectedDays.forEach((selectedDay) => {
+          if (!isInBlacklist(selectedDay)) {
+            doctor.addToDoctorBlacklist(selectedDay);
+          }
+        });
+      } else {
+        // Entferne alle ausgewählten Tage von der Blacklist
+        selectedDays.forEach((selectedDay) => {
+          doctor.removeFromDoctorBlacklist(selectedDay);
+        });
+      }
     } else {
-      // Füge die ausgewählten Tage hinzu, falls sie noch nicht vorhanden sind
-      selectedDays.forEach((selectedDay) => {
-        const vacationExists = vacations.some(
-          (vacation) =>
-            vacation.date.getTime() === selectedDay.getTime() &&
-            vacation.doctorId === doctor._id
-        );
-
-        if (!vacationExists) {
-          new Vacation({
-            date: selectedDay,
-            userGroupId: doctor.userGroupId,
-            doctorId: doctor._id,
-            setParentArray: setVacations,
-          });
+      // Bei Auswahl eines einzelnen Tages
+      const selectedDay = selectedDays[0];
+  
+      if (!isInBlacklist(selectedDay)) {
+        if (!isInGreenlist(selectedDay)) {
+          // Füge den Tag zur Blacklist hinzu
+          doctor.addToDoctorBlacklist(selectedDay);
+        } else {
+          // Entferne den Tag von der Greenlist
+          doctor.removeFromDoctorGreenlist(selectedDay);
         }
-      });
+      } else {
+        // Entferne den Tag von der Blacklist und füge ihn zur Greenlist hinzu
+        doctor.addToDoctorGreenlist(selectedDay);
+      }
     }
-
+  
     setSelectedDays([]);
     setSelectedDoctor(null);
   }
+  
 
   // Handle MouseOver to select multiple days while the mouse is held down
   function handleMouseOver(day, doctor) {

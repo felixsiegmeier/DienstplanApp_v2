@@ -28,14 +28,14 @@ export default class Roster {
     this.setParentArray = setParentArray;
   }
 
-  async updateDatabase(property, value) {
+  async updateDatabase(property) {
     try {
       await fetch("/api/rosters", {
         method: "PUT",
         body: JSON.stringify({
           id: this._id,
           property,
-          value,
+          value: this[property],
         }),
       });
     } catch (error) {
@@ -46,37 +46,37 @@ export default class Roster {
   async toggleVisible() {
     this.visible = !this.visible;
     this.updateParentArray();
-    await this.updateDatabase("visible", this.visible);
+    await this.updateDatabase("visible");
   }
 
   async toggleWishOpen() {
     this.wishOpen = !this.wishOpen;
     this.updateParentArray();
-    await this.updateDatabase("wishOpen", this.wishOpen);
+    await this.updateDatabase("wishOpen");
   }
 
   async addDoctor(doctor) {
     this.doctors.push(doctor);
     this.updateParentArray();
-    await this.updateDatabase("doctors", this.doctors);
+    await this.updateDatabase("doctors");
   }
 
   async removeDoctor(doctorId) {
     this.doctors = this.doctors.filter((doctor) => doctor._id !== doctorId);
     this.updateParentArray();
-    await this.updateDatabase("doctors", this.doctors);
+    await this.updateDatabase("doctors");
   }
 
   async addDay(newDay) {
     this.days.push(newDay);
     this.updateParentArray();
-    await this.updateDatabase("days", this.days);
+    await this.updateDatabase("days");
   }
 
   async addToChangelog(date, change, name) {
     this.changelog.push({ date, change, name });
     this.updateParentArray();
-    await this.updateDatabase("changelog", this.changelog);
+    await this.updateDatabase("changelog");
   }
 
   updateParentArray() {
