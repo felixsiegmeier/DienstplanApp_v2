@@ -5,6 +5,7 @@ import React from "react";
 import WishRowMobile from "./components/WishRowMobile";
 import WishRow from "./components/WishRow";
 import Doctor from "@/app/models/Doctor";
+import ButtonCyan from "@/app/components/ButtonCyan";
 
 export default function Wishes({ params }) {
   const { rosters, isMobile, doctors } = usePageContext();
@@ -105,6 +106,7 @@ export default function Wishes({ params }) {
           )}
         </tbody>
       </table>
+      <ButtonCyan className={`mt-8 ${isMobile ? "mb-8" : "mb-20"}`} text="Zum Dienstplan" onClick={() => router.push(`/rosters/${roster._id}`)} />
     </div>
   );
 }

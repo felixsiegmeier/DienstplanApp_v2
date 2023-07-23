@@ -2,7 +2,7 @@ export default class RosterDay{
     constructor({
         date,
         holiday,
-        dutyColumns = [],
+        dutyColumns = {},
         value = 0,
         updateParentArray,
         updateDatabase

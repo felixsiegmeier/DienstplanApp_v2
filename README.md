@@ -206,4 +206,4 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
   Das muss ich für die Dienstpläne und die Ärzte auch noch implementieren und die Aktualisierung vom Server entsprechend löschen (toggleContextUpdateFromDatabase())
 
 # Nächste Schritte
-- Wunschliste implementieren
+- RosterGridRow bugfixen - GPT war leider zu blöd, die eine Funktion in die andere umzuschreiben und hat die Referenzen alle durcheinander gehauen (so gibt es bspw. kein globales "day" im code und day.vacations gibt es schon recht nicht)

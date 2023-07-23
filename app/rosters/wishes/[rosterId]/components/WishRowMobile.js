@@ -85,6 +85,7 @@ export default function WishRowMobile({ doctor, index, roster }) {
     return false;
   }
 
+  // Damit wird festgelegt, ob das Grid mit den Wünschen dieses doctor angezeigt wird
   function toggleWishDays() {
     setShowWishDays((prevState) => !prevState);
   }
