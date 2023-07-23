@@ -18,7 +18,7 @@ export default class RosterDay{
     async updateDuty(dutyColumn, assignment) {
         this.dutyColumns[dutyColumn] = assignment;
         this.updateParentArray();
-        await this.updateDatabase("days", this.days);
+        await this.updateDatabase("days");
       }
     
 }

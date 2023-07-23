@@ -1,0 +1,122 @@
+import React, { useEffect, useRef, useState } from "react";
+import { usePageContext } from "@/app/context/pageContext";
+
+export default function DoctorDropdown({ roster, day, activeField, setActiveField, handleSelectDoctor, background }) {
+  const dropdownRef = useRef(null);
+  const { vacations, config } = usePageContext();
+  const [selectedDoctors, setSelectedDoctors] = useState([]);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setActiveField(null);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const textColorClass = (doctor) => {
+    if (isGreenListed(doctor, day)) return "text-green-600";
+    if (isBlackListedOrOnVacation(doctor, day)) return "line-through";
+    if (isRed(doctor, day)) return "text-red-600";
+    if (isYellow(doctor, day)) return "text-yellow-600";
+    return "";
+  };
+
+  const isGreenListed = (doctor, day) => {
+    return doctor.greenlist.some((greenlistDay) => greenlistDay.getTime() === day.date.getTime());
+  };
+
+  const isBlackListedOrOnVacation = (doctor, day) => {
+    return (
+      doctor.blacklist.some((blacklistDay) => blacklistDay.getTime() === day.date.getTime()) ||
+      vacations.some((vacation) => vacation.date.getTime() === day.date.getTime() && vacation.doctorId === doctor._id)
+    );
+  };
+
+  const isRed = (doctor, day) => {
+    const previousDay = new Date(day.date);
+    previousDay.setDate(day.date.getDate() - 1);
+    const nextDay = new Date(day.date);
+    nextDay.setDate(day.date.getDate() + 1);
+
+    return (
+      doctor.dutyColumns.some((column) => day.dutyColumns[column]?.includes(doctor._id)) ||
+      doctor.dutyColumns.some((column) => {
+        const prevDayDuties = roster.days.find((day) => day.date.getTime() === previousDay.getTime())?.dutyColumns[column];
+        const nextDayDuties = roster.days.find((day) => day.date.getTime() === nextDay.getTime())?.dutyColumns[column];
+        return (prevDayDuties && prevDayDuties.includes(doctor._id)) || (nextDayDuties && nextDayDuties.includes(doctor._id));
+      })
+    );
+  };
+
+  const isYellow = (doctor, day) => {
+    const twoDaysBefore = new Date(day.date);
+    twoDaysBefore.setDate(day.date.getDate() - 2);
+    const twoDaysAfter = new Date(day.date);
+    twoDaysAfter.setDate(day.date.getDate() + 2);
+
+    return (
+      doctor.dutyColumns.some((column) => {
+        const twoDaysBeforeDuties = roster.days.find((day) => day.date.getTime() === twoDaysBefore.getTime())?.dutyColumns[column];
+        const twoDaysAfterDuties = roster.days.find((day) => day.date.getTime() === twoDaysAfter.getTime())?.dutyColumns[column];
+        return (twoDaysBeforeDuties && twoDaysBeforeDuties.includes(doctor._id)) || (twoDaysAfterDuties && twoDaysAfterDuties.includes(doctor._id));
+      })
+    );
+  };
+
+  const canTakeDuty = (doctor) => {
+    // Überprüfen, ob der Doctor die Dienstreihe belegen kann
+    return doctor.dutyColumns.includes(activeField);
+  };
+
+  const handleDoctorClick = (doctorName) => {
+    if (selectedDoctors.length === 0) {
+        handleSelectDoctor(activeField, doctorName);
+      setSelectedDoctors([doctorName]);
+    } else if (selectedDoctors.length === 1) {
+        handleSelectDoctor(activeField, `+${doctorName}`)
+      setSelectedDoctors((prevSelected) => [...prevSelected, doctorName]);
+      setTimeout(() => {
+        setActiveField(null);
+      }, 300);
+    }
+  };
+
+  const sortedDoctors = roster.doctors.sort((a, b) => {
+    const getColorPriority = (doctor) => {
+      if (isGreenListed(doctor, day)) return 1;
+      if (!canTakeDuty(doctor)) return 6; // Ärzte, die die Dienstreihe nicht belegen können, erhalten höhere Priorität
+      if (isRed(doctor, day)) return 3;
+      if (isYellow(doctor, day)) return 4;
+      if (isBlackListedOrOnVacation(doctor, day)) return 5;
+      return 2; // Ärzte, die die Dienstreihe belegen können, erhalten niedrigere Priorität
+    };
+
+    const colorPriorityA = getColorPriority(a);
+    const colorPriorityB = getColorPriority(b);
+
+    // Sortiere nach Farbpriorität
+    return colorPriorityA - colorPriorityB;
+  });
+
+  return (
+    <div className={`bg-${background} border rounded-md absolute mt-2 w-full shadow-md z-10`} ref={dropdownRef}>
+      {sortedDoctors.map((doctor) => (
+        <div
+          key={doctor._id}
+          className={`p-2 cursor-pointer ${textColorClass(doctor)} ${
+            canTakeDuty(doctor) ? "" : "opacity-50"
+          } ${selectedDoctors.includes(doctor.name) ? "bg-cyan-800" : ""} hover:bg-slate-500`}
+          onClick={() => handleDoctorClick(doctor.name)}
+        >
+          {doctor.name}
+        </div>
+      ))}
+    </div>
+  );
+}

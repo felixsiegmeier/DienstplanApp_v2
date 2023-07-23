@@ -204,6 +204,9 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
 - @app-pathing überall einführen
 - Vacation hat eine methode "addSelf", die die _id vom Server erhält und den Urlaub in das parentArray schreibt. 
   Das muss ich für die Dienstpläne und die Ärzte auch noch implementieren und die Aktualisierung vom Server entsprechend löschen (toggleContextUpdateFromDatabase())
+- hover-Effekt zu den Namen in der mobile-Ansicht von Vacations und Wishes hinzufügen (wie bei doctors schon vorhanden)
 
 # Nächste Schritte
-- RosterGridRow bugfixen - GPT war leider zu blöd, die eine Funktion in die andere umzuschreiben und hat die Referenzen alle durcheinander gehauen (so gibt es bspw. kein globales "day" im code und day.vacations gibt es schon recht nicht)
+- dafür sorgen, dass DoctorDropdown nicht den Namen, sondern die ID übergibt
+- den Eintrag in die Datenbank übertragen => Dafür nicht mehr den State-Hook "values" in RosterTableRow bearbeiten sondern den Context!
+- Zusammenfassung implementieren
