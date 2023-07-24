@@ -9,8 +9,8 @@ export default function RosterTableRow({ day, roster, index }) {
   const [activeField, setActiveField] = useState(null);
 
   const handleSelectDoctor = (fieldName, doctorName) => {
-    console.log(doctorName)
     setValues((prevValues) => ({ ...prevValues, [fieldName]: doctorName }));
+    console.log(day)
   };
 
   const handleFocus = (fieldName) => {
@@ -36,7 +36,7 @@ export default function RosterTableRow({ day, roster, index }) {
               />
             ) : (
               <DoctorInput
-                dutyColumn={dutyColumn}
+                dutyColumn={dutyColumn.name}
                 roster={roster}
                 day={day}
                 values={values}

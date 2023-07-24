@@ -207,6 +207,7 @@ Der Algorithmus wird zur Erstellung des Dienstplans verwendet. Hier soll der Abl
 - hover-Effekt zu den Namen in der mobile-Ansicht von Vacations und Wishes hinzufügen (wie bei doctors schon vorhanden)
 
 # Nächste Schritte
+- Doppelklick auf Namen ermöglichen => direkt zuweisen
 - dafür sorgen, dass DoctorDropdown nicht den Namen, sondern die ID übergibt
 - den Eintrag in die Datenbank übertragen => Dafür nicht mehr den State-Hook "values" in RosterTableRow bearbeiten sondern den Context!
 - Zusammenfassung implementieren

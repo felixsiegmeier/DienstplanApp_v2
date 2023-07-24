@@ -74,16 +74,19 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
     return doctor.dutyColumns.includes(activeField);
   };
 
-  const handleDoctorClick = (doctorName) => {
+  const handleDoctorClick = (doctor) => {
     if (selectedDoctors.length === 0) {
-        handleSelectDoctor(activeField, doctorName);
-      setSelectedDoctors([doctorName]);
-    } else if (selectedDoctors.length === 1) {
-        handleSelectDoctor(activeField, `+${doctorName}`)
-      setSelectedDoctors((prevSelected) => [...prevSelected, doctorName]);
+        handleSelectDoctor(activeField, doctor._id);
+      setSelectedDoctors([doctor.name]);
       setTimeout(() => {
         setActiveField(null);
-      }, 300);
+      }, 1500);
+    } else if (selectedDoctors.length === 1) {
+        handleSelectDoctor(activeField, `/${doctor._id}`)
+      setSelectedDoctors((prevSelected) => [...prevSelected, doctor.name]);
+      setTimeout(() => {
+        setActiveField(null);
+      }, 200);
     }
   };
 
@@ -106,13 +109,20 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
 
   return (
     <div className={`bg-${background} border rounded-md absolute mt-2 w-full shadow-md z-10`} ref={dropdownRef}>
+    <div
+          key={"???"}
+          className={`p-2 cursor-pointer select-none ${selectedDoctors.includes("???") ? "bg-cyan-800" : ""} hover:bg-slate-500`}
+          onClick={() => handleDoctorClick({name: "???", _id: "???"})}
+        >
+          ???
+        </div>
       {sortedDoctors.map((doctor) => (
         <div
           key={doctor._id}
-          className={`p-2 cursor-pointer ${textColorClass(doctor)} ${
+          className={`p-2 cursor-pointer select-none ${textColorClass(doctor)} ${
             canTakeDuty(doctor) ? "" : "opacity-50"
           } ${selectedDoctors.includes(doctor.name) ? "bg-cyan-800" : ""} hover:bg-slate-500`}
-          onClick={() => handleDoctorClick(doctor.name)}
+          onClick={() => handleDoctorClick(doctor)}
         >
           {doctor.name}
         </div>
