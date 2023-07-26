@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { usePageContext } from "../context/pageContext";
+import { usePageContext } from "../context/pageContext"; 
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const {setUser} = usePageContext();
+  const router = useRouter();
 
   async function handler() {
     const response = await fetch("/api/login", {
@@ -15,6 +17,7 @@ export default function Login() {
     });
     const data = await response.json();
     if (data){
+        router.push("/")
         setUser({_id: data._id, userGroupId: data.userGroupId})
     }else {
       setError("Benutzername oder Passwort falsch!");

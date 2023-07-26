@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { usePageContext } from "@/app/context/pageContext";
 
-export default function DoctorDropdown({ roster, day, activeField, setActiveField, handleSelectDoctor, background }) {
+export default function DoctorDropdown({ roster, day, activeField, setActiveField, background }) {
   const dropdownRef = useRef(null);
-  const { vacations, config } = usePageContext();
+  const { vacations } = usePageContext();
   const [selectedDoctors, setSelectedDoctors] = useState([]);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
     nextDay.setDate(day.date.getDate() + 1);
 
     return (
-      doctor.dutyColumns.some((column) => day.dutyColumns[column]?.includes(doctor._id)) ||
+      //doctor.dutyColumns.some((column) => day.dutyColumns[column]?.includes(doctor._id)) ||
       doctor.dutyColumns.some((column) => {
         const prevDayDuties = roster.days.find((day) => day.date.getTime() === previousDay.getTime())?.dutyColumns[column];
         const nextDayDuties = roster.days.find((day) => day.date.getTime() === nextDay.getTime())?.dutyColumns[column];
@@ -76,13 +76,15 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
 
   const handleDoctorClick = (doctor) => {
     if (selectedDoctors.length === 0) {
-        handleSelectDoctor(activeField, doctor._id);
+        //handleSelectDoctor(activeField, doctor._id);
+        day.updateDuty(activeField, doctor._id)
       setSelectedDoctors([doctor.name]);
       setTimeout(() => {
         setActiveField(null);
       }, 1500);
     } else if (selectedDoctors.length === 1) {
-        handleSelectDoctor(activeField, `/${doctor._id}`)
+        //handleSelectDoctor(activeField, `/${doctor._id}`)
+        day.updateDuty(activeField, `/${doctor._id}`)
       setSelectedDoctors((prevSelected) => [...prevSelected, doctor.name]);
       setTimeout(() => {
         setActiveField(null);
@@ -90,22 +92,24 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
     }
   };
 
-  const sortedDoctors = roster.doctors.sort((a, b) => {
+  const sortedDoctors = useMemo(() => {
     const getColorPriority = (doctor) => {
       if (isGreenListed(doctor, day)) return 1;
-      if (!canTakeDuty(doctor)) return 6; // Ärzte, die die Dienstreihe nicht belegen können, erhalten höhere Priorität
+      if (!canTakeDuty(doctor)) return 6;
       if (isRed(doctor, day)) return 3;
       if (isYellow(doctor, day)) return 4;
       if (isBlackListedOrOnVacation(doctor, day)) return 5;
-      return 2; // Ärzte, die die Dienstreihe belegen können, erhalten niedrigere Priorität
+      return 2;
     };
 
-    const colorPriorityA = getColorPriority(a);
-    const colorPriorityB = getColorPriority(b);
+    return roster.doctors.slice().sort((a, b) => {
+      const colorPriorityA = getColorPriority(a);
+      const colorPriorityB = getColorPriority(b);
 
-    // Sortiere nach Farbpriorität
-    return colorPriorityA - colorPriorityB;
-  });
+      // Sortiere nach Farbpriorität
+      return colorPriorityA - colorPriorityB;
+    });
+  }, [roster.doctors]);
 
   return (
     <div className={`bg-${background} border rounded-md absolute mt-2 w-full shadow-md z-10`} ref={dropdownRef}>

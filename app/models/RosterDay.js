@@ -16,7 +16,15 @@ export default class RosterDay{
     }
 
     async updateDuty(dutyColumn, assignment) {
-        this.dutyColumns[dutyColumn] = assignment;
+        if (assignment[0] === "/"){
+            if(this.dutyColumns[dutyColumn].length === 1 && !this.dutyColumns[dutyColumn].includes(assignment.slice(1))){
+                this.dutyColumns[dutyColumn].push(assignment.slice(1))
+            } else {
+                this.dutyColumns[dutyColumn] = [assignment.slice(1)]
+            }
+        } else {
+            this.dutyColumns[dutyColumn] = [assignment]
+        }
         this.updateParentArray();
         await this.updateDatabase("days");
       }

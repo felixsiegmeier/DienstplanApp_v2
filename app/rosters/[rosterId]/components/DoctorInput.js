@@ -1,6 +1,12 @@
 import React from "react";
 
-export default function DoctorInput({ dutyColumn, roster, day, values, handleFocus, background }) {
+export default function DoctorInput({
+  dutyColumn,
+  roster,
+  day,
+  handleFocus,
+  background,
+}) {
   const doctorIds = day.dutyColumns[dutyColumn];
   const doctorNames = doctorIds
     .map((doctorId) => {
@@ -11,12 +17,12 @@ export default function DoctorInput({ dutyColumn, roster, day, values, handleFoc
     .join(" / ");
 
   return (
-    <input
-      type="text"
+    <div
       className={`w-full p-1 rounded-md focus:outline-none bg-${background} border-none cursor-pointer`}
-      value={values[dutyColumn] || doctorNames}
-      readOnly
-      onFocus={() => handleFocus(dutyColumn)}
-    />
+      onClick={() => handleFocus(dutyColumn)}
+      style={{ whiteSpace: "nowrap" }} // Verhindert Zeilenumbruch
+    >
+      {doctorNames || "\u00A0"} {/* Verwende ein Leerzeichen, um die Zelle zu füllen, wenn doctorNames leer ist */}
+    </div>
   );
 }

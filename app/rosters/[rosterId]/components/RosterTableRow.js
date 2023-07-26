@@ -5,7 +5,6 @@ import DoctorDropdown from "./DoctorDropdown";
 
 export default function RosterTableRow({ day, roster, index }) {
   const { config } = usePageContext();
-  const [values, setValues] = useState({});
   const [activeField, setActiveField] = useState(null);
 
   const handleSelectDoctor = (fieldName, doctorName) => {
@@ -31,7 +30,6 @@ export default function RosterTableRow({ day, roster, index }) {
                 day={day}
                 activeField={activeField}
                 setActiveField={setActiveField}
-                handleSelectDoctor={handleSelectDoctor}
                 background={background}
               />
             ) : (
@@ -39,7 +37,6 @@ export default function RosterTableRow({ day, roster, index }) {
                 dutyColumn={dutyColumn.name}
                 roster={roster}
                 day={day}
-                values={values}
                 handleFocus={handleFocus}
                 background={background}
               />
