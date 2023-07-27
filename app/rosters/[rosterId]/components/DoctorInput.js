@@ -5,7 +5,6 @@ export default function DoctorInput({
   roster,
   day,
   handleFocus,
-  background,
 }) {
   const doctorIds = day.dutyColumns[dutyColumn];
   const doctorNames = doctorIds
@@ -16,9 +15,16 @@ export default function DoctorInput({
     .filter(Boolean)
     .join(" / ");
 
+    const freeDays = () => {
+      if(day.date.getDay() === 0) return true;
+      if(day.date.getDay() === 6) return true;
+      if(day.holiday) return true;
+      return false; 
+    }
+
   return (
     <div
-      className={`w-full p-1 rounded-md focus:outline-none bg-${background} border-none cursor-pointer`}
+      className={`w-full focus:outline-none pr-2 pl-2 text-slate-300 text-md border-none cursor-pointer ${freeDays() ? "bg-slate-900" : "bg-slate-800"}`}
       onClick={() => handleFocus(dutyColumn)}
       style={{ whiteSpace: "nowrap" }} // Verhindert Zeilenumbruch
     >

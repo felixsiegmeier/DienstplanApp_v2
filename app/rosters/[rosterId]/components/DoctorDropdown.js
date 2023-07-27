@@ -110,6 +110,7 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
       return colorPriorityA - colorPriorityB;
     });
   }, [roster.doctors]);
+  
 
   return (
     <div className={`bg-${background} border rounded-md absolute mt-2 w-full shadow-md z-10`} ref={dropdownRef}>
@@ -123,7 +124,7 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
       {sortedDoctors.map((doctor) => (
         <div
           key={doctor._id}
-          className={`p-2 cursor-pointer select-none ${textColorClass(doctor)} ${
+          className={`p-0.5 cursor-pointer select-none ${textColorClass(doctor)} ${
             canTakeDuty(doctor) ? "" : "opacity-50"
           } ${selectedDoctors.includes(doctor.name) ? "bg-cyan-800" : ""} hover:bg-slate-500`}
           onClick={() => handleDoctorClick(doctor)}

@@ -7,11 +7,6 @@ export default function RosterTableRow({ day, roster, index }) {
   const { config } = usePageContext();
   const [activeField, setActiveField] = useState(null);
 
-  const handleSelectDoctor = (fieldName, doctorName) => {
-    setValues((prevValues) => ({ ...prevValues, [fieldName]: doctorName }));
-    console.log(day)
-  };
-
   const handleFocus = (fieldName) => {
     setActiveField(fieldName);
   };
