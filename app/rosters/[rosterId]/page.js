@@ -6,6 +6,7 @@ import RosterGrid from "./components/RosterGrid";
 import Doctor from "@/app/models/Doctor";
 import RosterTable from "./components/RosterTable";
 import ButtonCyan from "@/app/components/ButtonCyan";
+import Summary from "./components/Summary";
 
 export default function Roster({ params }) {
   const { doctors, rosters, isMobile } = usePageContext();
@@ -75,6 +76,7 @@ export default function Roster({ params }) {
       <ButtonCyan className={"mt-4"} text={"Plan automatisch füllen"} onClick={() => console.log("Work in Progress")} />
       {!isMobile && <RosterGrid roster={roster}  />}
       <RosterTable roster={roster} />
+      < Summary roster={roster} />
       </div>
   );
 }

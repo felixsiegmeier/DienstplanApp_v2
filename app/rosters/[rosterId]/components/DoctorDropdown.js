@@ -113,7 +113,7 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
   
 
   return (
-    <div className={`bg-${background} border rounded-md absolute mt-2 w-full shadow-md z-10`} ref={dropdownRef}>
+    <div className={`bg-${background} border rounded-md absolute mt-2 w-full shadow-md z-10 h-80 overflow-y-auto`} ref={dropdownRef}>
     <div
           key={"???"}
           className={`p-2 cursor-pointer select-none ${selectedDoctors.includes("???") ? "bg-cyan-800" : ""} hover:bg-slate-500`}

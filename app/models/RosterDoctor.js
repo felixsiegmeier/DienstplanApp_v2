@@ -5,9 +5,6 @@ export default class RosterDoctor{
         dutyColumns = [],
         blacklist = [],
         greenlist = [],
-        duties = [],
-        weekends = [],
-        points = 0,
         updateParentArray,
         updateDatabase
     }){
@@ -16,9 +13,6 @@ export default class RosterDoctor{
         this.dutyColumns = dutyColumns;
         this.blacklist = blacklist.map(wish => new Date(wish));
         this.greenlist = greenlist.map(wish => new Date(wish));
-        this.duties = duties.map(wish => new Date(wish));
-        this.weekends = weekends.map(wish => new Date(wish));
-        this.points = points;
         this. updateParentArray = updateParentArray;
         this.updateDatabase = updateDatabase;
     }
@@ -60,60 +54,4 @@ export default class RosterDoctor{
     isInGreenlist(entry) {
       return this.greenlist.some((greenlistDay) => greenlistDay.getTime() === entry.getTime());
     }
-  
-  async addToDoctorDuties(entry) {
-    this.duties.push(entry);
-    this.updateParentArray();
-    await this.updateDatabase("doctors");
   }
-  
-  async removeFromDoctorDuties(entryToRemove) {
-    this.duties = this.duties.filter((entry) => entry !== entryToRemove);
-    this.updateParentArray();
-    await this.updateDatabase("doctors");
-  }
-  
-  async addToDoctorWeekends(entry) {
-    this.weekends.push(entry);
-    this.updateParentArray();
-    await this.updateDatabase("doctors");
-  }
-  
-  async removeFromDoctorWeekends(entryToRemove) {
-    this.weekends = this.weekends.filter((entry) => entry !== entryToRemove);
-    this.updateParentArray();
-    await this.updateDatabase("doctors");
-  }
-  
-  async addPointsToDoctor(points) {
-    this.points += points;
-    this.updateParentArray();
-    await this.updateDatabase("doctors");
-  }
-  
-  async subtractPointsFromDoctor(points) {
-    this.points -= points;
-    this.updateParentArray();
-    await this.updateDatabase("doctors");
-  }
-  
-}
-
-
-
-
-
-
-/**
-     // Funktion zum Hinzufügen eines Tages zur Blacklist und Entfernen aus der Greenlist
-    const addToBlacklistAndRemoveFromGreenlist = (addDay) => {
-      doctor.addToDoctorBlacklist(addDay);
-      doctor.removeFromDoctorGreenlist(addDay);
-    };
-  
-    // Funktion zum Hinzufügen eines Tages zur Greenlist und Entfernen aus der Blacklist
-    const addToGreenlistAndRemoveFromBlacklist = (addDay) => {
-      doctor.addToDoctorGreenlist(addDay);
-      doctor.removeFromDoctorBlacklist(addDay);
-    };
- */
