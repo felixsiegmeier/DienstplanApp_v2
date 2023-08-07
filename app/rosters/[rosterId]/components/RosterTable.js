@@ -11,7 +11,7 @@ export default function RosterTable({roster}) {
   
         return (
           <div className="text-center mt-4 flex flex-col justify-center items-center">
-            <h1 className="text-2xl font-bold">{`Grid-Ansicht für ${formatDate(
+            <h1 className="text-2xl font-bold">{`Tabellen-Ansicht für ${formatDate(
               roster.month,
               roster.year
             )}`}</h1>

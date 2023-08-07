@@ -1,3 +1,4 @@
+import Changelog from "../rosters/[rosterId]/components/Changelog";
 import RosterDay from "./RosterDay";
 import RosterDoctor from "./RosterDoctor";
 
@@ -12,7 +13,10 @@ export default class Roster {
     visible = true,
     wishOpen = true,
     days = [],
-    changelog = [],
+    changelog = {
+      resetTimestamp: new Date.now(),
+      log: []
+    },
     setParentArray,
   }) {
     this._id = _id;
@@ -71,10 +75,16 @@ export default class Roster {
     this.days.push(newDay);
     this.updateParentArray();
     await this.updateDatabase("days");
+  }j
+
+  async addToChangelog({date, dutyColumn, oldAssignment, newAssignment}) {
+    this.changelog.log.push(new Changelog({date, dutyColumn, oldAssignment, newAssignment}));
+    this.updateParentArray();
+    await this.updateDatabase("changelog");
   }
 
-  async addToChangelog(date, change, name) {
-    this.changelog.push({ date, change, name });
+  async resetChangelog() {
+    this.changelog.resetTimestamp = new Date.now();
     this.updateParentArray();
     await this.updateDatabase("changelog");
   }
