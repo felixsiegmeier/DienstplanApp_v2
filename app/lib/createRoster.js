@@ -2,6 +2,7 @@ import Roster from "../models/Roster";
 import RosterDay from "../models/RosterDay";
 
 export default async function createRoster({ name, month, year, config }) {
+  console.log("creating roster")
   const roster = new Roster({
     name: name,
     year: year,

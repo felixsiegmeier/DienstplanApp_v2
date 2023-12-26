@@ -7,6 +7,7 @@ export default class Config {
       dutyColumns,
       groups,
       setState,
+      superAdmin
     }) {
       this._id = _id;
       this.admins = admins;
@@ -15,6 +16,7 @@ export default class Config {
       this.dutyColumns = dutyColumns;
       this.groups = groups;
       this.setState = setState;
+      this.superAdmin = superAdmin;
     }
   
     async updateDatabase(property, value) {
@@ -56,8 +58,25 @@ export default class Config {
       this.setState(this);
     }
   
-    async addDutyColumn(dutyColumn) {
-      this.dutyColumns.push(dutyColumn);
+    async addDutyColumnByName(name) {
+      this.dutyColumns.push(
+        {
+          name: name,
+          autoAssignment: false,
+          present: true
+        }
+      );
+      await this.updateDatabase("dutyColumns", this.dutyColumns);
+      this.setState(this);
+    }
+
+    async toggleDutyColumnPresentByName(name) {
+      this.dutyColumns = this.dutyColumns.map((dutyColumn) => {
+        if (dutyColumn.name === name) {
+          dutyColumn.present = !dutyColumn.present;
+        }
+        return dutyColumn;
+      });
       await this.updateDatabase("dutyColumns", this.dutyColumns);
       this.setState(this);
     }
@@ -67,6 +86,30 @@ export default class Config {
       await this.updateDatabase("dutyColumns", this.dutyColumns);
       this.setState(this);
     }
+
+    async changeDutyColumnPosition(name, direction) {
+      const index = this.dutyColumns.findIndex((column) => column.name === name);
+
+      if (index === -1) {
+          console.error(`DutyColumn mit dem Namen ${name} wurde nicht gefunden.`);
+          return;
+      }
+
+      const newIndex = direction === "up" ? index - 1 : index + 1;
+
+      if (newIndex < 0 || newIndex >= this.dutyColumns.length) {
+          console.error("Die Verschiebung ist nicht möglich, da die neue Position außerhalb des Arrays liegt.");
+          return;
+      }
+
+      // Tausche die DutyColumns aus
+      const temp = this.dutyColumns[index];
+      this.dutyColumns[index] = this.dutyColumns[newIndex];
+      this.dutyColumns[newIndex] = temp;
+
+      await this.updateDatabase("dutyColumns", this.dutyColumns);
+      this.setState(this);
+  }
   
     async toggleDutyColumnAutoAssignmentByName(name) {
       this.dutyColumns = this.dutyColumns.map((dutyColumn) => {
@@ -79,8 +122,12 @@ export default class Config {
       this.setState(this);
     }
   
-    async addGroup(group) {
-      this.groups.push(group);
+    async addGroupByName(name) {
+      this.groups.push({
+        name: name,
+        maximum: 99,
+        exclusion: []
+      });
       await this.updateDatabase("groups", this.groups);
       this.setState(this);
     }

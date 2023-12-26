@@ -1,11 +1,6 @@
 "use client";
 import { useState } from "react";
 import { usePageContext } from "../../context/pageContext";
-import BoxGroups from "./boxComponents/BoxGroups";
-import BoxDutyColumns from "./boxComponents/BoxDutyColumns";
-import Box12h from "./boxComponents/Box12h";
-import BoxNonWorkingDays from "./boxComponents/BoxNonWorkingDays";
-import BoxMaximum from "./boxComponents/BoxMaximum";
 import ButtonRed from "@/app/components/ButtonRed";
 import ButtonCyan from "@/app/components/ButtonCyan";
 import BoxManager from "./boxComponents/BoxManager";
@@ -20,29 +15,8 @@ export default function ToggleBox({ doctor, isOpen, toggle }) {
     <tr>
       <td colSpan="4" className="p-2">
         <div className="select-none bg-slate-600 rounded-md p-4 animate-fade-in">
-          <p className="text-lg underline">
-            Welchen Gruppen gehört {doctor.name} an?
-          </p>
-          <BoxGroups doctor={doctor}/>
-          <p className="text-lg underline">
-            Welchen Dienstreihen gehört {doctor.name} an?
-          </p>
-          <BoxDutyColumns doctor={doctor}/>
-          <p className="text-lg underline">
-            Macht {doctor.name} nur 12-Stunden-Dienste?
-          </p>
-          <Box12h doctor={doctor}/>
-          <p className="text-lg underline">
-            An welchen Wochentagen soll {doctor.name} keine Dienste machen?
-          </p>
-          <div className="flex justify-center">
-          <BoxNonWorkingDays doctor={doctor}/>
-          </div>
-          <p className="text-lg underline">
-            Gibt es für {doctor.name} eine Dienstobergrenze?
-          </p>
-          <BoxMaximum doctor={doctor}/>
-          {user.isAdmin && <BoxManager doctor={doctor}/>}
+        {!user.isAdmin && "Verwaltungsaccount"}
+        {user.isAdmin && <BoxManager doctor={doctor}/>}
           <br/>
            <DeleteModal doctor={doctor} open={openDeleteModal} setOpen={setOpenDeleteModal} />
            {user.isAdmin && <div className="flex justify-center"><ButtonRed onClick={() => setOpenDeleteModal(true)} text={`${doctor.name} löschen`} /></div>}

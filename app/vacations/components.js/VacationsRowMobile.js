@@ -140,7 +140,7 @@ export default function VacationsRowMobile({ doctor, year, month, index }) {
 
   const background = index % 2 === 0 ? "" : "bg-slate-800";
   return (
-    <tr className={background}>
+    <tr className={`hover:bg-slate-600 ${background}`}>
       <td>
         <div className="px-4 py-2 text-center cursor-pointer select-none" onClick={toggleVacationDays}>
           {doctor.name}

@@ -1,6 +1,7 @@
-import Changelog from "../rosters/[rosterId]/components/Changelog";
+import Changelog from "@/app/models/Changelog";
 import RosterDay from "./RosterDay";
 import RosterDoctor from "./RosterDoctor";
+import compareArrays from "../lib/compareArrays";
 
 export default class Roster {
   constructor({
@@ -14,7 +15,7 @@ export default class Roster {
     wishOpen = true,
     days = [],
     changelog = {
-      resetTimestamp: new Date.now(),
+      resetTimestamp: Date.now(),
       log: []
     },
     setParentArray,
@@ -27,7 +28,7 @@ export default class Roster {
     this.doctors = doctors.map((doctorData) => new RosterDoctor({...doctorData, updateParentArray: this.updateParentArray.bind(this), updateDatabase: this.updateDatabase.bind(this)}));
     this.visible = visible;
     this.wishOpen = wishOpen;
-    this.days = days.map((dayData) => new RosterDay({...dayData, updateParentArray: this.updateParentArray.bind(this), updateDatabase: this.updateDatabase.bind(this)}));
+    this.days = days.map((dayData) => new RosterDay({...dayData, updateParentArray: this.updateParentArray.bind(this), updateDatabase: this.updateDatabase.bind(this), addToChangelog: this.addToChangelog.bind(this)}));
     this.changelog = changelog;
     this.setParentArray = setParentArray;
   }
@@ -77,14 +78,16 @@ export default class Roster {
     await this.updateDatabase("days");
   }j
 
-  async addToChangelog({date, dutyColumn, oldAssignment, newAssignment}) {
-    this.changelog.log.push(new Changelog({date, dutyColumn, oldAssignment, newAssignment}));
+  async addToChangelog({date, dutyColumn, assignment, oldAssignment, user}) {
+    if(compareArrays(assignment, oldAssignment)){return}
+    const newChangelog = new Changelog({date, dutyColumn, oldAssignment, assignment, user})
+    this.changelog.log.push(newChangelog);
     this.updateParentArray();
     await this.updateDatabase("changelog");
   }
 
   async resetChangelog() {
-    this.changelog.resetTimestamp = new Date.now();
+    this.changelog.resetTimestamp = Date.now();
     this.updateParentArray();
     await this.updateDatabase("changelog");
   }

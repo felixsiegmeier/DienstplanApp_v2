@@ -10,7 +10,7 @@ export default function BoxMaximum({ doctor }) {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <label className="relative inline-flex items-center cursor-pointer mt-2 mb-2">
         <input
           type="checkbox"

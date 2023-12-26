@@ -2,6 +2,7 @@
 import {useState } from "react";
 import TableRow from "./TableRow";
 import { usePageContext } from "../../context/pageContext";
+import TableRowManager from "./TableRowManager";
 
 export default function Table() {
   const [openIndex, setOpenIndex] = useState(-1);
@@ -30,15 +31,22 @@ export default function Table() {
         </tr>
       </thead>
       <tbody>
-        {doctors.map((doctor, index) => (
-          <TableRow
+        {doctors.map((doctor, index) => {
+          if(!doctor.isManager) {return <TableRow
+            key={doctor._id}
+            doctor={doctor}
+            index={index}
+            isOpen={index === openIndex}
+            toggle={() => toggleRow(index, doctor._id)}
+          />}
+          return <TableRowManager
             key={doctor._id}
             doctor={doctor}
             index={index}
             isOpen={index === openIndex}
             toggle={() => toggleRow(index, doctor._id)}
           />
-        ))}
+        })}
       </tbody>
     </table>
   );

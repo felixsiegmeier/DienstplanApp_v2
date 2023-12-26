@@ -3,6 +3,7 @@ export default class RosterDoctor{
         _id,
         name,
         dutyColumns = [],
+        groups = [],
         blacklist = [],
         greenlist = [],
         updateParentArray,
@@ -11,6 +12,7 @@ export default class RosterDoctor{
         this._id = _id;
         this.name = name;
         this.dutyColumns = dutyColumns;
+        this.groups = groups;
         this.blacklist = blacklist.map(wish => new Date(wish));
         this.greenlist = greenlist.map(wish => new Date(wish));
         this. updateParentArray = updateParentArray;

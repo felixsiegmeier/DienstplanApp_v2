@@ -10,7 +10,7 @@ export default function DoctorInput({
   const doctorNames = doctorIds
     .map((doctorId) => {
       const doctor = roster.doctors.find((doc) => doc._id === doctorId);
-      return doctor ? doctor.name : "";
+      return doctor ? doctor.name : (doctorIds.length > 1 ? "?" : "");
     })
     .filter(Boolean)
     .join(" / ");

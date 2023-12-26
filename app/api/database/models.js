@@ -8,6 +8,7 @@ export const doctorModel = {
   nonWorkingDays: [],
   maximum: 99,
   password: "",
+  isManager: false
 };
 
 export const doctorRosterModel = {

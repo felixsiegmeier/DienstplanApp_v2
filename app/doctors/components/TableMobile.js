@@ -2,16 +2,21 @@
 import {useState } from "react";
 import TableRowMobile from "./TableRowMobile";
 import { usePageContext } from "../../context/pageContext";
+import TableRowManagerMobile from "./TableRowManagerMobile";
 
 export default function TableMobile() {
   const [openIndex, setOpenIndex] = useState(-1);
-  const {doctors} = usePageContext();
+  const {doctors, user} = usePageContext();
 
-  const toggleRow = (index) => {
+  const toggleRow = (index, id) => {
     if (index === openIndex) {
       setOpenIndex(-1);
     } else {
-      setOpenIndex(index);
+      if(user.isAdmin | id === user._id){
+        setOpenIndex(index);
+      } else {
+        setOpenIndex(-1);
+      }
     }
   };
 
@@ -23,15 +28,22 @@ export default function TableMobile() {
         </tr>
       </thead>
       <tbody>
-        {doctors.map((doctor, index) => (
-          <TableRowMobile
+        {doctors.map((doctor, index) => {
+          if(!doctor.isManager){ return <TableRowMobile
             key={doctor.id}
             doctor={doctor}
             index={index}
             isOpen={index === openIndex}
-            toggle={() => toggleRow(index)}
+            toggle={() => toggleRow(index, doctor._id)}
+          />}
+          return <TableRowManagerMobile
+            key={doctor.id}
+            doctor={doctor}
+            index={index}
+            isOpen={index === openIndex}
+            toggle={() => toggleRow(index, doctor._id)}
           />
-        ))}
+        })}
       </tbody>
     </table>
   );

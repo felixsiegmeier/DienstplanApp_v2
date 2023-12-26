@@ -3,12 +3,14 @@ export default class Changelog{
         date,
         dutyColumn,
         oldAssignment,
-        newAssignment
+        assignment, 
+        user
     }){
         this.date = date;
         this.dutyColumn = dutyColumn;
         this.oldAssignment = oldAssignment;
-        this.newAssignment = newAssignment;
-        this.timestamp = new Date.now();
+        this.assignment = assignment;
+        this.user = user.name;
+        this.timestamp = Date.now();
     }
 }

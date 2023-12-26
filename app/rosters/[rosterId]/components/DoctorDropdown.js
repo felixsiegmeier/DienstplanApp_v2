@@ -3,7 +3,7 @@ import { usePageContext } from "@/app/context/pageContext";
 
 export default function DoctorDropdown({ roster, day, activeField, setActiveField, background }) {
   const dropdownRef = useRef(null);
-  const { vacations } = usePageContext();
+  const { vacations, user } = usePageContext();
   const [selectedDoctors, setSelectedDoctors] = useState([]);
 
   useEffect(() => {
@@ -28,12 +28,12 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
   };
 
   const isGreenListed = (doctor, day) => {
-    return doctor.greenlist.some((greenlistDay) => greenlistDay.getTime() === day.date.getTime());
+    return doctor?.greenlist?.some((greenlistDay) => greenlistDay.getTime() === day.date.getTime());
   };
 
   const isBlackListedOrOnVacation = (doctor, day) => {
     return (
-      doctor.blacklist.some((blacklistDay) => blacklistDay.getTime() === day.date.getTime()) ||
+      doctor?.blacklist?.some((blacklistDay) => blacklistDay.getTime() === day.date.getTime()) ||
       vacations.some((vacation) => vacation.date.getTime() === day.date.getTime() && vacation.doctorId === doctor._id)
     );
   };
@@ -46,7 +46,7 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
 
     return (
       //doctor.dutyColumns.some((column) => day.dutyColumns[column]?.includes(doctor._id)) ||
-      doctor.dutyColumns.some((column) => {
+      doctor?.dutyColumns.some((column) => {
         const prevDayDuties = roster.days.find((day) => day.date.getTime() === previousDay.getTime())?.dutyColumns[column];
         const nextDayDuties = roster.days.find((day) => day.date.getTime() === nextDay.getTime())?.dutyColumns[column];
         return (prevDayDuties && prevDayDuties.includes(doctor._id)) || (nextDayDuties && nextDayDuties.includes(doctor._id));
@@ -61,7 +61,7 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
     twoDaysAfter.setDate(day.date.getDate() + 2);
 
     return (
-      doctor.dutyColumns.some((column) => {
+      doctor?.dutyColumns.some((column) => {
         const twoDaysBeforeDuties = roster.days.find((day) => day.date.getTime() === twoDaysBefore.getTime())?.dutyColumns[column];
         const twoDaysAfterDuties = roster.days.find((day) => day.date.getTime() === twoDaysAfter.getTime())?.dutyColumns[column];
         return (twoDaysBeforeDuties && twoDaysBeforeDuties.includes(doctor._id)) || (twoDaysAfterDuties && twoDaysAfterDuties.includes(doctor._id));
@@ -71,20 +71,20 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
 
   const canTakeDuty = (doctor) => {
     // Überprüfen, ob der Doctor die Dienstreihe belegen kann
-    return doctor.dutyColumns.includes(activeField);
+    return doctor?.dutyColumns.includes(activeField);
   };
 
   const handleDoctorClick = (doctor) => {
     if (selectedDoctors.length === 0) {
         //handleSelectDoctor(activeField, doctor._id);
-        day.updateDuty(activeField, doctor._id)
+        day.updateDuty({dutyColumn: activeField, assignment: doctor._id, user: user})
       setSelectedDoctors([doctor.name]);
       setTimeout(() => {
         setActiveField(null);
       }, 1500);
     } else if (selectedDoctors.length === 1) {
         //handleSelectDoctor(activeField, `/${doctor._id}`)
-        day.updateDuty(activeField, `/${doctor._id}`)
+        day.updateDuty({dutyColumn: activeField, assignment: `/${doctor._id}`, user: user})
       setSelectedDoctors((prevSelected) => [...prevSelected, doctor.name]);
       setTimeout(() => {
         setActiveField(null);
@@ -121,8 +121,9 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
         >
           ???
         </div>
-      {sortedDoctors.map((doctor) => (
-        <div
+      {sortedDoctors.map((doctor) => {
+        if(doctor.isManager) return
+        return <div
           key={doctor._id}
           className={`p-0.5 cursor-pointer select-none ${textColorClass(doctor)} ${
             canTakeDuty(doctor) ? "" : "opacity-50"
@@ -131,7 +132,7 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
         >
           {doctor.name}
         </div>
-      ))}
+      })}
     </div>
   );
 }

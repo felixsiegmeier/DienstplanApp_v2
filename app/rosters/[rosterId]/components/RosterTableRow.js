@@ -15,7 +15,7 @@ export default function RosterTableRow({ day, roster, index }) {
 
   return (
     <tr>
-      <td>{day.date.toLocaleDateString()}</td>
+      <td className="text-center">{String(day.date.getDate()).padStart(2,"0")}</td>
       {config.dutyColumns.map((dutyColumn) => (
         <td key={dutyColumn.name}>
           <div className="relative">

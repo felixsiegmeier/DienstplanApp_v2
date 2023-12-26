@@ -1,7 +1,34 @@
 "use client"
+import { useEffect } from "react";
 import ButtonPlate from "./button-plate";
+import { usePageContext } from "../context/pageContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function MainPage() {
+
+  const {user, loading} = usePageContext();
+
+  const checkPassword = async () => {
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: user.alias, password: user.alias}),
+    });
+    const data = await response.json();
+    if (data) {
+      toast.error("Bitte Passwort ändern!", {position: toast.POSITION.TOP_CENTER})
+    } else {
+      return false;
+    }
+  };
+  
+  useEffect(() => {
+    if(!loading){
+      checkPassword();
+    }
+  }, [loading])
+  
 
   return (
     <main className="flex-grow ">
@@ -43,6 +70,7 @@ export default function MainPage() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </main>
   );
 }

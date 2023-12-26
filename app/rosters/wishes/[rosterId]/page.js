@@ -8,10 +8,11 @@ import Doctor from "@/app/models/Doctor";
 import ButtonCyan from "@/app/components/ButtonCyan";
 
 export default function Wishes({ params }) {
-  const { rosters, isMobile, doctors } = usePageContext();
+  const { rosters, isMobile } = usePageContext();
   const { rosterId } = params;
   const router = useRouter();
   const roster = rosters.find((roster) => rosterId === roster._id);
+  const doctors = roster.doctors
 
   if (!roster) {
     router.push("/");
@@ -22,46 +23,36 @@ export default function Wishes({ params }) {
     return `${formattedMonth}/${year}`;
   };
 
-  const updateDoctors = () => {
-    for (const doctor of doctors) {
-      const index = roster.doctors.findIndex((doc) => doc._id === doctor._id);
-      if (index === -1) {
-        roster.addDoctor(
-          new Doctor({
-            ...doctor,
-            setParentArray: roster.setParentArray.bind(roster),
-          })
-        );
-      }
-    }
-
-    // Sortiere die Ärzte entsprechend den Einträgen in ihren doctor.dutyColumns-Arrays
-    roster.doctors.sort((a, b) => {
-      const aDutyColumns = a.dutyColumns;
-      const bDutyColumns = b.dutyColumns;
-      const minLen = Math.min(aDutyColumns.length, bDutyColumns.length);
-
-      for (let i = 0; i < minLen; i++) {
-        const compareResult = aDutyColumns[i].localeCompare(bDutyColumns[i]);
-        if (compareResult !== 0) {
-          return compareResult;
-        }
-      }
-
-      // Wenn alle Einträge bis minLen identisch sind, sortiere nach der Länge der dutyColumns-Arrays
-      if (aDutyColumns.length !== bDutyColumns.length) {
-        return aDutyColumns.length - bDutyColumns.length;
-      }
-
-      // Wenn alle Einträge identisch sind, sortiere alphabetisch nach dem Namen
-      return a.name.localeCompare(b.name);
+  // Funktion zum Sortieren der Doctors nach Gruppen und Namen und Gruppieren nach Gruppen
+  const sortAndGroupDoctorsByGroupsAndNames = (doctors, groups) => {
+    // Zuerst sortiere die Doctors nach ihren Gruppen
+    doctors.sort((a, b) => {
+      const groupA = a.groups[0] || ""; // Wenn ein Doctor keine Gruppe hat, leeres String verwenden
+      const groupB = b.groups[0] || "";
+      return groups.indexOf(groupA) - groups.indexOf(groupB);
     });
 
-    // Verschiebe Ärzte mit leeren dutyColumns-Arrays ans Ende des Arrays
-    roster.doctors.sort((a, b) => (a.dutyColumns.length > 0 ? -1 : 1));
+    // Dann sortiere die Doctors innerhalb ihrer Gruppen nach ihren Namen
+    doctors.sort((a, b) => a.name.localeCompare(b.name));
+
+    // Gruppiere die Doctors nach ihren Gruppen
+    const groupedDoctors = {};
+    doctors.forEach((doctor) => {
+      const group = doctor.groups[0] || "Ohne Gruppe"; // Wenn ein Doctor keine Gruppe hat, "Ohne Gruppe" verwenden
+      if (!groupedDoctors[group]) {
+        groupedDoctors[group] = [];
+      }
+      groupedDoctors[group].push(doctor);
+    });
+
+    return groupedDoctors;
   };
 
-  updateDoctors();
+  // Hole die eindeutigen Gruppen aus doctors
+  const uniqueGroups = Array.from(new Set(doctors.flatMap((doctor) => doctor.groups)));
+
+  // Sortiere und gruppieren die Doctors nach Gruppen und Namen
+  const groupedDoctors = sortAndGroupDoctorsByGroupsAndNames(doctors, uniqueGroups);
 
   return (
     <div className="text-center mt-4 flex flex-col justify-center items-center">
@@ -81,19 +72,28 @@ export default function Wishes({ params }) {
         Urlaub
       </div>
       </div>
-      <table className="w-[90%] border-collapse mt-2">
-        <thead>
-          <tr>
-            {/* Use w-min class to set the minimum content size for the name column */}
-            <th className="px-4 py-2 text-gray-200 text-left select-none w-min"></th>
-            {!isMobile && (
-              <th className="px-4 py-2 text-gray-200 text-center select-none"></th>
-            )}
-          </tr>
-        </thead>
-        <tbody>
-          {roster.doctors.map((doctor, index) =>
-            isMobile ? (
+    <table className="w-[90%] border-collapse">
+      <thead>
+        <tr>
+          <th className="px-4 py-2 text-gray-200 text-left select-none w-min"></th>
+          {!isMobile && (
+            <th className="px-4 py-2 text-gray-200 text-center select-none"></th>
+          )}
+        </tr>
+      </thead>
+      <tbody>
+        {Object.entries(groupedDoctors).map(([group, doctorsInGroup], groupIndex) => (
+          <React.Fragment key={group}>
+            {/* Zeile für die Gruppenüberschrift */}
+            <tr>
+              <td colSpan={isMobile ? 1 : 2} className="px-4 py-2 font-bold bg-gray-900 text-white">
+                {group}
+              </td>
+            </tr>
+            {/* Zeilen für die Doctors innerhalb der Gruppe */}
+            {doctorsInGroup.map((doctor, index) => {
+              if(doctor.isManager) return
+              return (isMobile ? (
               <WishRowMobile key={doctor._id} doctor={doctor} index={index} roster={roster} />
             ) : (
               <WishRow
@@ -103,10 +103,14 @@ export default function Wishes({ params }) {
                 index={index}
               />
             )
-          )}
-        </tbody>
-      </table>
-      <ButtonCyan className={`mt-8 ${isMobile ? "mb-8" : "mb-20"}`} text="Zum Dienstplan" onClick={() => router.push(`/rosters/${roster._id}`)} />
-    </div>
+              )
+            }
+            )}
+          </React.Fragment>
+        ))}
+      </tbody>
+    </table>
+  <ButtonCyan className={`mt-8 ${isMobile ? "mb-8" : "mb-20"}`} text="Zum Dienstplan" onClick={() => router.push(`/rosters/${roster._id}`)} />
+  </div>
   );
 }

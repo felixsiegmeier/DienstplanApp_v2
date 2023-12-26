@@ -10,6 +10,7 @@ export default class Doctor {
     only12 = false,
     userGroupId,
     setParentArray,
+    isManager = false,
   }) {
     this._id = _id;
     this.alias = alias;
@@ -21,6 +22,7 @@ export default class Doctor {
     this.only12 = only12;
     this.userGroupId = userGroupId;
     this.setParentArray = setParentArray;
+    this.isManager = isManager;
   }
 
   async updateDatabase(property, value) {
@@ -88,6 +90,12 @@ export default class Doctor {
     this.only12 = !this.only12;
     this.updateDoctorsState();
     await this.updateDatabase("only12", this.only12);
+  }
+
+  async toggleIsManager() {
+    this.isManager = !this.isManager;
+    this.updateDoctorsState();
+    await this.updateDatabase("isManager", this.isManager);
   }
 
   updateDoctorsState() {

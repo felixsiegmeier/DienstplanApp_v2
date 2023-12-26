@@ -181,7 +181,7 @@ export default function WishRowMobile({ doctor, index, roster }) {
   }
 
   return (
-    <tr className={`select-none transition-all duration-300 ${background}`}>
+    <tr className={`select-none transition-all duration-300  hover:bg-slate-600 ${background}`}>
       <td>
         <div className="px-4 py-2 text-center cursor-pointer" onClick={toggleWishDays}>
           {doctor.name}

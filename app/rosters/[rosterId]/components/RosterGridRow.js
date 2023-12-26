@@ -1,8 +1,11 @@
 import React from "react";
 import { usePageContext } from "@/app/context/pageContext";
+import DutyDropDown from "./DutyDropdown";
+import { useState } from "react";
 
 export default function RosterGridRow({ doctor, index, roster }) {
   const { user, config, vacations } = usePageContext();
+  const [activeField, setActiveField] = useState(null);
 
   // Erstelle das Array "days", welches alle Daten des Monats enhält
   const days = roster.days
@@ -40,64 +43,21 @@ export default function RosterGridRow({ doctor, index, roster }) {
   }
 
   const handleClick = async (day, doctor) => {
-    const columnNames = Object.keys(day.dutyColumns);
-    const doctorId = doctor._id;
-
-    for (const column of columnNames) {
-      const columnIndex = day.dutyColumns[column].indexOf(doctorId);
-
-      if (columnIndex !== -1) {
-        // If the doctor is already assigned, remove them from the dutyColumn
-        day.dutyColumns[column].splice(columnIndex, 1);
-        await day.updateDuty(column, day.dutyColumns[column]);
+    for (const column of Object.keys(day.dutyColumns)) {
+      if (day.dutyColumns[column].includes(doctor._id)) {
+        day.updateDuty({dutyColumn: column, assignment: "", user: user});
         return;
       }
     }
-
-    // Find the first compatible dutyColumn to assign the doctor
-    let targetColumn;
-    for (const column of columnNames) {
-      if (
-        doctor.dutyColumns.includes(column) &&
-        day.dutyColumns[column].length === 0
-      ) {
-        targetColumn = column;
-        break;
-      }
+    setActiveField(day.date)
     }
-
-    if (!targetColumn) {
-        for (const column of columnNames) {
-            if (
-              doctor.dutyColumns.includes(column) &&
-              day.dutyColumns[column].length === 1
-            ) {
-              targetColumn = column;
-              break;
-            }
-          }
-      }
-
-    if (!targetColumn) {
-      for (const column of columnNames) {
-        if (doctor.dutyColumns.includes(column)) {
-          targetColumn = column;
-          break;
-        }
-      }
-    }
-
-    if (targetColumn) {
-        day.dutyColumns[targetColumn].push(doctorId);
-      await day.updateDuty(targetColumn, day.dutyColumns[targetColumn]);
-    }
-  };
 
   return (
     <tr className={`select-none transition-all duration-300 ${background}`}>
       <td className="px-4 py-2 text-center">{doctor.name}</td>
       <td className="px-4 py-2 text-center flex justify-center">
-        {days.map((day) => (
+        {days.map((day) => {return (
+          <div>
           <div
             className={dayEntryClass(day, doctor)}
             onClick={() => handleClick(day, doctor)}
@@ -105,7 +65,17 @@ export default function RosterGridRow({ doctor, index, roster }) {
           >
             {day.date.getDate()}
           </div>
-        ))}
+          {activeField === day.date && <DutyDropDown
+                roster={roster}
+                day={day}
+                activeField={activeField}
+                setActiveField={setActiveField}
+                doctor={doctor}
+              />}
+          </div>
+        )
+        }
+        )}
       </td>
     </tr>
   );

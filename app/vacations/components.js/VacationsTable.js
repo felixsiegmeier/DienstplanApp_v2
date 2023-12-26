@@ -38,7 +38,7 @@ export default function VacationsTable({ month, year }) {
   const groupedDoctors = sortAndGroupDoctorsByGroupsAndNames(doctors, uniqueGroups);
 
   return (
-    <table className="w-[90%] border-collapse">
+    <table className="w-[90%] border-collapse text-center">
       <thead>
         <tr>
           <th className="px-4 py-2 text-gray-200 text-left select-none w-min"></th>
@@ -57,8 +57,9 @@ export default function VacationsTable({ month, year }) {
               </td>
             </tr>
             {/* Zeilen für die Doctors innerhalb der Gruppe */}
-            {doctorsInGroup.map((doctor, index) =>
-              isMobile ? (
+            {doctorsInGroup.map((doctor, index) => {
+              if(doctor.isManager) return
+              return (isMobile ? (
                 <VacationsRowMobile
                   key={doctor._id}
                   doctor={doctor}
@@ -75,6 +76,8 @@ export default function VacationsTable({ month, year }) {
                   year={year}
                 />
               )
+              )
+            }
             )}
           </React.Fragment>
         ))}

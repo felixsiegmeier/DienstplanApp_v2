@@ -7,6 +7,7 @@ import Doctor from "@/app/models/Doctor";
 import RosterTable from "./components/RosterTable";
 import ButtonCyan from "@/app/components/ButtonCyan";
 import Summary from "./components/Summary";
+import Changelog from "./components/Changelog";
 
 export default function Roster({ params }) {
   const { doctors, rosters, isMobile } = usePageContext();
@@ -77,6 +78,7 @@ export default function Roster({ params }) {
       {!isMobile && <RosterGrid roster={roster}  />}
       <RosterTable roster={roster} />
       < Summary roster={roster} />
+      {!isMobile && <Changelog roster={roster} />}
       </div>
   );
 }

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 export default function RosterModal({ selectedRoster, onClose }) {
-  const { isMobile } = usePageContext();
+  const { isMobile, user } = usePageContext();
   const [showConfirmation, setShowConfirmation] = useState(false);
   const router = useRouter();
 
@@ -73,7 +73,7 @@ export default function RosterModal({ selectedRoster, onClose }) {
             text="Wünsche aufrufen"
           />
         </div>
-
+        {user.isAdmin && (<>
         <label className="relative inline-flex items-center cursor-pointer mt-2 mb-2">
           <input
             type="checkbox"
@@ -99,9 +99,10 @@ export default function RosterModal({ selectedRoster, onClose }) {
             Wünsche zulassen
           </span>
         </label>
+        </>)}
 
         {/* Löschen-Button */}
-        <ButtonRed onClick={handleDelete} text="Dienstplan löschen" />
+        {user.isAdmin && <ButtonRed onClick={handleDelete} text="Dienstplan löschen" />}
 
         {/* Modalfenster für Bestätigung */}
         {showConfirmation && (
