@@ -12,7 +12,7 @@ export default function Doctors() {
   const [openNewDoctorModal, setOpenNewDoctorModal] = useState(false);
 
   return (
-    <div className="text-center mt-4 flex flex-col items-center">
+    <div className="text-center mt-4 flex flex-col items-center select-none">
       <h1 className="text-3xl font-bold mb-4"> Ärzte </h1>
       <NewDoctorModal
         isMobile={isMobile}

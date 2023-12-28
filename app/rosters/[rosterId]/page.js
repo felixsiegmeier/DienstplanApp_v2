@@ -68,7 +68,7 @@ export default function Roster({ params }) {
   updateDoctors();
 
   return (
-    <div className="text-center mt-4 flex flex-col justify-center items-center">
+    <div className="text-center mt-4 flex flex-col justify-center select-none items-center">
       <h1 className="text-3xl font-bold">{`Dienstplan für ${formatDate(
         roster.month,
         roster.year

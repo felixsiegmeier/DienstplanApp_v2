@@ -76,6 +76,7 @@ export default function WishRow({ doctor, index, roster }) {
 
   function handleMouseDown(day, doctor) {
     setMouseDown(true);
+    if(!roster.wishOpen) return null;
     if (selectedDoctor === doctor._id) {
       // Füge den ausgewählten Tag hinzu, wenn er noch nicht im Array ist
       if (selectedDays.indexOf(day) === -1) {
@@ -90,6 +91,7 @@ export default function WishRow({ doctor, index, roster }) {
 
   function handleMouseUp(day, doctor) {
     setMouseDown(false);
+    if(!roster.wishOpen) return null;
     const selectedDaysCount = selectedDays.length;
   
     // Funktion zum Prüfen, ob ein Tag in der Blacklist enthalten ist

@@ -10,7 +10,7 @@ export default function Rosters() {
   const { config, rosters, user } = usePageContext();
   const [year, setYear] = React.useState(new Date().getFullYear());
   return (
-    <div className="flex flex-col justify-center items-center gap-4 mt-4">
+    <div className="flex flex-col justify-center items-center gap-4 mt-4 select-none">
       <div className="flex flex-col items-center">
         <p className="text-3xl font-bold text-slate-200">Dienstpläne</p>
         <div className="flex items-center text-2xl text-cyan-400">

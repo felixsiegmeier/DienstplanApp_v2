@@ -17,7 +17,7 @@ export default function Vacations() {
   };
 
   return (
-    <div className="flex justify-center flex-col items-center">
+    <div className="flex justify-center flex-col items-center select-none">
       <div className="text-center mt-4">
         <h1 className="text-3xl font-bold"> Urlaubsplan </h1>
       </div>

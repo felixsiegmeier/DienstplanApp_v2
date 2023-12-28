@@ -17,7 +17,7 @@ export default function RosterGrid({ year }) {
     "bg-fuchsia-500",
     "bg-purple-500",
   ];
-  const { isMobile, rosters } = usePageContext();
+  const { isMobile, rosters, user } = usePageContext();
   const [selectedRoster, setSelectedRoster] = useState(null)
 
   // Sort the rosters by month
@@ -38,6 +38,7 @@ export default function RosterGrid({ year }) {
         const color = colors[month % colors.length];
 
         if (roster.year !== year) return null;
+        if (!roster.visible && !user.isAdmin) return null;
 
         return (
           <div

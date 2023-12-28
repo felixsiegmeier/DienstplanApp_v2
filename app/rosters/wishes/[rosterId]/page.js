@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import WishRowMobile from "./components/WishRowMobile";
 import WishRow from "./components/WishRow";
-import Doctor from "@/app/models/Doctor";
 import ButtonCyan from "@/app/components/ButtonCyan";
 
 export default function Wishes({ params }) {
@@ -55,11 +54,12 @@ export default function Wishes({ params }) {
   const groupedDoctors = sortAndGroupDoctorsByGroupsAndNames(doctors, uniqueGroups);
 
   return (
-    <div className="text-center mt-4 flex flex-col justify-center items-center">
+    <div className="text-center mt-4 flex flex-col justify-center items-center select-none">
       <h1 className="text-3xl font-bold">{`Wünsche für ${formatDate(
         roster.month,
         roster.year
       )}`}</h1>
+      {!roster.wishOpen && <h1 className="text-2xl font-bold text-red-600 animate-bounce mt-2">Es dürfen für diesen Monat keine Wünsche mehr abgegeben werden!</h1>}
       <div className="flex gap-4 justify-center mt-4 select-none">
         <div className=" h-8 p-1 text-center bg-green-500 rounded-sm">
           Dienstwunsch

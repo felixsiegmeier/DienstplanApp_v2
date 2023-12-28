@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePageContext } from "../context/pageContext"; 
 import { useRouter } from "next/navigation";
 
@@ -17,6 +17,9 @@ export default function Login() {
     });
     const data = await response.json();
     if (data){
+        localStorage.clear();
+        localStorage.setItem("user", data._id);
+        localStorage.setItem("userGroupId", data.userGroupId)
         router.push("/")
         setUser({_id: data._id, userGroupId: data.userGroupId})
     }else {
@@ -29,6 +32,23 @@ export default function Login() {
       handler();
     }
   }
+
+  async function stayLoggedId(){
+    const storedId = localStorage.getItem("user");
+    const userGroupId = localStorage.getItem("userGroupId");
+    if(!storedId) return;
+    const response = await fetch(`/api/doctors?userGroupId=${userGroupId}`)
+    const data = await response.json();
+    if(data) console.log(data.some(obj => obj._id === storedId))
+    if(data && data.some(obj => obj._id === storedId)) {
+      router.push("/")
+      setUser({_id: storedId, userGroupId: userGroupId})
+    }
+  }
+
+  useEffect(() => {
+    stayLoggedId();
+  },[] )
 
   return (
       <div className="flex flex-col items-center">

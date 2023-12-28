@@ -45,7 +45,7 @@ export default function RosterGrid({ roster }) {
   );
 
   return (
-    <div className="text-center mt-4 flex flex-col justify-center items-center">
+    <div className="text-center mt-8 mb-8 flex flex-col justify-center items-center">
       <h1 className="text-2xl font-bold">{`Grid-Ansicht für ${formatDate(
         roster.month,
         roster.year

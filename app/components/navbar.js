@@ -37,6 +37,7 @@ export default function Navbar() {
             <NavButton href="/configuration" title="Einstellungen" />
             <button
               onClick={() => {
+                localStorage.clear();
                 setUser({_id: null, setUserGroupId: null});
               }}
               className={`block select-none mt-4 ${

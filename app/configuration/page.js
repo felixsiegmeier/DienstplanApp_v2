@@ -5,11 +5,11 @@ import HorizontalDivider from "@/app/components/HorizontalDivider";
 import PersonalConfiguration from "./components/PersonalConfiguration";
 
 export default function Configuration(){
-    const {user, loading} = usePageContext();
+    const {user, loading, isMobile} = usePageContext();
     return (
         !loading && <div>
-        {user.isAdmin && <GroupConfiguration />} 
-        {user.isAdmin && <HorizontalDivider />}
+        {user.isAdmin && !isMobile && <GroupConfiguration />} 
+        {user.isAdmin && !isMobile && <HorizontalDivider />}
         <PersonalConfiguration />
         </div>
     )
