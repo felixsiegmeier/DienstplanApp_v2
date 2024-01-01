@@ -8,9 +8,11 @@ import RosterTable from "./components/RosterTable";
 import ButtonCyan from "@/app/components/ButtonCyan";
 import Summary from "./components/Summary";
 import Changelog from "./components/Changelog";
+import Conflicts from "./components/Conflicts";
+import compareArrays from "@/app/lib/compareArrays";
 
 export default function Roster({ params }) {
-  const { doctors, rosters, isMobile } = usePageContext();
+  const { doctors, rosters, isMobile, config} = usePageContext();
   const { rosterId } = params;
   const router = useRouter();
   const roster = rosters.find((roster) => rosterId === roster._id);
@@ -37,6 +39,17 @@ export default function Roster({ params }) {
           })
         );
       }
+      doctors.forEach(dbDoctor => {
+        const rosterDoctor = roster.doctors.find(rosterDoctor => rosterDoctor._id === dbDoctor._id)
+        if(!compareArrays(dbDoctor.groups, rosterDoctor.groups)){
+          rosterDoctor.groups = dbDoctor.groups;
+          roster.updateDatabase("doctors");
+        }
+        if(!compareArrays(dbDoctor.dutyColumns, rosterDoctor.dutyColumns)){
+          rosterDoctor.dutyColumns = dbDoctor.dutyColumns;
+          roster.updateDatabase("doctors");
+        }
+      })
     }
 
     // Sortiere die Ärzte entsprechend den Einträgen in ihren doctor.dutyColumns-Arrays
@@ -77,6 +90,7 @@ export default function Roster({ params }) {
       <ButtonCyan className={"mt-4"} text={"Plan automatisch füllen"} onClick={() => console.log("Work in Progress")} />
       {!isMobile && <RosterGrid roster={roster}  />}
       <RosterTable roster={roster} />
+      < Conflicts roster={roster} config={config} doctors={doctors} />
       < Summary roster={roster} />
       {!isMobile && <Changelog roster={roster} />}
       </div>

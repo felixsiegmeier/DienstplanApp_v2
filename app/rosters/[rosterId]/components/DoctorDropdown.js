@@ -81,7 +81,7 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
       setSelectedDoctors([doctor.name]);
       setTimeout(() => {
         setActiveField(null);
-      }, 1500);
+      }, 5000);
     } else if (selectedDoctors.length === 1) {
         //handleSelectDoctor(activeField, `/${doctor._id}`)
         day.updateDuty({dutyColumn: activeField, assignment: `/${doctor._id}`, user: user})

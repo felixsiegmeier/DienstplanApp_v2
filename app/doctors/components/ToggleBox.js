@@ -11,7 +11,7 @@ import ButtonCyan from "@/app/components/ButtonCyan";
 import BoxManager from "./boxComponents/BoxManager";
 
 export default function ToggleBox({ doctor, isOpen, toggle }) {
-  const { user } = usePageContext();
+  const { user, config } = usePageContext();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
     if(!isOpen) return null;
@@ -45,7 +45,7 @@ export default function ToggleBox({ doctor, isOpen, toggle }) {
           {user.isAdmin && <BoxManager doctor={doctor}/>}
           <br/>
            <DeleteModal doctor={doctor} open={openDeleteModal} setOpen={setOpenDeleteModal} />
-           {user.isAdmin && <div className="flex justify-center"><ButtonRed onClick={() => setOpenDeleteModal(true)} text={`${doctor.name} löschen`} /></div>}
+           {user.isAdmin && !config.admins.includes(doctor._id) && <div className="flex justify-center"><ButtonRed onClick={() => setOpenDeleteModal(true)} text={`${doctor.name} löschen`} /></div>}
         </div>
       </td>
     </tr>
