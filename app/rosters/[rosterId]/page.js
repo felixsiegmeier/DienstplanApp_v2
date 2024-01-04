@@ -91,7 +91,7 @@ export default function Roster({ params }) {
         roster.year
       )}`}</h1>
       <ButtonCyan className={"mt-4"} text={"Zu den Wünschen"} onClick={() => router.push(`/rosters/wishes/${roster._id}`)} />
-      <ButtonCyan className={"mt-4"} text={"Plan automatisch füllen"} onClick={() => fillRoster(roster)} />
+      {/* <ButtonCyan className={"mt-4"} text={"Plan automatisch füllen"} onClick={() => fillRoster(roster)} /> */}
       {!isMobile && <RosterGrid roster={roster}  />}
       <RosterTable roster={roster} />
       < Conflicts roster={roster} config={config} doctors={doctors} />
