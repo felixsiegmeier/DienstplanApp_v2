@@ -3,7 +3,7 @@ import { usePageContext } from "@/app/context/pageContext";
 
 export default function DoctorDropdown({ roster, day, activeField, setActiveField, background }) {
   const dropdownRef = useRef(null);
-  const { vacations, user } = usePageContext();
+  const { vacations, user, doctors } = usePageContext();
   const [selectedDoctors, setSelectedDoctors] = useState([]);
 
   useEffect(() => {
@@ -122,7 +122,7 @@ export default function DoctorDropdown({ roster, day, activeField, setActiveFiel
           ???
         </div>
       {sortedDoctors.map((doctor) => {
-        if(doctor.isManager) return
+        if(doctors.find(doc => doc._id === doctor._id)?.isManager) return
         return <div
           key={doctor._id}
           className={`p-0.5 cursor-pointer select-none ${textColorClass(doctor)} ${

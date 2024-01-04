@@ -3,13 +3,14 @@ import { usePageContext } from "@/app/context/pageContext";
 import { useRouter } from "next/navigation";
 import React from "react";
 import RosterGrid from "./components/RosterGrid";
-import Doctor from "@/app/models/Doctor";
 import RosterTable from "./components/RosterTable";
 import ButtonCyan from "@/app/components/ButtonCyan";
 import Summary from "./components/Summary";
 import Changelog from "./components/Changelog";
 import Conflicts from "./components/Conflicts";
 import compareArrays from "@/app/lib/compareArrays";
+import RosterDoctor from "@/app/models/RosterDoctor";
+import fillRoster from "@/app/lib/fillRoster";
 
 export default function Roster({ params }) {
   const { doctors, rosters, isMobile, config} = usePageContext();
@@ -33,14 +34,15 @@ export default function Roster({ params }) {
       const index = roster.doctors.findIndex((doc) => doc._id === doctor._id);
       if (index === -1) {
         roster.addDoctor(
-          new Doctor({
+          new RosterDoctor({
             ...doctor,
-            setParentArray: roster.setParentArray.bind(roster),
+            updateParentArray: roster.setParentArray.bind(roster),
           })
         );
       }
       doctors.forEach(dbDoctor => {
         const rosterDoctor = roster.doctors.find(rosterDoctor => rosterDoctor._id === dbDoctor._id)
+        try{
         if(!compareArrays(dbDoctor.groups, rosterDoctor.groups)){
           rosterDoctor.groups = dbDoctor.groups;
           roster.updateDatabase("doctors");
@@ -48,6 +50,8 @@ export default function Roster({ params }) {
         if(!compareArrays(dbDoctor.dutyColumns, rosterDoctor.dutyColumns)){
           rosterDoctor.dutyColumns = dbDoctor.dutyColumns;
           roster.updateDatabase("doctors");
+        }}catch{
+          console.info("rosterDoctor nicht gefunden - vermutlich gelöscht")
         }
       })
     }
@@ -87,7 +91,7 @@ export default function Roster({ params }) {
         roster.year
       )}`}</h1>
       <ButtonCyan className={"mt-4"} text={"Zu den Wünschen"} onClick={() => router.push(`/rosters/wishes/${roster._id}`)} />
-      <ButtonCyan className={"mt-4"} text={"Plan automatisch füllen"} onClick={() => console.log("Work in Progress")} />
+      <ButtonCyan className={"mt-4"} text={"Plan automatisch füllen"} onClick={() => fillRoster(roster)} />
       {!isMobile && <RosterGrid roster={roster}  />}
       <RosterTable roster={roster} />
       < Conflicts roster={roster} config={config} doctors={doctors} />
