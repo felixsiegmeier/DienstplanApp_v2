@@ -4,6 +4,9 @@ export default class RosterDoctor{
         name,
         dutyColumns = [],
         groups = [],
+        only12 = false,
+        isManager = false,
+        nonWorkingDays = [],
         blacklist = [],
         greenlist = [],
         updateParentArray,
@@ -13,6 +16,9 @@ export default class RosterDoctor{
         this.name = name;
         this.dutyColumns = dutyColumns;
         this.groups = groups;
+        this.only12 = only12;
+        this.nonWorkingDays = nonWorkingDays;
+        this.isManager = isManager;
         this.blacklist = blacklist.map(wish => new Date(wish));
         this.greenlist = greenlist.map(wish => new Date(wish));
         this. updateParentArray = updateParentArray;
