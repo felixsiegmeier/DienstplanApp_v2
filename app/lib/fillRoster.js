@@ -6,7 +6,6 @@ function backtrackAlgorithm({ roster, config, vacations }) {
     (nextDuty.date.getDate() === 28 || nextDuty.date.getDate() === 29) &&
     nextDuty.dutyColumn === "IMC"
   ) {
-    console.log(nextDuty);
   }
 
   // Ende wenn voll
@@ -29,6 +28,7 @@ function backtrackAlgorithm({ roster, config, vacations }) {
 function getNextDuty({ roster, config, vacations }) {
   const duty = {
     doctors: [],
+    availabilityRatio: 1,
     dutyColumn: null,
     date: null,
   };
@@ -55,18 +55,21 @@ function getNextDuty({ roster, config, vacations }) {
   const avgDutySpacing = (roster.days.length / avgDutys) * 0.8;
   roster.days.forEach((day) => {
     dutyColumns.forEach((dutyColumn) => {
-      const doctors = getDutyDoctors({
+      const allDoctorsCount = roster.doctors.filter(doctor => doctor.dutyColumns.includes(dutyColumn))?.length;
+      const availableDoctors = getDutyDoctors({
         roster,
         day,
         dutyColumn,
         config,
         vacations,
       });
+      const availabilityRatio = (allDoctorsCount && availableDoctors) ? availableDoctors.length/allDoctorsCount : false
       if (
-        doctors &&
-        (doctors.length < duty.doctors.length || duty.doctors.length === 0)
+        availabilityRatio &&
+        (availabilityRatio < duty.availabilityRatio || duty.availabilityRatio === 1)
       ) {
-        duty.doctors = doctors;
+        duty.doctors = availableDoctors;
+        duty.availabilityRatio = availabilityRatio;
         duty.dutyColumn = dutyColumn;
         duty.date = day.date;
       }
@@ -184,7 +187,10 @@ function checkGroups({ doctor, day, config, roster }) {
         }
       });
     });
-    if (count >= group.maximum) return true;
+    const maximum = config.groups
+    .find((g) => g.name === group)
+    .maximum
+    if (count >= maximum) return true;
     return false;
   });
 }
@@ -235,7 +241,7 @@ function sortedDuty({
       doctorId,
       duty,
     });
-    console.log("fitnessWeekendCountFactor", fitnessWeekendCountFactor);
+    // console.log("fitnessWeekendCountFactor", fitnessWeekendCountFactor);
     let fitnessDutySpacingFactor = fitnessDutySpacing({
       roster,
       duty,
@@ -254,6 +260,8 @@ function sortedDuty({
     });
     //console.log("fitnessGroupAvailabilityFactor",fitnessGroupAvailabilityFactor)
 
+    let fitnessGreenlistFactor = fitnessGreenlist({roster, doctorId, duty});
+
     let totalFitness =
       fitnessDutyCountFactor +
       fitnessHighValueDutysFactor +
@@ -261,13 +269,17 @@ function sortedDuty({
       fitnessWeekendCountFactor +
       fitnessDutySpacingFactor +
       fitnessGroupsFactor +
-      fitnessGroupAvailabilityFactor;
+      fitnessGroupAvailabilityFactor + 
+      fitnessGreenlistFactor;
 
     doctorsWithFitness.push({ doctorId, totalFitness });
   });
   const sortedDoctors = doctorsWithFitness
-    .sort((a, b) => b.fitness - a.fitness)
+    .sort((a, b) => a.totalFitness - b.totalFitness)
     .map((doc) => doc.doctorId);
+
+  const sortedDoctorLog = doctorsWithFitness
+    .sort((a, b) => a.totalFitness - b.totalFitness)
   duty.doctors = sortedDoctors;
   return duty;
 }
@@ -305,10 +317,9 @@ function fitnessHighValueDutys({ roster, doctorId, avgHighValueDays }) {
   return fitness;
 }
 
-function fitnessWeekendSpacing({ roster, doctorId, duty }) {
-  // +10 für jedes aufeinander folgende Wochenende wenn duty am Wochenende ist, sonst +0
-  const weekendDays = [5, 6, 0]; // Freitag, Samstag, Sonntag (0-basiert)
-  if (!weekendDays.includes(duty.date.getDay())) return 0;
+function fitnessWeekendSpacing({ roster, doctorId, duty }) { // +50 für jedes aufeinander folgende Wochenende wenn duty am Wochenende ist, +100 für 3er-Ketten, sonst +0
+  const rosterDay = roster.days.find(day => day.date.getTime() === duty.date.getTime())
+  if (rosterDay.value === 1) return 0;
 
   let count = 0;
 
@@ -318,8 +329,9 @@ function fitnessWeekendSpacing({ roster, doctorId, duty }) {
     dutyColumns.forEach((dutyColumn) => {
       if (
         day.dutyColumns[dutyColumn].includes(doctorId) &&
-        weekendDays.includes(day.date.getDay())
-      ) {
+        day.value > 1
+        )
+      {
         dutys.push(day.date);
       }
     });
@@ -331,23 +343,27 @@ function fitnessWeekendSpacing({ roster, doctorId, duty }) {
     return timestamp1 - timestamp2;
   });
 
-  for (let i = 0; i < dutys.length - 2; i++) {
-    const currentDay = dutys[i].getDay();
-    const nextDay = dutys[i + 1].getDay();
+  for (let i = 0; i < dutys.length - 1; i++) {
 
     if (
-      dutys[i + 1] - dutys[i] > 3 * 24 * 60 * 60 * 1000 &&
-      dutys[i + 1] - dutys[i] < 9 * 24 * 60 * 60 * 1000
+      dutys[i + 1].getTime() - dutys[i].getTime() > 4 * 24 * 60 * 60 * 1000 &&
+      dutys[i + 1].getTime() - dutys[i].getTime() < 9 * 24 * 60 * 60 * 1000
     ) {
-      count += 10;
+      count += 50;
+      if (
+        dutys[i + 2] &&
+        dutys[i + 2].getTime() - dutys[i + 1].getTime() > 4 * 24 * 60 * 60 * 1000 &&
+        dutys[i + 2].getTime() - dutys[i + 1].getTime() < 9 * 24 * 60 * 60 * 1000
+      ) {
+        count += 100;
+      }
     }
   }
   const fitness = count;
   return fitness;
 }
 
-function fitnessWeekendCount({ roster, doctorId, duty }) {
-  // +3n^2 für jedes Wochenende wenn duty am Wochenende ist, sonst +0
+function fitnessWeekendCount({ roster, doctorId, duty }) { // +3n^2 für jedes Wochenende wenn duty am Wochenende ist, sonst +0
   const weekendDays = [5, 6, 0]; // Freitag, Samstag, Sonntag (0-basiert)
   if (!weekendDays.includes(duty.date.getDay())) return 0;
   const weekendDutys = [duty.date];
@@ -373,30 +389,31 @@ function fitnessWeekendCount({ roster, doctorId, duty }) {
   return fitness ** 2;
 }
 
-function fitnessDutySpacing({ roster, duty, doctorId, avgDutySpacing }) {
-  let fitness = 1;
+function fitnessDutySpacing({ roster, duty, doctorId, avgDutySpacing }) { // wenn Abstand zu einem anderen Dienst < avg dann +1 für jeden Tag Abweichung und zusätzlich +5 bei kurzem Wechsel
+  let fitness = 0;
   const millisecondsPerDay = 24 * 60 * 60 * 1000;
   const dutyTimestamp = duty.date.getTime();
   roster.days.forEach((day) => {
     const dayTimestamp = day.date.getTime();
-    const spacing = Math.abs(dayTimestamp - dayTimestamp) / millisecondsPerDay;
-    if (!(spacing < avgDutySpacing)) return;
+    const spacing = Math.abs(dayTimestamp - dutyTimestamp) / millisecondsPerDay;
+    if ((spacing > avgDutySpacing)) return;
     const dutyColumns = Object.keys(day.dutyColumns);
     dutyColumns.forEach((dutyColumn) => {
-      if (dutyColumn.includes(doctorId)) {
-        fitness = fitness * (spacing / avgDutySpacing);
+      if (day.dutyColumns[dutyColumn].includes(doctorId)) {
+        fitness = fitness + (avgDutySpacing - spacing);
+        if(spacing === 2){fitness += 5}
       }
     });
   });
   return fitness;
 }
 
-function fitnessGroups({ roster, doctorId, duty, config }) {
-  let count = 0;
+function fitnessGroups({ roster, doctorId, duty, config }) { // +1 für jeden Arzt der selben Gruppe an diesem Tag (wenn duty.date.getDay() nicht in exclusion)
+  let fitness = 0;
   const doctorGroups = roster.doctors.find(
     (doctor) => doctor._id === doctorId
   )?.groups;
-  const day = roster.days.find((day) => day.date === duty.date);
+  const day = roster.days.find((day) => day.date.getTime() === duty.date.getTime());
   const dutyColumns = Object.keys(day.dutyColumns);
   const doctorsOfDay = [];
   dutyColumns.forEach((dutyColumn) =>
@@ -414,11 +431,18 @@ function fitnessGroups({ roster, doctorId, duty, config }) {
             ?.exclusion.includes(duty.date.getDay())
       )
     ) {
-      count += 1;
+      fitness += 1;
     }
   });
-  const fitness = 1 / (1 + count / 2);
   return fitness;
+}
+
+function fitnessGreenlist({roster, doctorId, duty}) { // -9999 wenn der Dienst gewünscht wurde 
+  const greenlist = roster.doctors.find(doctor => doctor._id === doctorId)?.greenlist
+  let fitness = 0
+  if(greenlist.find(day => day.getTime() === duty.date.getTime())) fitness = -9999
+  return fitness
+
 }
 
 function countWeekends(dates) {
@@ -452,8 +476,8 @@ function groupDatesByWeekend(dates) {
   return weekends;
 }
 
-function fitnessGroupAvailability({ doctorId, roster, config, vacations }) {
-  let count = 0;
+function fitnessGroupAvailability({ doctorId, roster, config, vacations }) { // +0.5 für jede Dienstreihe, die derjenige/diejenige besetzen kann
+  let fitness = 0
   const dutyColumns = [];
   config.dutyColumns.forEach((dutyColumn) => {
     if (dutyColumn.autoAssignment) {
@@ -463,23 +487,9 @@ function fitnessGroupAvailability({ doctorId, roster, config, vacations }) {
   const doctor = roster.doctors.find((doc) => doc._id === doctorId);
   dutyColumns.forEach((dutyColumn) => {
     if (doctor.dutyColumns.includes(dutyColumn)) {
-      count += 1;
+      fitness += 0.5;
     }
   });
-  const absence = vacations.filter(
-    (vacation) =>
-      vacation.doctorId === doctorId &&
-      vacation.date.getMonth() === roster.month &&
-      !doctor.blacklist.some(
-        (date) => date.getTime() === vacation.date.getTime()
-      )
-  ).length;
-
-  const nonBlacklistFactor =
-    (roster.days.length - (absence + doctor.blacklist.length)) /
-    roster.days.length;
-  if (count === 0) return 1 / nonBlacklistFactor;
-  const fitness = (1 + 1 / count) / nonBlacklistFactor;
   return fitness;
 }
 
@@ -498,5 +508,4 @@ function assignDuty({ roster, dutyColumn, date, doctor_id }) {
 
 export default function fillRoster({ roster, config, vacations }) {
   const filledRoster = backtrackAlgorithm({ roster, config, vacations });
-  console.log(filledRoster);
 }

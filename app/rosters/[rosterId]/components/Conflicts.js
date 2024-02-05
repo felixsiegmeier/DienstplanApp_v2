@@ -98,20 +98,17 @@ export default function Conflicts({ roster, doctors, config }) {
     roster.days.forEach((day) => {
       const dutyColumns = Object.keys(day.dutyColumns);
       dutyColumns.forEach((dutyColumn) => {
-        if (day.dutyColumns[dutyColumn].includes(doctor._id)) {
+        if (day.dutyColumns[dutyColumn].includes(doctor._id) && day.value > 1) {
           dutys.push(day.date);
         }
       });
     });
 
-    for (let i = 0; i < dutys.length - 2; i++) {
-      const currentDay = dutys[i].getDay();
-      const nextDay = dutys[i + 1].getDay();
+    for (let i = 0; i < dutys.length - 1; i++) {
 
       if (
-        weekendDays.includes(currentDay) &&
-        weekendDays.includes(nextDay) &&
-        dutys[i + 1] - dutys[i] === 7 * 24 * 60 * 60 * 1000
+        dutys[i + 1].getTime() - dutys[i].getTime() > 4 * 24 * 60 * 60 * 1000 &&
+        dutys[i + 1].getTime() - dutys[i].getTime() < 11 * 24 * 60 * 60 * 1000
       ) {
         conflictElements.push(
           <li className="text-red-500" key={index + i + "1"}>
