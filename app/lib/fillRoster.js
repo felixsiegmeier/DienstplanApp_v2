@@ -1,55 +1,73 @@
+import assignDuty from "./assignDuty";
+import getNextDuty from "./get-next-duty/getNextDuty";
+import getWorstDuties from "./get-next-duty/getWorstDuties";
 
-function getNextDuty(roster){
-    const duty = {
-        doctors: [],
-        dutyColumn: null,
-        date: null,
+export default function fillRoster({ roster, config, vacations }) {
+  const filledRoster = backtrackAlgorithmWrapper({ roster, config, vacations });
+}
+
+function backtrackAlgorithmWrapper({
+  roster,
+  config,
+  vacations,
+  repeatCount = 100,
+}) {
+  for (let i = 0; i < repeatCount +1; i++) {
+    if (backtrackAlgorithm({ roster, config, vacations })) {
+      console.log("durchlaufe Iteration Nr", i);
+      if(i === repeatCount) return roster
+      const worstDuties = getWorstDuties({ roster, count: 10 });
+      console.log(worstDuties);
+
+      if (worstDuties.length > 0) {
+        worstDuties.forEach((duty) => {
+          roster.days.find(
+            (day) => day.date.getTime() === duty.date.getTime()
+          ).dutyColumns[duty.dutyColumn] = [];
+        });
+      }
     }
-    roster.days.forEach(day => {
-        day.dutyColumns.forEach(dutyColumn => {
-            const doctors = getDutyDoctors({rosterDoctors: roster.doctors, day, dutyColumn})
-        if(doctors && doctors.length < duty.doctors.length){
-            duty.doctors = doctors;
-            duty.dutyColumn = dutyColumn;
-            duty.date = day.date;
-        }
-        })
-    })
-    if(duty.doctors.length > 0)return sortedDuty(duty);
-    return null;
+  }
 }
 
-function getDutyDoctors({rosterDoctors, day, dutyColumn}){
-    if(day[dutyColumn].length > 0) return null;
+function backtrackAlgorithm({ roster, config, vacations }) {
+  // erhalte den Dienst, der am schlechtesten zu besetzen ist
+  const nextDuty = getNextDuty({ roster, config, vacations });
 
-    // Hier muss ich weiter programmieren => Es soll ein unsortiertes Array von Arzt-IDs ausgespuckt werden, die den Dienst machen können.
-    // => Das sortieren passiert dann erst am Ende
-}
+  // Überprüfe, ob alle Dienste besetzt sind (Ende des Backtrack-Algorithmus)
+  if (!nextDuty) {
+    // Wenn alle Dienste besetzt sind, gib `true` zurück
+    return true;
+  }
 
-function sortedDuty(duty){
-    // sortiert die Ärzte in duty.doctors anhand ihrer Fitness
-    return duty
-}
+  const { doctors, dutyColumn, date } = nextDuty;
 
-export default function fillRoster(roster){
-    console.log(roster)
-/*
-function backtrackAlgorithm(roster){
-    // erhalte den Dienst, der am schlechtesten zu besetzen ist
-    const nextDuty = getNextDuty(roster)
-    
-    // Ende wenn voll
-    if(!nextDuty) return roster
+  // Referenz auf die Duty-Liste für das aktuelle Datum und die Schicht
+  const dutyRef = roster.days.find(
+    (day) => day.date.getTime() === date.getTime()
+  ).dutyColumns[dutyColumn];
 
-    const {doctors, dutyColumn, date} = nextDuty
+  // Leere die Duty-Liste für den aktuellen Dienst
+  dutyRef.length = 0;
 
-    for(const doctor_id of doctors){
-        const rosterCopy = JSON.parse(JSON.stringify(roster)); // Kopie des Dienstplans erstellen
-        assignDuty({roster: rosterCopy, dutyColumn, date, doctor_id});
-        backtrackAlgorithm(rosterCopy);
-        assignDuty({roster, dutyColumn, date, doctor_id: false});
+  // Iteriere über alle Ärzte für den nächsten Dienst
+  for (const doctor_id of doctors) {
+    // Weise den Dienst dem Arzt zu
+    assignDuty({ roster, dutyColumn, date, doctor_id });
+
+    // Starte den Backtrack-Algorithmus rekursiv
+    if (backtrackAlgorithm({ roster, config, vacations })) {
+      // Wenn der rekursive Aufruf erfolgreich ist, gib `true` zurück
+      return true;
     }
-}
 
- */
+    // Deaktiviere die Zuweisung und setze den Backtrack fort
+    assignDuty({ roster, dutyColumn, date, doctor_id: false });
+  }
+
+  // Überprüfe, ob die Duty-Liste nach allen Versuchen leer ist
+  if (dutyRef.length < 1) {
+    // Wenn die Duty-Liste leer ist, gib `false` zurück
+    return false;
+  }
 }

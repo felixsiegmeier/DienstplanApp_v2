@@ -13,7 +13,7 @@ import RosterDoctor from "@/app/models/RosterDoctor";
 import fillRoster from "@/app/lib/fillRoster";
 
 export default function Roster({ params }) {
-  const { doctors, rosters, isMobile, config} = usePageContext();
+  const { doctors, rosters, isMobile, config, vacations} = usePageContext();
   const { rosterId } = params;
   const router = useRouter();
   const roster = rosters.find((roster) => rosterId === roster._id);
@@ -50,7 +50,22 @@ export default function Roster({ params }) {
         if(!compareArrays(dbDoctor.dutyColumns, rosterDoctor.dutyColumns)){
           rosterDoctor.dutyColumns = dbDoctor.dutyColumns;
           roster.updateDatabase("doctors");
-        }}catch{
+        }
+        if(!compareArrays(dbDoctor.nonWorkingDays, rosterDoctor.nonWorkingDays)){
+          rosterDoctor.nonWorkingDays = dbDoctor.nonWorkingDays;
+          roster.updateDatabase("nonWorkingDays");
+        }
+        if(dbDoctor.only12 != rosterDoctor.only12){
+          rosterDoctor.only12 = dbDoctor.only12;
+          roster.updateDatabase("only12")
+        }
+        if(dbDoctor.isManager != rosterDoctor.isManager){
+          rosterDoctor.isManager = dbDoctor.isManager;
+          roster.updateDatabase("isManager")
+        }
+      }catch(error){
+          console.info(error)
+          console.info(dbDoctor.name)
           console.info("rosterDoctor nicht gefunden - vermutlich gelöscht")
         }
       })
@@ -91,7 +106,7 @@ export default function Roster({ params }) {
         roster.year
       )}`}</h1>
       <ButtonCyan className={"mt-4"} text={"Zu den Wünschen"} onClick={() => router.push(`/rosters/wishes/${roster._id}`)} />
-      {/* <ButtonCyan className={"mt-4"} text={"Plan automatisch füllen"} onClick={() => fillRoster(roster)} /> */}
+      <ButtonCyan className={"mt-4"} text={"Plan automatisch füllen"} onClick={() => fillRoster({roster, config, vacations})} />
       {!isMobile && <RosterGrid roster={roster}  />}
       <RosterTable roster={roster} />
       < Conflicts roster={roster} config={config} doctors={doctors} />
