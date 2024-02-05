@@ -1,8 +1,14 @@
+// Importiere die Funktion getRandomElements aus der Datei "./getRandomElements"
+import getRandomElements from "../getRandomElements";
+
+// Exportiere die Funktion getWorstDuties als Standardexport
 export default function getWorstDuties({ roster, count }) {
-  const worstDuties = [];
+  // Array zum Speichern der "schlechten" Dienste
   const badDuties = [];
+  // Extrahiere die IDs aller Ärzte aus dem Roster
   const doctorIds = roster.doctors.map((doc) => doc._id);
 
+  // Klasse zur Repräsentation eines Arztes mit seinen Diensten und Punkten
   class Doctor {
     constructor(id) {
       this._id = id;
@@ -11,7 +17,10 @@ export default function getWorstDuties({ roster, count }) {
     }
   }
 
+  // Erstelle eine Instanz der Klasse Doctor für jede Arzt-ID
   const doctorData = doctorIds.map((id) => new Doctor(id));
+
+  // Iteriere über alle Tage im Roster und aktualisiere die Arztinformationen
   roster.days.forEach((day) => {
     const dutyColumns = Object.keys(day.dutyColumns);
     dutyColumns.forEach((dutyColumn) => {
@@ -23,19 +32,18 @@ export default function getWorstDuties({ roster, count }) {
     });
   });
 
-  // Prüfe, ob zwei Daten in 2 Tagen oder weniger liegen
+  // Funktion zum Überprüfen, ob zwei Daten in 2 Tagen oder weniger liegen
   const checkShortSwitch = (a, b) => {
     const distance =
       Math.abs(a.getTime() - b.getTime()) / (1000 * 60 * 60 * 24);
     return distance < 3;
   };
 
-  // nimmt ein Array von Daten
-  // Erstelle ein Array aller enthaltenen "schlechten" Wochenenden = kurze Wechsel & mehr als 3 im Monat
+  // Funktion zum Überprüfen von "schlechten" Wochenenden
   const checkWeekends = (duties) => {
     const weekendDays = [5, 6, 0]; // Freitag, Samstag, Sonntag (0-basiert)
     const weekendDuties = duties.filter((duty) =>
-      weekendDays.includes(duty.date.getDay()),
+      weekendDays.includes(duty.date.getDay())
     );
     if (weekendDuties.length < 2) return [];
     if (weekendDuties.length > 3) return weekendDuties;
@@ -43,16 +51,17 @@ export default function getWorstDuties({ roster, count }) {
     for (let i = 0; i < weekendDuties.length - 1; i++) {
       const distance =
         Math.abs(
-          weekendDuties[i].date.getTime() - weekendDuties[i + 1].date.getTime(),
+          weekendDuties[i].date.getTime() - weekendDuties[i + 1].date.getTime()
         ) /
         (1000 * 60 * 60 * 24);
-      if (distance > 4 && distance < 9)
+      if (distance > 4 && distance < 12)
         badWeekends.push(weekendDuties[i], weekendDuties[i + 1]);
     }
     if (badWeekends.length < 2) return [];
     return badWeekends;
   };
 
+  // Iteriere über alle Ärzte und identifiziere "schlechte" Dienste
   doctorData.forEach((doc) => {
     if (doc.duties.length > 6)
       badDuties.push(doc.duties[Math.floor(Math.random() * doc.duties.length)]);
@@ -65,7 +74,7 @@ export default function getWorstDuties({ roster, count }) {
     for (let i = 0; i < doc.duties.length - 1; i++) {
       const shortSwitch = checkShortSwitch(
         doc.duties[i].date,
-        doc.duties[i + 1].date,
+        doc.duties[i + 1].date
       );
       if (shortSwitch) shortSwitchDays.push(doc.duties[i], doc.duties[i + 1]);
     }
@@ -73,7 +82,9 @@ export default function getWorstDuties({ roster, count }) {
     badDuties.push(...badWeekends, ...shortSwitchDays);
   });
 
-  return badDuties;
-}
+  // Wähle zufällig "schlechte" Dienste entsprechend der übergebenen Anzahl aus
+  const worstDuties = getRandomElements(badDuties, count);
 
-// testing stuff
+  // Gib die ausgewählten "schlechten" Dienste zurück
+  return worstDuties;
+}

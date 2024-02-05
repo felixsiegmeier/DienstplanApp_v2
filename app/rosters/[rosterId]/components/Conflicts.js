@@ -108,7 +108,7 @@ export default function Conflicts({ roster, doctors, config }) {
 
       if (
         dutys[i + 1].getTime() - dutys[i].getTime() > 4 * 24 * 60 * 60 * 1000 &&
-        dutys[i + 1].getTime() - dutys[i].getTime() < 11 * 24 * 60 * 60 * 1000
+        dutys[i + 1].getTime() - dutys[i].getTime() < 12 * 24 * 60 * 60 * 1000
       ) {
         conflictElements.push(
           <li className="text-red-500" key={index + i + "1"}>
