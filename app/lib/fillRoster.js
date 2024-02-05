@@ -1,15 +1,12 @@
+import getWorstDuties from "./getWorstDuties";
+
 function backtrackAlgorithm({ roster, config, vacations }) {
   // erhalte den Dienst, der am schlechtesten zu besetzen ist
   const nextDuty = getNextDuty({ roster, config, vacations });
 
-  if (
-    (nextDuty.date.getDate() === 28 || nextDuty.date.getDate() === 29) &&
-    nextDuty.dutyColumn === "IMC"
-  ) {
-  }
-
   // Ende wenn voll
   if (!nextDuty) {
+    console.log(getWorstDuties({ roster, count: 10 }));
     return undefined;
   }
   const { doctors, dutyColumn, date } = nextDuty;
@@ -41,10 +38,10 @@ function getNextDuty({ roster, config, vacations }) {
   const availableDoctors = roster.doctors.filter(
     (doctor) =>
       doctor.dutyColumns.some((dutyColumn) =>
-        dutyColumns.includes(dutyColumn)
+        dutyColumns.includes(dutyColumn),
       ) &&
       !doctor.only12 &&
-      !doctor.isManager
+      !doctor.isManager,
   );
 
   const allDutysCount = dutyColumns.length * roster.days.length;
@@ -55,7 +52,9 @@ function getNextDuty({ roster, config, vacations }) {
   const avgDutySpacing = (roster.days.length / avgDutys) * 0.8;
   roster.days.forEach((day) => {
     dutyColumns.forEach((dutyColumn) => {
-      const allDoctorsCount = roster.doctors.filter(doctor => doctor.dutyColumns.includes(dutyColumn))?.length;
+      const allDoctorsCount = roster.doctors.filter((doctor) =>
+        doctor.dutyColumns.includes(dutyColumn),
+      )?.length;
       const availableDoctors = getDutyDoctors({
         roster,
         day,
@@ -63,10 +62,14 @@ function getNextDuty({ roster, config, vacations }) {
         config,
         vacations,
       });
-      const availabilityRatio = (allDoctorsCount && availableDoctors) ? availableDoctors.length/allDoctorsCount : false
+      const availabilityRatio =
+        allDoctorsCount && availableDoctors
+          ? availableDoctors.length / allDoctorsCount
+          : false;
       if (
         availabilityRatio &&
-        (availabilityRatio < duty.availabilityRatio || duty.availabilityRatio === 1)
+        (availabilityRatio < duty.availabilityRatio ||
+          duty.availabilityRatio === 1)
       ) {
         duty.doctors = availableDoctors;
         duty.availabilityRatio = availabilityRatio;
@@ -99,7 +102,7 @@ function getDutyDoctors({ roster, day, dutyColumn, config, vacations }) {
     (doctor) =>
       doctor.dutyColumns.some((dutyCol) => dutyColumns.includes(dutyCol)) &&
       !doctor.only12 &&
-      !doctor.isManager
+      !doctor.isManager,
   );
 
   const allDoctorsIds = allDoctors.map((doctor) => doctor._id);
@@ -134,7 +137,7 @@ function getDutyDoctors({ roster, day, dutyColumn, config, vacations }) {
 
 function checkBlacklist(doctor, day) {
   return doctor.blacklist.some(
-    (blackDay) => blackDay.getTime() === day.date.getTime()
+    (blackDay) => blackDay.getTime() === day.date.getTime(),
   );
 }
 
@@ -142,7 +145,7 @@ function checkVacation({ doctor, day, vacations }) {
   return vacations.find(
     (vacation) =>
       vacation.date.getTime() === day.date.getTime() &&
-      vacation.doctorId === doctor._id
+      vacation.doctorId === doctor._id,
   );
 }
 
@@ -157,7 +160,7 @@ const checkProximity = ({ doctor, day, roster }) => {
 
   dates.forEach((date) => {
     const checkDay = roster.days.find(
-      (cDay) => cDay.date.getTime() === date.getTime()
+      (cDay) => cDay.date.getTime() === date.getTime(),
     );
     if (!checkDay) {
       return;
@@ -187,9 +190,7 @@ function checkGroups({ doctor, day, config, roster }) {
         }
       });
     });
-    const maximum = config.groups
-    .find((g) => g.name === group)
-    .maximum
+    const maximum = config.groups.find((g) => g.name === group).maximum;
     if (count >= maximum) return true;
     return false;
   });
@@ -214,7 +215,7 @@ function sortedDuty({
     const absence = vacations.filter(
       (vacation) =>
         vacation.doctorId === doctorId &&
-        vacation.date.getMonth() === roster.month
+        vacation.date.getMonth() === roster.month,
     ).length;
     const attendance = (roster.days.length - absence) / roster.days.length;
     let fitnessDutyCountFactor = fitnessDutyCount({
@@ -260,7 +261,7 @@ function sortedDuty({
     });
     //console.log("fitnessGroupAvailabilityFactor",fitnessGroupAvailabilityFactor)
 
-    let fitnessGreenlistFactor = fitnessGreenlist({roster, doctorId, duty});
+    let fitnessGreenlistFactor = fitnessGreenlist({ roster, doctorId, duty });
 
     let totalFitness =
       fitnessDutyCountFactor +
@@ -269,7 +270,7 @@ function sortedDuty({
       fitnessWeekendCountFactor +
       fitnessDutySpacingFactor +
       fitnessGroupsFactor +
-      fitnessGroupAvailabilityFactor + 
+      fitnessGroupAvailabilityFactor +
       fitnessGreenlistFactor;
 
     doctorsWithFitness.push({ doctorId, totalFitness });
@@ -278,8 +279,9 @@ function sortedDuty({
     .sort((a, b) => a.totalFitness - b.totalFitness)
     .map((doc) => doc.doctorId);
 
-  const sortedDoctorLog = doctorsWithFitness
-    .sort((a, b) => a.totalFitness - b.totalFitness)
+  const sortedDoctorLog = doctorsWithFitness.sort(
+    (a, b) => a.totalFitness - b.totalFitness,
+  );
   duty.doctors = sortedDoctors;
   return duty;
 }
@@ -317,8 +319,11 @@ function fitnessHighValueDutys({ roster, doctorId, avgHighValueDays }) {
   return fitness;
 }
 
-function fitnessWeekendSpacing({ roster, doctorId, duty }) { // +50 für jedes aufeinander folgende Wochenende wenn duty am Wochenende ist, +100 für 3er-Ketten, sonst +0
-  const rosterDay = roster.days.find(day => day.date.getTime() === duty.date.getTime())
+function fitnessWeekendSpacing({ roster, doctorId, duty }) {
+  // +50 für jedes aufeinander folgende Wochenende wenn duty am Wochenende ist, +100 für 3er-Ketten, sonst +0
+  const rosterDay = roster.days.find(
+    (day) => day.date.getTime() === duty.date.getTime(),
+  );
   if (rosterDay.value === 1) return 0;
 
   let count = 0;
@@ -327,11 +332,7 @@ function fitnessWeekendSpacing({ roster, doctorId, duty }) { // +50 für jedes a
   roster.days.forEach((day) => {
     const dutyColumns = Object.keys(day.dutyColumns);
     dutyColumns.forEach((dutyColumn) => {
-      if (
-        day.dutyColumns[dutyColumn].includes(doctorId) &&
-        day.value > 1
-        )
-      {
+      if (day.dutyColumns[dutyColumn].includes(doctorId) && day.value > 1) {
         dutys.push(day.date);
       }
     });
@@ -344,7 +345,6 @@ function fitnessWeekendSpacing({ roster, doctorId, duty }) { // +50 für jedes a
   });
 
   for (let i = 0; i < dutys.length - 1; i++) {
-
     if (
       dutys[i + 1].getTime() - dutys[i].getTime() > 4 * 24 * 60 * 60 * 1000 &&
       dutys[i + 1].getTime() - dutys[i].getTime() < 9 * 24 * 60 * 60 * 1000
@@ -352,8 +352,10 @@ function fitnessWeekendSpacing({ roster, doctorId, duty }) { // +50 für jedes a
       count += 50;
       if (
         dutys[i + 2] &&
-        dutys[i + 2].getTime() - dutys[i + 1].getTime() > 4 * 24 * 60 * 60 * 1000 &&
-        dutys[i + 2].getTime() - dutys[i + 1].getTime() < 9 * 24 * 60 * 60 * 1000
+        dutys[i + 2].getTime() - dutys[i + 1].getTime() >
+          4 * 24 * 60 * 60 * 1000 &&
+        dutys[i + 2].getTime() - dutys[i + 1].getTime() <
+          9 * 24 * 60 * 60 * 1000
       ) {
         count += 100;
       }
@@ -363,7 +365,8 @@ function fitnessWeekendSpacing({ roster, doctorId, duty }) { // +50 für jedes a
   return fitness;
 }
 
-function fitnessWeekendCount({ roster, doctorId, duty }) { // +3n^2 für jedes Wochenende wenn duty am Wochenende ist, sonst +0
+function fitnessWeekendCount({ roster, doctorId, duty }) {
+  // +3n^2 für jedes Wochenende wenn duty am Wochenende ist, sonst +0
   const weekendDays = [5, 6, 0]; // Freitag, Samstag, Sonntag (0-basiert)
   if (!weekendDays.includes(duty.date.getDay())) return 0;
   const weekendDutys = [duty.date];
@@ -385,39 +388,45 @@ function fitnessWeekendCount({ roster, doctorId, duty }) { // +3n^2 für jedes W
     return timestamp1 - timestamp2;
   });
 
-  const fitness = 3*countWeekends(weekendDutys);
+  const fitness = 3 * countWeekends(weekendDutys);
   return fitness ** 2;
 }
 
-function fitnessDutySpacing({ roster, duty, doctorId, avgDutySpacing }) { // wenn Abstand zu einem anderen Dienst < avg dann +1 für jeden Tag Abweichung und zusätzlich +5 bei kurzem Wechsel
+function fitnessDutySpacing({ roster, duty, doctorId, avgDutySpacing }) {
+  // wenn Abstand zu einem anderen Dienst < avg dann +1 für jeden Tag Abweichung und zusätzlich +5 bei kurzem Wechsel
   let fitness = 0;
   const millisecondsPerDay = 24 * 60 * 60 * 1000;
   const dutyTimestamp = duty.date.getTime();
   roster.days.forEach((day) => {
     const dayTimestamp = day.date.getTime();
     const spacing = Math.abs(dayTimestamp - dutyTimestamp) / millisecondsPerDay;
-    if ((spacing > avgDutySpacing)) return;
+    if (spacing > avgDutySpacing) return;
     const dutyColumns = Object.keys(day.dutyColumns);
     dutyColumns.forEach((dutyColumn) => {
       if (day.dutyColumns[dutyColumn].includes(doctorId)) {
         fitness = fitness + (avgDutySpacing - spacing);
-        if(spacing === 2){fitness += 5}
+        if (spacing === 2) {
+          fitness += 5;
+        }
       }
     });
   });
   return fitness;
 }
 
-function fitnessGroups({ roster, doctorId, duty, config }) { // +1 für jeden Arzt der selben Gruppe an diesem Tag (wenn duty.date.getDay() nicht in exclusion)
+function fitnessGroups({ roster, doctorId, duty, config }) {
+  // +1 für jeden Arzt der selben Gruppe an diesem Tag (wenn duty.date.getDay() nicht in exclusion)
   let fitness = 0;
   const doctorGroups = roster.doctors.find(
-    (doctor) => doctor._id === doctorId
+    (doctor) => doctor._id === doctorId,
   )?.groups;
-  const day = roster.days.find((day) => day.date.getTime() === duty.date.getTime());
+  const day = roster.days.find(
+    (day) => day.date.getTime() === duty.date.getTime(),
+  );
   const dutyColumns = Object.keys(day.dutyColumns);
   const doctorsOfDay = [];
   dutyColumns.forEach((dutyColumn) =>
-    doctorsOfDay.push(...day.dutyColumns[dutyColumn])
+    doctorsOfDay.push(...day.dutyColumns[dutyColumn]),
   );
   doctorsOfDay.forEach((docId) => {
     const groups = roster.doctors.find((doc) => doc._id === docId)?.groups;
@@ -428,7 +437,7 @@ function fitnessGroups({ roster, doctorId, duty, config }) { // +1 für jeden Ar
           groups.includes(doctorGroup) &&
           !config.groups
             .find((group) => group.name === doctorGroup)
-            ?.exclusion.includes(duty.date.getDay())
+            ?.exclusion.includes(duty.date.getDay()),
       )
     ) {
       fitness += 1;
@@ -437,12 +446,15 @@ function fitnessGroups({ roster, doctorId, duty, config }) { // +1 für jeden Ar
   return fitness;
 }
 
-function fitnessGreenlist({roster, doctorId, duty}) { // -9999 wenn der Dienst gewünscht wurde 
-  const greenlist = roster.doctors.find(doctor => doctor._id === doctorId)?.greenlist
-  let fitness = 0
-  if(greenlist.find(day => day.getTime() === duty.date.getTime())) fitness = -9999
-  return fitness
-
+function fitnessGreenlist({ roster, doctorId, duty }) {
+  // -9999 wenn der Dienst gewünscht wurde
+  const greenlist = roster.doctors.find(
+    (doctor) => doctor._id === doctorId,
+  )?.greenlist;
+  let fitness = 0;
+  if (greenlist.find((day) => day.getTime() === duty.date.getTime()))
+    fitness = -9999;
+  return fitness;
 }
 
 function countWeekends(dates) {
@@ -476,8 +488,9 @@ function groupDatesByWeekend(dates) {
   return weekends;
 }
 
-function fitnessGroupAvailability({ doctorId, roster, config, vacations }) { // +0.5 für jede Dienstreihe, die derjenige/diejenige besetzen kann
-  let fitness = 0
+function fitnessGroupAvailability({ doctorId, roster, config, vacations }) {
+  // +0.5 für jede Dienstreihe, die derjenige/diejenige besetzen kann
+  let fitness = 0;
   const dutyColumns = [];
   config.dutyColumns.forEach((dutyColumn) => {
     if (dutyColumn.autoAssignment) {
@@ -497,11 +510,11 @@ function assignDuty({ roster, dutyColumn, date, doctor_id }) {
   const doctorName = roster.doctors.find((doc) => doc._id === doctor_id).name;
   if (doctor_id === false) {
     roster.days.find(
-      (day) => day.date.getTime() === date.getTime()
+      (day) => day.date.getTime() === date.getTime(),
     ).dutyColumns[dutyColumn] = [];
   } else {
     roster.days.find(
-      (day) => day.date.getTime() === date.getTime()
+      (day) => day.date.getTime() === date.getTime(),
     ).dutyColumns[dutyColumn] = [doctor_id];
   }
 }
