@@ -53,7 +53,7 @@ export default function MainPage() {
               style="bg-green-500 hover:bg-green-600"
               title="Urlaubsplan"
               explaination="Erhalte eine Übersicht über Urlaube und Anwesenheiten"
-              link="/vacation"
+              link="/vacations"
             />
             <ButtonPlate
               style="bg-amber-500 hover:bg-amber-600"
@@ -65,7 +65,7 @@ export default function MainPage() {
               style="bg-orange-500 hover:bg-orange-600"
               title="Einstellungen"
               explaination="Verwaltung der Grundeinstellungen für das Dienstmodell und den Algorithmus"
-              link="/options"
+              link="/configuration"
             />
           </div>
         </div>
