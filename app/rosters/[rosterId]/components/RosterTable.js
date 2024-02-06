@@ -54,7 +54,7 @@ export default function RosterTable({ roster }) {
         roster.month,
         roster.year
       )}`}</h1>
-      <table className="w-[90%] table-auto border-collapse mt-2">
+      <table className={`${isMobile ? "w-min" : "w-[90%]"} table-auto border-collapse mt-2`}>
         <thead>
           <tr>
             <th className="px-4 py-2 text-gray-200 text-center select-none">
