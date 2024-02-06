@@ -2,8 +2,9 @@ import assignDuty from "./assignDuty";
 import getNextDuty from "./get-next-duty/getNextDuty";
 import getWorstDuties from "./get-next-duty/getWorstDuties";
 
-export default function fillRoster({ roster, config, vacations }) {
-  const filledRoster = backtrackAlgorithmWrapper({ roster, config, vacations });
+export default async function fillRoster({ roster, config, vacations }) {
+  const filledRoster = await backtrackAlgorithmWrapper({ roster, config, vacations });
+  return true;
 }
 
 function backtrackAlgorithmWrapper({
