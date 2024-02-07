@@ -5,6 +5,7 @@
 import checkBlacklist from "./checks/checkBlacklist";
 import checkDutyColumn from "./checks/checkDutyColumn";
 import checkGroups from "./checks/checkGroups";
+import checkNonWorkingDays from "./checks/checkNonWorkingDays";
 import checkProximity from "./checks/checkProximity";
 import checkVacation from "./checks/checkVacation";
 
@@ -24,6 +25,9 @@ export default function getDutyDoctors({ roster, day, dutyColumn, config, vacati
     // Führe verschiedene Checks durch, um die Verfügbarkeit zu prüfen
     if (checkBlacklist(doctor, day)) {
       return; // Wenn Blacklist-Check nicht bestanden, springe zur nächsten Iteration
+    }
+    if (checkNonWorkingDays(doctor, day)) {
+      return; // Wenn NonWorkingDays nicht bestanden, springe zur nächsten Iteration
     }
     if (checkVacation({ doctor, day, vacations })) {
       return; // Wenn Urlaubs-Check nicht bestanden, springe zur nächsten Iteration
