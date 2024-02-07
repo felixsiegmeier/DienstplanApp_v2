@@ -2,7 +2,7 @@
 import getRandomElements from "../getRandomElements";
 
 // Exportiere die Funktion getWorstDuties als Standardexport
-export default function getWorstDuties({ roster, count }) {
+export default function getWorstDuties({ roster, count, presetDuties }) {
   // Array zum Speichern der "schlechten" Dienste
   const badDuties = [];
   // Extrahiere die IDs aller Ärzte aus dem Roster
@@ -82,9 +82,23 @@ export default function getWorstDuties({ roster, count }) {
     badDuties.push(...badWeekends, ...shortSwitchDays);
   });
 
+  const badDutiesWithoutPresetDuties = filterDuties(badDuties, presetDuties)
+
   // Wähle zufällig "schlechte" Dienste entsprechend der übergebenen Anzahl aus
-  const worstDuties = getRandomElements(badDuties, count);
+  const worstDuties = getRandomElements(badDutiesWithoutPresetDuties, count);
 
   // Gib die ausgewählten "schlechten" Dienste zurück
   return worstDuties;
+}
+
+function filterDuties(arr1, arr2) {
+  return arr1.filter((item1) => {
+    // Suche nach einem übereinstimmenden Objekt in arr2
+    const match = arr2.find(item2 =>
+      item1.date.getTime() === item2.date.getTime() && 
+      item1.dutyColumn === item2.dutyColumn
+    );
+    // Filtere das Element aus, wenn kein übereinstimmendes Objekt gefunden wurde
+    return !match;
+  });
 }

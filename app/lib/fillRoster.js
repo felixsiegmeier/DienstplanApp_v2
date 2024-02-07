@@ -13,13 +13,11 @@ function backtrackAlgorithmWrapper({
   vacations,
   repeatCount = 100,
 }) {
+  const presetDuties = getPresetDuties(roster)
   for (let i = 0; i < repeatCount +1; i++) {
     if (backtrackAlgorithm({ roster, config, vacations })) {
-      console.log("durchlaufe Iteration Nr", i);
       if(i === repeatCount) return roster
-      const worstDuties = getWorstDuties({ roster, count: 10 });
-      console.log(worstDuties);
-
+      const worstDuties = getWorstDuties({ roster, count: 10, presetDuties });
       if (worstDuties.length > 0) {
         worstDuties.forEach((duty) => {
           roster.days.find(
@@ -71,4 +69,16 @@ function backtrackAlgorithm({ roster, config, vacations }) {
     // Wenn die Duty-Liste leer ist, gib `false` zurück
     return false;
   }
+}
+
+function getPresetDuties(roster){
+  const presetDuties = []
+  roster.days.forEach(day => {
+    Object.entries(day.dutyColumns).forEach(([dutyColumn, duty]) => {
+      if(duty.length > 0){
+        presetDuties.push({date: day.date, dutyColumn: dutyColumn})
+      }
+    })
+  })
+  return presetDuties
 }
