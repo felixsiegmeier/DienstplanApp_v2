@@ -8,6 +8,7 @@ export default class Doctor {
     name,
     nonWorkingDays = [],
     only12 = false,
+    optOut= true,
     userGroupId,
     setParentArray,
     isManager = false,
@@ -20,6 +21,7 @@ export default class Doctor {
     this.name = name;
     this.nonWorkingDays = nonWorkingDays;
     this.only12 = only12;
+    this.optOut = optOut;
     this.userGroupId = userGroupId;
     this.setParentArray = setParentArray;
     this.isManager = isManager;
@@ -90,6 +92,12 @@ export default class Doctor {
     this.only12 = !this.only12;
     this.updateDoctorsState();
     await this.updateDatabase("only12", this.only12);
+  }
+
+  async toggleOptOut() {
+    this.optOut = !this.optOut;
+    this.updateDoctorsState();
+    await this.updateDatabase("optOut", this.optOut);
   }
 
   async toggleIsManager() {

@@ -9,6 +9,8 @@ export default class RosterDoctor{
         nonWorkingDays = [],
         blacklist = [],
         greenlist = [],
+        absence = [],
+        compTime = [],
         updateParentArray,
         updateDatabase
     }){
@@ -21,6 +23,8 @@ export default class RosterDoctor{
         this.isManager = isManager;
         this.blacklist = blacklist.map(wish => new Date(wish));
         this.greenlist = greenlist.map(wish => new Date(wish));
+        this.absence = absence;
+        this.compTime = compTime;
         this. updateParentArray = updateParentArray;
         this.updateDatabase = updateDatabase;
     }
@@ -61,5 +65,41 @@ export default class RosterDoctor{
   
     isInGreenlist(entry) {
       return this.greenlist.some((greenlistDay) => greenlistDay.getTime() === entry.getTime());
+    }
+
+    async addToAbsence(entry) {
+      if (!this.isInAbsence(entry)) {
+        this.absence.push(new Date(entry));
+        this.updateParentArray();
+        await this.updateDatabase("doctors");
+      }
+    }
+  
+    async removeFromAbsence(entryToRemove) {
+      this.absence = this.absence.filter((entry) => entry.getTime() !== new Date(entryToRemove).getTime());
+      this.updateParentArray();
+      await this.updateDatabase("doctors");
+    }
+  
+    async addToCompTime(entry) {
+      if (!this.isInCompTime(entry)) {
+        this.compTime.push(new Date(entry));
+        this.updateParentArray();
+        await this.updateDatabase("doctors");
+      }
+    }
+  
+    async removeFromCompTime(entryToRemove) {
+      this.compTime = this.compTime.filter((entry) => entry.getTime() !== new Date(entryToRemove).getTime());
+      this.updateParentArray();
+      await this.updateDatabase("doctors");
+    }
+  
+    isInAbsence(entry) {
+      return this.absence.some((absenceDay) => absenceDay.getTime() === new Date(entry).getTime());
+    }
+  
+    isInCompTime(entry) {
+      return this.compTime.some((compDay) => compDay.getTime() === new Date(entry).getTime());
     }
   }

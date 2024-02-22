@@ -45,6 +45,9 @@ export default function TableRow({ doctor, isOpen, toggle, index }) {
     if (doctor.maximum < 11) {
       return true;
     }
+    if (!doctor.optOut){
+      return true;
+    }
     return false;
   }
 }

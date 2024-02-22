@@ -4,6 +4,7 @@ import { usePageContext } from "../../context/pageContext";
 import ButtonRed from "@/app/components/ButtonRed";
 import ButtonCyan from "@/app/components/ButtonCyan";
 import BoxManager from "./boxComponents/BoxManager";
+import BoxGroups from "./boxComponents/BoxGroups";
 
 export default function ToggleBox({ doctor, isOpen, toggle }) {
   const { user, config } = usePageContext();
@@ -15,6 +16,10 @@ export default function ToggleBox({ doctor, isOpen, toggle }) {
     <tr>
       <td colSpan="4" className="p-2">
         <div className="select-none bg-slate-600 rounded-md p-4 animate-fade-in">
+        <p className="text-lg underline">
+            Welchen Gruppen gehört {doctor.name} an?
+          </p>
+          <BoxGroups doctor={doctor}/>
         {!user.isAdmin && "Verwaltungsaccount"}
         {user.isAdmin && <BoxManager doctor={doctor}/>}
           <br/>

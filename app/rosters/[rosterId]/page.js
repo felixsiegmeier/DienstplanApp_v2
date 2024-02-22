@@ -63,6 +63,10 @@ export default function Roster({ params }) {
             rosterDoctor.only12 = dbDoctor.only12;
             roster.updateDatabase("only12");
           }
+          if (dbDoctor.optOut != rosterDoctor.optOut) {
+            rosterDoctor.optOut = dbDoctor.optOut;
+            roster.updateDatabase("optOut");
+          }
           if (dbDoctor.isManager != rosterDoctor.isManager) {
             rosterDoctor.isManager = dbDoctor.isManager;
             roster.updateDatabase("isManager");
@@ -114,6 +118,11 @@ export default function Roster({ params }) {
         text={"Zu den Wünschen"}
         onClick={() => router.push(`/rosters/wishes/${roster._id}`)}
       />
+      {!isMobile && <ButtonCyan
+        className={"mt-4"}
+        text={"Zu den Anwesenheiten"}
+        onClick={() => router.push(`/availability/${roster._id}`)}
+      />}
       <ButtonCyan
         className={"mt-4"}
         text={"Plan automatisch füllen"}

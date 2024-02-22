@@ -1,3 +1,4 @@
+import { usePageContext } from "@/app/context/pageContext";
 import ToggleBoxManager from "./ToggleBoxManager";
 
 export default function TableRowManager({
@@ -8,6 +9,7 @@ export default function TableRowManager({
 }) 
 {
   const background = index % 2 === 0 ? "bg-slate-800" : ""
+  const { config } = usePageContext();
   return (
     <>
       <tr
@@ -15,9 +17,15 @@ export default function TableRowManager({
         className={`select-none cursor-pointer transition-all duration-300 hover:bg-slate-600 ${background}`}
       >
         <td className="px-4 py-2 text-center">{doctor.name}</td>
+        <td className="px-4 py-2 text-center">
+          {doctor.groups
+            .filter((group) =>
+              config.groups.some((configGroup) => configGroup.name === group)
+            )
+            .join(", ")}
+        </td>
         <td className="px-4 py-2 text-center">-</td>
-        <td className="px-4 py-2 text-center">-</td>
-        <td className="px-4 py-2 text-center">Verwaltung</td>
+        <td className="px-4 py-2 text-center">Verwaltung / Inaktiv</td>
       </tr>
       <ToggleBoxManager isOpen={isOpen} toggle={toggle} doctor={doctor}/>
     </>

@@ -9,6 +9,7 @@ import BoxMaximum from "./boxComponents/BoxMaximum";
 import ButtonRed from "@/app/components/ButtonRed";
 import ButtonCyan from "@/app/components/ButtonCyan";
 import BoxManager from "./boxComponents/BoxManager";
+import BoxOptOut from "./boxComponents/BoxOptOut";
 
 export default function ToggleBox({ doctor, isOpen, toggle }) {
   const { user, config } = usePageContext();
@@ -32,6 +33,10 @@ export default function ToggleBox({ doctor, isOpen, toggle }) {
             Macht {doctor.name} nur 12-Stunden-Dienste?
           </p>
           <Box12h doctor={doctor}/>
+          <p className="text-lg underline">
+            Hat {doctor.name} Opt-Out unterzeichnet?
+          </p>
+          <BoxOptOut doctor={doctor}/>
           <p className="text-lg underline">
             An welchen Wochentagen soll {doctor.name} keine Dienste machen?
           </p>
