@@ -7,8 +7,9 @@ import WishRow from "./components/WishRow";
 import ButtonCyan from "@/app/components/ButtonCyan";
 
 export default function Wishes({ params }) {
-  const { rosters, isMobile, doctors: dbDctors } = usePageContext();
+  const { rosters, isMobile } = usePageContext();
   const { rosterId } = params;
+  
   const router = useRouter();
   const roster = rosters.find((roster) => rosterId === roster._id);
   const doctors = roster.doctors
@@ -92,7 +93,7 @@ export default function Wishes({ params }) {
             </tr>
             {/* Zeilen für die Doctors innerhalb der Gruppe */}
             {doctorsInGroup.map((doctor, index) => {
-              if(dbDctors.find(doc => doc._id === doctor._id)?.isManager) return
+              if(doctors.find(doc => doc._id === doctor._id)?.isManager) return
               return (isMobile ? (
               <WishRowMobile key={doctor._id} doctor={doctor} index={index} roster={roster} />
             ) : (

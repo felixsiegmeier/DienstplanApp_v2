@@ -6,6 +6,7 @@ export default class RosterDoctor{
         groups = [],
         only12 = false,
         isManager = false,
+        optOut = true,
         nonWorkingDays = [],
         blacklist = [],
         greenlist = [],
@@ -21,6 +22,7 @@ export default class RosterDoctor{
         this.only12 = only12;
         this.nonWorkingDays = nonWorkingDays;
         this.isManager = isManager;
+        this.optOut = optOut;
         this.blacklist = blacklist.map(wish => new Date(wish));
         this.greenlist = greenlist.map(wish => new Date(wish));
         this.absence = absence;
