@@ -36,7 +36,7 @@ export default function Roster({ params }) {
         roster.addDoctor(
           new RosterDoctor({
             ...doctor,
-            updateParentArray: roster.setParentArray.bind(roster),
+            updateParentArray: roster.updateParentArray.bind(roster),
             updateDatabase: roster.updateDatabase.bind(roster)
           })
         );
