@@ -36,43 +36,55 @@ export default function Roster({ params }) {
         roster.addDoctor(
           new RosterDoctor({
             ...doctor,
-            updateParentArray: roster.setParentArray.bind(roster),
+            updateParentArray: roster.updateParentArray.bind(roster),
+            updateDatabase: roster.updateDatabase.bind(roster)
           })
         );
+        console.info(`added new doctor from DataBase: ${doctor.name}`)
+      }else{
+          console.info(`checking ${doctor.name} for Update`)
+          const rosterDoctor = roster.doctors.find(
+            (rosterDoctor) => rosterDoctor._id === doctor._id
+          );
+          try {
+            if (!compareArrays(doctor.groups, rosterDoctor.groups)) {
+              rosterDoctor.groups = doctor.groups;
+              roster.updateDatabase("doctors");
+              console.info("...updating groups")
+            }
+            if (!compareArrays(doctor.dutyColumns, rosterDoctor.dutyColumns)) {
+              rosterDoctor.dutyColumns = doctor.dutyColumns;
+              roster.updateDatabase("doctors");
+              console.info("...updating dutyColumns")
+            }
+            if (
+              !compareArrays(doctor.nonWorkingDays, rosterDoctor.nonWorkingDays)
+            ) {
+              rosterDoctor.nonWorkingDays = doctor.nonWorkingDays;
+              roster.updateDatabase("nonWorkingDays");
+              console.info("...updating noWorkingDays")
+            }
+            if (doctor.only12 != rosterDoctor.only12) {
+              rosterDoctor.only12 = doctor.only12;
+              roster.updateDatabase("only12");
+              console.info("...updating only12")
+            }
+            if (doctor.optOut != rosterDoctor.optOut) {
+              rosterDoctor.optOut = doctor.optOut;
+              roster.updateDatabase("optOut");
+              console.info("...updating optOut")
+            }
+            if (doctor.isManager != rosterDoctor.isManager) {
+              rosterDoctor.isManager = doctor.isManager;
+              roster.updateDatabase("isManager");
+              console.info("...updating isManager")
+            }
+          } catch (error) {
+            console.error(error);
+            console.error(doctor.name);
+            console.error("...update eines doctors fehlgeschlagen");
+          }
       }
-      doctors.forEach((dbDoctor) => {
-        const rosterDoctor = roster.doctors.find(
-          (rosterDoctor) => rosterDoctor._id === dbDoctor._id
-        );
-        try {
-          if (!compareArrays(dbDoctor.groups, rosterDoctor.groups)) {
-            rosterDoctor.groups = dbDoctor.groups;
-            roster.updateDatabase("doctors");
-          }
-          if (!compareArrays(dbDoctor.dutyColumns, rosterDoctor.dutyColumns)) {
-            rosterDoctor.dutyColumns = dbDoctor.dutyColumns;
-            roster.updateDatabase("doctors");
-          }
-          if (
-            !compareArrays(dbDoctor.nonWorkingDays, rosterDoctor.nonWorkingDays)
-          ) {
-            rosterDoctor.nonWorkingDays = dbDoctor.nonWorkingDays;
-            roster.updateDatabase("nonWorkingDays");
-          }
-          if (dbDoctor.only12 != rosterDoctor.only12) {
-            rosterDoctor.only12 = dbDoctor.only12;
-            roster.updateDatabase("only12");
-          }
-          if (dbDoctor.isManager != rosterDoctor.isManager) {
-            rosterDoctor.isManager = dbDoctor.isManager;
-            roster.updateDatabase("isManager");
-          }
-        } catch (error) {
-          console.info(error);
-          console.info(dbDoctor.name);
-          console.info("rosterDoctor nicht gefunden - vermutlich gelöscht");
-        }
-      });
     }
 
     // Sortiere die Ärzte entsprechend den Einträgen in ihren doctor.dutyColumns-Arrays
