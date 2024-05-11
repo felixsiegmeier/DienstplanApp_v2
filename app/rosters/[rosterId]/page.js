@@ -131,7 +131,7 @@ export default function Roster({ params }) {
         text={"Plan automatisch füllen"}
         onClick={() => {
           if (fillRoster({ roster, config, vacations })) {
-            console.log("redirectiong");
+            console.log("redirecting");
             router.push(`/rosters/${roster._id}`);
           }
         }}

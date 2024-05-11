@@ -3,7 +3,7 @@ export default function checkGroups({ doctor, day, config, roster }) {
       if (
         config.groups
           .find((g) => g.name === group)
-          .exclusion.includes(day.date.getDate())
+          ?.exclusion.includes(day.date.getDate())
       )
         return false;
       let count = 0;
@@ -16,7 +16,8 @@ export default function checkGroups({ doctor, day, config, roster }) {
           }
         });
       });
-      const maximum = config.groups.find((g) => g.name === group).maximum;
+      const maximum = config.groups.find((g) => g.name === group)?.maximum;
+      if(!maximum) {return false};
       if (count >= maximum) return true;
       return false;
     });

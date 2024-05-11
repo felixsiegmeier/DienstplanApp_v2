@@ -1,6 +1,7 @@
 import GroupAdmins from "./GroupAdmins";
 import GroupDutyColumns from "./GroupDutyColumns";
 import GroupGroups from "./GroupGroups";
+import GroupRules from "./GroupRules";
 
 export default function GroupConfiguration() {
     return (
@@ -9,6 +10,7 @@ export default function GroupConfiguration() {
             <GroupAdmins />
             <GroupDutyColumns />
             <GroupGroups />
+            <GroupRules />
         </div>
     )
 }
